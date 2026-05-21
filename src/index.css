@@ -2,66 +2,66 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Import Manrope — police exacte de Pisteur */
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+html { scroll-behavior: smooth; }
 
-html,
 body {
-  background-color: #f8fafc;
-  color: #0f172a;
-  font-family: 'Manrope', system-ui, sans-serif;
-  font-size: 15px;
-  line-height: 1.6;
-  overflow-x: hidden;
-  scroll-behavior: smooth;
+  @apply bg-navy-950 text-white;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
-main {
-  min-height: 100vh;
-  background-color: #f8fafc;
+@layer utilities {
+  .section { @apply py-20 px-4 sm:px-6 lg:px-8; }
+  .section-inner { @apply max-w-6xl mx-auto; }
+  .section-inner-wide { @apply max-w-7xl mx-auto; }
+  .card-glass {
+    @apply bg-white/5 border border-white/10 rounded-2xl;
+    backdrop-filter: blur(4px);
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-5 py-3 rounded-xl
+    bg-white text-navy-900 font-medium text-sm hover:bg-gray-100 
+    transition-all duration-200 hover:scale-[1.02] shadow-lg shadow-white/10;
+  }
+  .btn-outline {
+    @apply inline-flex items-center justify-center px-4 py-2.5 rounded-xl
+    border border-white/20 text-sm text-white/80 hover:bg-white/5 
+    transition-colors;
+  }
+  .btn-accent {
+    @apply inline-flex items-center justify-center px-5 py-3 rounded-xl
+    bg-emerald-500 text-white font-medium text-sm hover:bg-emerald-600
+    transition-all duration-200 hover:scale-[1.02] shadow-lg shadow-emerald-500/20;
+  }
+  .animate-slideUp {
+    animation: slideUp 0.25s ease-out;
+  }
+  .fade-in {
+    animation: fadeIn 0.6s ease-out both;
+  }
+  .fade-in-up {
+    animation: fadeInUp 0.6s ease-out both;
+  }
 }
 
-/* Sections */
-.section {
-  @apply py-20 px-4 sm:px-6 lg:px-8;
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-.section-inner {
-  @apply max-w-5xl mx-auto;
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
-/* Glass card (fond blanc avec bordure) */
-.glass-card {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 1rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,.08), 0 2px 4px rgba(0,0,0,.04);
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Badge violet style Pisteur */
-.badge-p {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  background: #ede9fe;
-  color: #7c3aed;
-  padding: 5px 13px;
-  border-radius: 100px;
-  font-size: 12px;
-  font-weight: 700;
-  border: 1px solid rgba(124,58,237,.15);
-}
-
-.badge-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #10b981;
-  box-shadow: 0 0 0 2px rgba(16,185,129,.25);
-  animation: lp 2s infinite;
-}
-
-@keyframes lp {
-  0%, 100% { box-shadow: 0 0 0 2px rgba(16,185,129,.25); }
-  50%       { box-shadow: 0 0 0 5px rgba(16,185,129,.10); }
+/* Input styles */
+.form-input {
+  @apply w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white text-sm
+  placeholder-white/30 focus:outline-none focus:border-emerald-500/60 focus:bg-white/8
+  transition-colors;
 }

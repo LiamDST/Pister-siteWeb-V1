@@ -8,29 +8,33 @@ import Home from './pages/Home';
 import Pricing from './pages/Pricing';
 import Faq from './pages/Faq';
 import Contact from './pages/Contact';
+import Demo from './pages/Demo';
+import Simulation from './pages/Simulation';
+import Blog from './pages/Blog';
 
+// ─── Scroll restauration ─────────────────────────────────
 function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
   return null;
 }
 
-function WhatsAppWidget() {
+// ─── Widget WhatsApp/Contact (inspiré Optee) ────────────
+function ContactWidget() {
   const [open, setOpen] = useState(false);
-  const whatsappUrl = 'https://wa.me/33600000000?text=Bonjour%2C%20je%20souhaite%20en%20savoir%20plus%20sur%20Pisteur.';
+  const whatsappUrl = 'https://wa.me/33600000000?text=Bonjour%2C%20je%20voudrais%20en%20savoir%20plus%20sur%20Pisteur.';
 
   return (
     <div className="fixed bottom-6 right-6 z-50">
       {open && (
         <div className="absolute bottom-16 right-0 w-72 bg-white rounded-2xl shadow-2xl border border-navy-100 overflow-hidden animate-slideUp">
           <div className="bg-navy-900 px-5 py-4 flex items-center justify-between">
-            <p className="text-white font-semibold text-sm">Vous avez une question ?</p>
-            <button onClick={() => setOpen(false)} className="text-white/60 hover:text-white">
+            <p className="text-white font-semibold text-sm">Besoin d&apos;aide ?</p>
+            <button onClick={() => setOpen(false)} className="text-white/60 hover:text-white transition-colors">
               <X className="w-4 h-4" />
             </button>
           </div>
           <div className="p-4 space-y-2">
-            {/* Link vers /contact — PAS dans un autre <a> */}
             <Link
               to="/contact"
               onClick={() => setOpen(false)}
@@ -40,11 +44,10 @@ function WhatsAppWidget() {
                 <Mail className="w-4 h-4 text-green-600" />
               </div>
               <div>
-                <p className="text-sm font-medium text-navy-900">Contact sur le site</p>
-                <p className="text-xs text-navy-500">Formulaire en ligne</p>
+                <p className="text-sm font-medium text-navy-900">Formulaire de contact</p>
+                <p className="text-xs text-navy-500">Réponse sous 24h</p>
               </div>
             </Link>
-            {/* <a> natif pour tel: — pas de Link imbriqué */}
             <a href="tel:+33123456789" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors">
               <div className="w-9 h-9 bg-blue-50 rounded-full flex items-center justify-center">
                 <Phone className="w-4 h-4 text-blue-600" />
@@ -68,6 +71,7 @@ function WhatsAppWidget() {
       )}
       <button
         onClick={() => setOpen(!open)}
+        aria-label="Ouvrir le contact"
         className="w-14 h-14 bg-green-500 hover:bg-green-600 rounded-full flex items-center justify-center shadow-lg shadow-green-500/30 transition-all duration-200 hover:scale-105"
       >
         {open ? <X className="w-6 h-6 text-white" /> : <MessageCircle className="w-7 h-7 text-white" />}
@@ -76,6 +80,7 @@ function WhatsAppWidget() {
   );
 }
 
+// ─── App ─────────────────────────────────────────────────
 export default function App() {
   return (
     <div className="min-h-screen flex flex-col bg-navy-950 text-white">
@@ -84,13 +89,16 @@ export default function App() {
       <main className="flex-1">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/demo" element={<Demo />} />
+          <Route path="/simulation" element={<Simulation />} />
           <Route path="/tarifs" element={<Pricing />} />
+          <Route path="/blog" element={<Blog />} />
           <Route path="/faq" element={<Faq />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
       </main>
       <Footer />
-      <WhatsAppWidget />
+      <ContactWidget />
     </div>
   );
 }

@@ -1,77 +1,93 @@
 import { Link } from 'react-router-dom';
-import { CheckCircle2, ArrowRight } from 'lucide-react';
+import { CheckCircle2 } from 'lucide-react';
+import { useFadeInOnScroll } from '../hooks/useFadeInOnScroll';
+
+function FadeSection({ children, delay = 0, className = '' }) {
+  const { ref, visible } = useFadeInOnScroll();
+  return (
+    <div ref={ref} style={{ transitionDelay: `${delay}ms` }}
+      className={`transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'} ${className}`}>
+      {children}
+    </div>
+  );
+}
 
 const plans = [
   {
     name: 'Starter',
     price: '149',
-    desc: 'Pour tester et démarrer votre prospection.',
-    features: ['50 leads/mois', 'Filtres de base (DPE, surface, zone)', 'Export CSV', 'Support email'],
-    cta: 'Commencer',
+    desc: 'Pour démarrer et tester votre marché.',
+    features: ['50 leads / mois', '2 filtres actifs', 'Export CSV', 'Email support'],
+    cta: 'Démarrer',
     highlight: false,
   },
   {
     name: 'Pro',
     price: '349',
-    desc: 'Pour une équipe commerciale active.',
-    features: ['200 leads/mois', 'Filtres avancés (code NAF, énergie, ancienneté)', 'Décideur nominatif', 'Email personnalisé auto', 'Support prioritaire'],
-    cta: 'Choisir Pro',
+    desc: 'Pour une prospection régulière et structurée.',
+    features: ['200 leads / mois', 'Filtres illimités', 'Email personnalisé IA', 'Dashboard analytique', 'Support prioritaire'],
+    cta: 'Essai gratuit 14j',
     highlight: true,
   },
   {
     name: 'Growth',
     price: '749',
-    desc: 'Pour les équipes à forte cadence.',
-    features: ['Leads illimités', 'Tous les filtres + API', 'CRM sync (HubSpot, Pipedrive)', 'Dashboard analytics', 'Account manager dédié'],
-    cta: 'Choisir Growth',
+    desc: 'Pour les équipes commerciales qui scalent.',
+    features: ['Leads illimités', 'Multi-utilisateurs', 'Intégration CRM', 'Onboarding dédié', 'Account manager'],
+    cta: 'Contacter l\'équipe',
     highlight: false,
   },
 ];
 
 export default function Pricing() {
   return (
-    <>
-      <section className="relative pt-32 pb-16 bg-navy-950">
-        <div className="absolute inset-0 bg-gradient-to-b from-navy-950 to-navy-900 pointer-events-none" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">Tarifs simples et transparents</h1>
-          <p className="text-white/60 text-lg max-w-xl mx-auto">Sans engagement. Changez de formule à tout moment.</p>
-        </div>
-      </section>
-      <section className="px-4 sm:px-6 lg:px-8 py-16 sm:py-20 bg-white">
-        <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-6">
-          {plans.map((plan) => (
-            <div key={plan.name} className={`rounded-2xl p-6 flex flex-col gap-4 border ${plan.highlight ? 'border-green-400 bg-navy-950 text-white shadow-2xl shadow-green-500/20 scale-105' : 'border-navy-100 bg-white text-navy-900'}`}>
-              <div>
-                <p className={`text-xs font-semibold uppercase tracking-wider mb-1 ${plan.highlight ? 'text-green-400' : 'text-navy-400'}`}>{plan.name}</p>
-                <div className="flex items-end gap-1 mb-1">
-                  <span className="text-4xl font-bold">{plan.price}€</span>
-                  <span className={`text-sm mb-1 ${plan.highlight ? 'text-white/60' : 'text-navy-500'}`}>/mois</span>
+    <section className="section">
+      <div className="section-inner">
+        <FadeSection className="text-center mb-12">
+          <p className="text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-2">Tarifs</p>
+          <h1 className="text-4xl font-bold mb-3">Simple, transparent.</h1>
+          <p className="text-white/60 text-sm max-w-md mx-auto">
+            Pas d&apos;engagement, pas de CB demandée pour l&apos;essai. Changez de plan à tout moment.
+          </p>
+        </FadeSection>
+
+        <div className="grid md:grid-cols-3 gap-6">
+          {plans.map((p, i) => (
+            <FadeSection key={p.name} delay={i * 80}>
+              <div className={`card-glass p-6 h-full flex flex-col gap-5 ${p.highlight ? 'border-emerald-500/40 ring-1 ring-emerald-500/20' : ''}`}>
+                {p.highlight && (
+                  <span className="self-start text-xs font-semibold bg-emerald-500/20 text-emerald-300 px-2.5 py-1 rounded-full">
+                    Recommandé
+                  </span>
+                )}
+                <div>
+                  <p className="font-bold text-lg">{p.name}</p>
+                  <p className="text-white/50 text-xs mt-1">{p.desc}</p>
                 </div>
-                <p className={`text-sm ${plan.highlight ? 'text-white/60' : 'text-navy-500'}`}>{plan.desc}</p>
+                <div>
+                  <span className="text-4xl font-black">{p.price}€</span>
+                  <span className="text-white/40 text-sm"> / mois</span>
+                </div>
+                <ul className="flex-1 space-y-2">
+                  {p.features.map(f => (
+                    <li key={f} className="flex items-center gap-2 text-sm text-white/70">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+                <Link to="/contact" className={p.highlight ? 'btn-accent text-center' : 'btn-outline text-center'}>
+                  {p.cta}
+                </Link>
               </div>
-              <ul className="space-y-2 flex-1">
-                {plan.features.map((f) => (
-                  <li key={f} className="flex items-start gap-2 text-sm">
-                    <CheckCircle2 className={`w-4 h-4 mt-0.5 flex-shrink-0 ${plan.highlight ? 'text-green-400' : 'text-green-500'}`} />
-                    <span>{f}</span>
-                  </li>
-                ))}
-              </ul>
-              <Link
-                to="/contact"
-                className={`inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full text-sm font-semibold transition-all hover:-translate-y-0.5 ${
-                  plan.highlight
-                    ? 'bg-green-500 text-white shadow-lg shadow-green-500/30 hover:bg-green-600'
-                    : 'bg-navy-50 text-navy-900 hover:bg-navy-100 border border-navy-200'
-                }`}
-              >
-                {plan.cta} <ArrowRight className="w-4 h-4" />
-              </Link>
-            </div>
+            </FadeSection>
           ))}
         </div>
-      </section>
-    </>
+
+        <FadeSection className="mt-10 text-center text-sm text-white/40">
+          Tous les plans incluent l&apos;accès aux données DPE nationales, la mise à jour mensuelle et l&apos;assistance email.
+        </FadeSection>
+      </div>
+    </section>
   );
 }

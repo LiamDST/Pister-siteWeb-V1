@@ -1,182 +1,112 @@
-// src/pages/Simulation.jsx
 import { useState } from 'react';
+import { supabase } from '../lib/supabase';
+import { Loader2, CheckCircle2, Building2 } from 'lucide-react';
 
-const zones = ['Île-de-France', 'Auvergne‑Rhône‑Alpes', 'Nouvelle‑Aquitaine', 'Occitanie'];
-const types = ['Résidentiel collectif', 'Tertiaire', 'Industriel'];
-const dpes = ['A‑C', 'D', 'E', 'F', 'G'];
-const tailles = ['< 1 000 m²', '1 000 – 5 000 m²', '> 5 000 m²'];
+const regions = ['Île-de-France', 'Auvergne-Rhône-Alpes', 'Occitanie', 'Nouvelle-Aquitaine', 'Bretagne', 'Grand Est', 'Normandie', 'Hauts-de-France'];
+const buildingTypes = ['Résidentiel collectif', 'Tertiaire', 'Logement social', 'Établissement public', 'Commercial'];
+const dpeOptions = ['E', 'F', 'G', 'E+F', 'E+F+G'];
 
-function estimateMarket({ zone, type, dpe, taille }) {
-  // Mock simple, juste pour donner un ressenti
-  if (!zone || !type || !dpe || !taille) return null;
-
-  let base = 500;
-  if (zone === 'Île-de-France') base += 400;
-  if (zone === 'Auvergne‑Rhône‑Alpes') base += 250;
-
-  if (type === 'Résidentiel collectif') base += 300;
-  if (type === 'Tertiaire') base += 150;
-
-  if (dpe === 'E') base += 200;
-  if (dpe === 'F') base += 260;
-  if (dpe === 'G') base += 320;
-
-  if (taille === '> 5 000 m²') base = Math.round(base * 0.4);
-  if (taille === '< 1 000 m²') base = Math.round(base * 1.2);
-
-  const heatScore = Math.min(99, Math.round((base / 1500) * 100));
-  return {
-    buildings: base,
-    heatScore,
-  };
+// Simulation locale (sans API)
+function computeResult({ region, buildingType, dpe, minSurface }) {
+  const base = { 'Île-de-France': 8400, 'Auvergne-Rhône-Alpes': 4200, 'Occitanie': 3100, 'Nouvelle-Aquitaine': 2900, 'Bretagne': 1800, 'Grand Est': 2200, 'Normandie': 1600, 'Hauts-de-France': 2500 }[region] || 3000;
+  const typeMult = { 'Résidentiel collectif': 1, 'Tertiaire': 0.6, 'Logement social': 0.4, 'Établissement public': 0.3, 'Commercial': 0.5 }[buildingType] || 0.8;
+  const dpeMult = dpe.includes('+') ? dpe.split('+').length * 0.35 : 0.35;
+  const surfMult = Math.max(0.2, 1 - (parseInt(minSurface) || 0) / 10000);
+  return Math.round(base * typeMult * dpeMult * surfMult);
 }
 
 export default function Simulation() {
-  const [form, setForm] = useState({
-    zone: '',
-    type: '',
-    dpe: '',
-    taille: '',
-  });
-  const result = estimateMarket(form);
+  const [form, setForm] = useState({ region: regions[0], buildingType: buildingTypes[0], dpe: 'E+F+G', minSurface: '500', email: '' });
+  const [result, setResult] = useState(null);
+  const [status, setStatus] = useState('idle');
+
+  const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
+
+  const handleSimulate = async e => {
+    e.preventDefault();
+    setStatus('loading');
+    const count = computeResult(form);
+    await new Promise(r => setTimeout(r, 700));
+
+    // Enregistrement dans Supabase (optionnel, si email renseigné)
+    if (form.email) {
+      await supabase.from('simulations').insert([{
+        email: form.email, region: form.region, building_type: form.buildingType,
+        dpe: form.dpe, min_surface: parseInt(form.minSurface) || 0,
+        result_count: count, created_at: new Date().toISOString(),
+      }]).catch(console.error);
+    }
+
+    setResult(count);
+    setStatus('done');
+  };
 
   return (
     <section className="section">
-      <div className="section-inner grid lg:grid-cols-[1.1fr,0.9fr] gap-10 items-start">
-        {/* Colonne gauche : formulaire */}
-        <div>
-          <p className="text-xs font-semibold tracking-[0.2em] text-slate-500 uppercase mb-2">
-            Simulation
-          </p>
-          <h1 className="text-3xl font-semibold mb-3">
-            Estimez votre marché adressable en 30 secondes.
-          </h1>
-          <p className="text-sm text-slate-600 mb-8 max-w-xl">
-            Choisissez une zone, un type de bâtiment, un niveau de DPE et une taille.
-            Nous vous donnons un ordre de grandeur du volume de bâtiments qui pourraient
-            entrer dans votre cible.
-          </p>
-
-          <form className="glass-card p-5 space-y-4">
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs text-slate-500 mb-1">Zone géographique</label>
-                <select
-                  className="w-full rounded-2xl border border-slate-200 bg-white/80 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
-                  value={form.zone}
-                  onChange={(e) => setForm((f) => ({ ...f, zone: e.target.value }))}
-                >
-                  <option value="">Choisir…</option>
-                  {zones.map((z) => (
-                    <option key={z} value={z}>
-                      {z}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label className="block text-xs text-slate-500 mb-1">Type de bâtiment</label>
-                <select
-                  className="w-full rounded-2xl border border-slate-200 bg-white/80 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
-                  value={form.type}
-                  onChange={(e) => setForm((f) => ({ ...f, type: e.target.value }))}
-                >
-                  <option value="">Choisir…</option>
-                  {types.map((t) => (
-                    <option key={t} value={t}>
-                      {t}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-xs text-slate-500 mb-1">DPE ciblé</label>
-                <select
-                  className="w-full rounded-2xl border border-slate-200 bg-white/80 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
-                  value={form.dpe}
-                  onChange={(e) => setForm((f) => ({ ...f, dpe: e.target.value }))}
-                >
-                  <option value="">Choisir…</option>
-                  {dpes.map((d) => (
-                    <option key={d} value={d}>
-                      {d}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label className="block text-xs text-slate-500 mb-1">Taille du bâtiment</label>
-                <select
-                  className="w-full rounded-2xl border border-slate-200 bg-white/80 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500"
-                  value={form.taille}
-                  onChange={(e) => setForm((f) => ({ ...f, taille: e.target.value }))}
-                >
-                  <option value="">Choisir…</option>
-                  {tailles.map((t) => (
-                    <option key={t} value={t}>
-                      {t}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
-            <p className="text-[11px] text-slate-500">
-              Résultats indicatifs basés sur des hypothèses moyennes. L&apos;objectif est
-              de vous donner un ordre de grandeur, pas une vérité absolue.
+      <div className="section-inner max-w-4xl mx-auto grid md:grid-cols-2 gap-12 items-start">
+        <div className="space-y-6">
+          <div>
+            <p className="text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-2">Simulation</p>
+            <h1 className="text-4xl font-bold mb-3">Estimez votre marché</h1>
+            <p className="text-white/60 text-sm leading-relaxed">
+              Renseignez votre ICP et découvrez combien de bâtiments correspondent à votre profil cible en France.
             </p>
+          </div>
+
+          <form onSubmit={handleSimulate} className="card-glass p-6 space-y-4">
+            <div>
+              <label className="text-xs text-white/50 mb-1 block">Région</label>
+              <select name="region" value={form.region} onChange={handleChange} className="form-input bg-navy-950">
+                {regions.map(r => <option key={r} value={r}>{r}</option>)}
+              </select>
+            </div>
+            <div>
+              <label className="text-xs text-white/50 mb-1 block">Type de bâtiment</label>
+              <select name="buildingType" value={form.buildingType} onChange={handleChange} className="form-input bg-navy-950">
+                {buildingTypes.map(t => <option key={t} value={t}>{t}</option>)}
+              </select>
+            </div>
+            <div>
+              <label className="text-xs text-white/50 mb-1 block">DPE ciblé</label>
+              <select name="dpe" value={form.dpe} onChange={handleChange} className="form-input bg-navy-950">
+                {dpeOptions.map(d => <option key={d} value={d}>{d}</option>)}
+              </select>
+            </div>
+            <div>
+              <label className="text-xs text-white/50 mb-1 block">Surface minimale (m²)</label>
+              <input name="minSurface" type="number" value={form.minSurface} onChange={handleChange} min={0} className="form-input" placeholder="500" />
+            </div>
+            <div>
+              <label className="text-xs text-white/50 mb-1 block">Email (pour recevoir les résultats)</label>
+              <input name="email" type="email" value={form.email} onChange={handleChange} placeholder="jean@entreprise.fr" className="form-input" />
+            </div>
+            <button type="submit" disabled={status === 'loading'} className="btn-accent w-full flex items-center justify-center gap-2 disabled:opacity-60">
+              {status === 'loading' && <Loader2 className="w-4 h-4 animate-spin" />}
+              {status === 'loading' ? 'Calcul en cours...' : 'Simuler mon marché'}
+            </button>
           </form>
         </div>
 
-        {/* Colonne droite : résultat */}
-        <div className="glass-card p-6 space-y-5 transition-transform duration-200 hover:-translate-y-1 hover:shadow-glow">
-          <p className="text-sm font-medium text-slate-900 mb-2">
-            Résultat de la simulation
-          </p>
-
-          {!result ? (
-            <p className="text-sm text-slate-500">
-              Complétez les 4 champs à gauche pour estimer le nombre de bâtiments qui
-              correspondent à votre cible.
-            </p>
-          ) : (
+        {/* Résultat */}
+        <div className="card-glass p-8 flex flex-col items-center justify-center text-center gap-4 min-h-64">
+          {status === 'idle' && (
             <>
-              <div className="grid sm:grid-cols-2 gap-4">
-                <div className="rounded-2xl bg-primary-500/10 border border-primary-500/40 p-4">
-                  <p className="text-xs text-slate-600 mb-1">Bâtiments estimés</p>
-                  <p className="text-3xl font-semibold text-primary-600">
-                    {result.buildings.toLocaleString('fr-FR')}
-                  </p>
-                  <p className="text-xs text-slate-500 mt-1">
-                    Dans votre zone et votre segment, avec le DPE ciblé.
-                  </p>
-                </div>
-                <div className="rounded-2xl bg-emerald-500/10 border border-emerald-500/40 p-4">
-                  <p className="text-xs text-slate-600 mb-1">Heat score de potentiel</p>
-                  <p className="text-3xl font-semibold text-emerald-600">
-                    {result.heatScore}%
-                  </p>
-                  <p className="text-xs text-slate-500 mt-1">
-                    Plus le score est élevé, plus votre segment est intéressant à
-                    travailler en priorité.
-                  </p>
-                </div>
+              <Building2 className="w-12 h-12 text-white/20" />
+              <p className="text-white/40 text-sm">Remplissez le formulaire pour estimer votre marché adressable.</p>
+            </>
+          )}
+          {status === 'loading' && <Loader2 className="w-10 h-10 text-emerald-400 animate-spin" />}
+          {status === 'done' && result !== null && (
+            <>
+              <CheckCircle2 className="w-10 h-10 text-emerald-400" />
+              <div>
+                <p className="text-5xl font-black text-emerald-400">{result.toLocaleString('fr-FR')}</p>
+                <p className="text-white/60 text-sm mt-2">bâtiments correspondent à vos critères</p>
               </div>
-
-              <div className="border-t border-slate-200 pt-4 text-xs text-slate-600 space-y-1.5">
-                <p className="font-medium text-slate-900">Lecture recommandée</p>
-                <p>
-                  • Au‑delà de 60% de heat score, vos équipes peuvent justifier une
-                  séquence de prospection dédiée.
-                </p>
-                <p>
-                  • Vous pouvez combiner plusieurs segments dans Pisteur pour lisser la
-                  saisonnalité.
-                </p>
-              </div>
+              <p className="text-xs text-white/40 max-w-xs">
+                Estimation basée sur les données BDNB et ADEME. Le nombre de leads livrés quotidiennement dépend de votre plan.
+              </p>
+              <a href="/contact" className="btn-accent">Obtenir mes premiers leads</a>
             </>
           )}
         </div>
