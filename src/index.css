@@ -4,12 +4,19 @@
 
 html,
 body {
-  @apply bg-navy-900 text-white scroll-smooth;
+  @apply text-white scroll-smooth;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
 }
 
+body {
+  background:
+    radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), transparent 55%),
+    radial-gradient(circle at bottom right, rgba(129, 140, 248, 0.18), transparent 55%),
+    #020617;
+}
+
 main {
-  @apply min-h-screen bg-navy-900;
+  @apply min-h-screen;
 }
 
 .section {
@@ -18,4 +25,19 @@ main {
 
 .section-inner {
   @apply max-w-6xl mx-auto;
+}
+
+.glass-card {
+  @apply bg-white/5 border border-white/10 rounded-3xl backdrop-blur-xl shadow-soft;
+}
+
+.chip {
+  @apply inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-white/5 border border-white/10 text-white/70;
+}
+
+.gradient-text {
+  background: linear-gradient(120deg, #a855f7, #22d3ee, #4f46e5);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
