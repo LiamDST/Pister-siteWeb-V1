@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { Loader2, CheckCircle2, Building2 } from 'lucide-react';
 
@@ -6,9 +7,12 @@ const regions = ['Île-de-France', 'Auvergne-Rhône-Alpes', 'Occitanie', 'Nouvel
 const buildingTypes = ['Résidentiel collectif', 'Tertiaire', 'Logement social', 'Établissement public', 'Commercial'];
 const dpeOptions = ['E', 'F', 'G', 'E+F', 'E+F+G'];
 
-// Simulation locale (sans API)
 function computeResult({ region, buildingType, dpe, minSurface }) {
-  const base = { 'Île-de-France': 8400, 'Auvergne-Rhône-Alpes': 4200, 'Occitanie': 3100, 'Nouvelle-Aquitaine': 2900, 'Bretagne': 1800, 'Grand Est': 2200, 'Normandie': 1600, 'Hauts-de-France': 2500 }[region] || 3000;
+  const base = {
+    'Île-de-France': 8400, 'Auvergne-Rhône-Alpes': 4200, 'Occitanie': 3100,
+    'Nouvelle-Aquitaine': 2900, 'Bretagne': 1800, 'Grand Est': 2200,
+    'Normandie': 1600, 'Hauts-de-France': 2500,
+  }[region] || 3000;
   const typeMult = { 'Résidentiel collectif': 1, 'Tertiaire': 0.6, 'Logement social': 0.4, 'Établissement public': 0.3, 'Commercial': 0.5 }[buildingType] || 0.8;
   const dpeMult = dpe.includes('+') ? dpe.split('+').length * 0.35 : 0.35;
   const surfMult = Math.max(0.2, 1 - (parseInt(minSurface) || 0) / 10000);
@@ -16,7 +20,10 @@ function computeResult({ region, buildingType, dpe, minSurface }) {
 }
 
 export default function Simulation() {
-  const [form, setForm] = useState({ region: regions[0], buildingType: buildingTypes[0], dpe: 'E+F+G', minSurface: '500', email: '' });
+  const [form, setForm] = useState({
+    region: regions[0], buildingType: buildingTypes[0],
+    dpe: 'E+F+G', minSurface: '500', email: '',
+  });
   const [result, setResult] = useState(null);
   const [status, setStatus] = useState('idle');
 
@@ -28,7 +35,6 @@ export default function Simulation() {
     const count = computeResult(form);
     await new Promise(r => setTimeout(r, 700));
 
-    // Enregistrement dans Supabase (optionnel, si email renseigné)
     if (form.email) {
       await supabase.from('simulations').insert([{
         email: form.email, region: form.region, building_type: form.buildingType,
@@ -49,7 +55,8 @@ export default function Simulation() {
             <p className="text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-2">Simulation</p>
             <h1 className="text-4xl font-bold mb-3">Estimez votre marché</h1>
             <p className="text-white/60 text-sm leading-relaxed">
-              Renseignez votre ICP et découvrez combien de bâtiments correspondent à votre profil cible en France.
+              Renseignez votre ICP et découvrez combien de bâtiments correspondent
+              à votre profil cible en France.
             </p>
           </div>
 
@@ -74,20 +81,27 @@ export default function Simulation() {
             </div>
             <div>
               <label className="text-xs text-white/50 mb-1 block">Surface minimale (m²)</label>
-              <input name="minSurface" type="number" value={form.minSurface} onChange={handleChange} min={0} className="form-input" placeholder="500" />
+              <input name="minSurface" type="number" value={form.minSurface}
+                onChange={handleChange} min={0} className="form-input" placeholder="500" />
             </div>
             <div>
-              <label className="text-xs text-white/50 mb-1 block">Email (pour recevoir les résultats)</label>
-              <input name="email" type="email" value={form.email} onChange={handleChange} placeholder="jean@entreprise.fr" className="form-input" />
+              <label className="text-xs text-white/50 mb-1 block">
+                Email <span className="text-white/30">(optionnel)</span>
+              </label>
+              <input name="email" type="email" value={form.email}
+                onChange={handleChange} placeholder="jean@entreprise.fr" className="form-input" />
             </div>
-            <button type="submit" disabled={status === 'loading'} className="btn-accent w-full flex items-center justify-center gap-2 disabled:opacity-60">
+            <button
+              type="submit"
+              disabled={status === 'loading'}
+              className="btn-accent w-full flex items-center justify-center gap-2 disabled:opacity-60"
+            >
               {status === 'loading' && <Loader2 className="w-4 h-4 animate-spin" />}
               {status === 'loading' ? 'Calcul en cours...' : 'Simuler mon marché'}
             </button>
           </form>
         </div>
 
-        {/* Résultat */}
         <div className="card-glass p-8 flex flex-col items-center justify-center text-center gap-4 min-h-64">
           {status === 'idle' && (
             <>
@@ -104,9 +118,9 @@ export default function Simulation() {
                 <p className="text-white/60 text-sm mt-2">bâtiments correspondent à vos critères</p>
               </div>
               <p className="text-xs text-white/40 max-w-xs">
-                Estimation basée sur les données BDNB et ADEME. Le nombre de leads livrés quotidiennement dépend de votre plan.
+                Estimation basée sur les données BDNB et ADEME.
               </p>
-              <a href="/contact" className="btn-accent">Obtenir mes premiers leads</a>
+              <Link to="/contact" className="btn-accent">Obtenir mes premiers leads</Link>
             </>
           )}
         </div>

@@ -11,9 +11,10 @@ const navItems = [
   { to: '/faq',        label: 'FAQ' },
 ];
 
+// bg-white/8 n'est pas valide en Tailwind → bg-white/[0.08]
 const navCls = ({ isActive }) =>
   `text-sm px-3 py-2 rounded-lg transition-colors ${
-    isActive ? 'bg-white/8 text-white' : 'text-white/60 hover:text-white'
+    isActive ? 'bg-white/[0.08] text-white' : 'text-white/60 hover:text-white'
   }`;
 
 export default function Header() {
@@ -23,7 +24,6 @@ export default function Header() {
     <header className="sticky top-0 z-40 bg-navy-950/80 backdrop-blur border-b border-white/5">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
 
-        {/* Logo */}
         <Link to="/" className="flex items-center gap-2 shrink-0">
           <div className="w-8 h-8 rounded-xl bg-emerald-500 flex items-center justify-center font-bold text-white text-xs">
             P
@@ -31,7 +31,6 @@ export default function Header() {
           <span className="font-semibold text-white tracking-tight">Pisteur</span>
         </Link>
 
-        {/* Nav desktop */}
         <nav className="hidden lg:flex items-center gap-1">
           {navItems.map(item => (
             <NavLink key={item.to} to={item.to} className={navCls} end={item.to === '/'}>
@@ -40,7 +39,6 @@ export default function Header() {
           ))}
         </nav>
 
-        {/* CTA + burger */}
         <div className="flex items-center gap-3">
           <Link to="/contact" className="hidden sm:inline-flex btn-primary text-xs px-4 py-2">
             Demander une démo
@@ -55,7 +53,6 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Nav mobile */}
       {open && (
         <div className="lg:hidden bg-navy-950 border-t border-white/5 px-4 pb-4 pt-2 space-y-1 animate-slideUp">
           {navItems.map(item => (
@@ -69,7 +66,11 @@ export default function Header() {
               {item.label}
             </NavLink>
           ))}
-          <Link to="/contact" className="btn-accent w-full mt-2 text-center" onClick={() => setOpen(false)}>
+          <Link
+            to="/contact"
+            className="btn-accent w-full mt-2 text-center block"
+            onClick={() => setOpen(false)}
+          >
             Demander une démo
           </Link>
         </div>
