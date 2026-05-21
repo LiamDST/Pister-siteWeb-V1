@@ -1,187 +1,77 @@
 import { Link } from 'react-router-dom';
-import { useSeoMeta } from '../hooks/useSeoMeta';
+import { CheckCircle2, ArrowRight } from 'lucide-react';
 
 const plans = [
   {
     name: 'Starter',
     price: '149',
-    period: '/mois',
-    description: 'Pour tester Pisteur sur un segment précis.',
+    desc: 'Pour tester et démarrer votre prospection.',
+    features: ['50 leads/mois', 'Filtres de base (DPE, surface, zone)', 'Export CSV', 'Support email'],
+    cta: 'Commencer',
     highlight: false,
-    cta: 'Essayer gratuitement',
-    features: [
-      '50 leads qualifiés / mois',
-      '1 zone géographique',
-      '2 segments de bâtiments',
-      'Accès base décideurs',
-      'Export CSV',
-      'Support email',
-    ],
-    missing: [
-      'Emails personnalisés générés',
-      'Intégration CRM',
-      'Alertes temps réel',
-    ],
   },
   {
     name: 'Pro',
     price: '349',
-    period: '/mois',
-    description: 'Pour les équipes commerciales actives.',
+    desc: 'Pour une équipe commerciale active.',
+    features: ['200 leads/mois', 'Filtres avancés (code NAF, énergie, ancienneté)', 'Décideur nominatif', 'Email personnalisé auto', 'Support prioritaire'],
+    cta: 'Choisir Pro',
     highlight: true,
-    badge: 'Le plus populaire',
-    cta: 'Démarrer en Pro',
-    features: [
-      '200 leads qualifiés / mois',
-      '3 zones géographiques',
-      'Segments illimités',
-      'Accès base décideurs',
-      'Export CSV + Excel',
-      'Emails personnalisés générés',
-      'Intégration HubSpot / Pipedrive',
-      'Support prioritaire',
-    ],
-    missing: [
-      'Alertes temps réel',
-    ],
   },
   {
     name: 'Growth',
     price: '749',
-    period: '/mois',
-    description: 'Pour les équipes qui veulent dominer leur marché.',
+    desc: 'Pour les équipes à forte cadence.',
+    features: ['Leads illimités', 'Tous les filtres + API', 'CRM sync (HubSpot, Pipedrive)', 'Dashboard analytics', 'Account manager dédié'],
+    cta: 'Choisir Growth',
     highlight: false,
-    cta: 'Parler à l\'équipe',
-    features: [
-      'Leads illimités',
-      'France entière',
-      'Segments illimités',
-      'Accès base décideurs',
-      'Export tous formats',
-      'Emails personnalisés générés',
-      'Intégration CRM complète',
-      'Alertes temps réel',
-      'Account manager dédié',
-      'Onboarding personnalisé',
-    ],
-    missing: [],
   },
 ];
 
 export default function Pricing() {
-  useSeoMeta({
-    title: 'Tarifs',
-    description: 'Découvrez les offres Pisteur : Starter à 149€/mois, Pro à 349€/mois, Growth à 749€/mois. Essai gratuit sans CB.',
-    canonical: '/tarifs',
-  });
-
   return (
-    <section className="section">
-      <div className="section-inner py-12">
-
-        {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-14">
-          <p className="text-xs font-semibold tracking-widest text-g-400 uppercase mb-2">
-            Tarifs
-          </p>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-g-900 mb-4">
-            Un prix clair, pas de surprise.
-          </h1>
-          <p className="text-g-500 text-sm">
-            Tous les plans incluent un essai gratuit de 7 jours. Sans carte bancaire.
-            Résiliable à tout moment.
-          </p>
+    <>
+      <section className="relative pt-32 pb-16 bg-navy-950">
+        <div className="absolute inset-0 bg-gradient-to-b from-navy-950 to-navy-900 pointer-events-none" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 className="text-4xl sm:text-5xl font-bold text-white mb-4">Tarifs simples et transparents</h1>
+          <p className="text-white/60 text-lg max-w-xl mx-auto">Sans engagement. Changez de formule à tout moment.</p>
         </div>
-
-        {/* Plans */}
-        <div className="grid md:grid-cols-3 gap-6 items-start">
+      </section>
+      <section className="px-4 sm:px-6 lg:px-8 py-16 sm:py-20 bg-white">
+        <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-6">
           {plans.map((plan) => (
-            <div
-              key={plan.name}
-              className={`rounded-2xl p-6 flex flex-col gap-5 border transition-all ${
-                plan.highlight
-                  ? 'border-p bg-white shadow-s2 scale-[1.02]'
-                  : 'border-g-200 bg-white shadow-s0'
-              }`}
-            >
-              {/* Badge */}
-              <div className="flex items-start justify-between">
-                <div>
-                  <p className="text-sm font-bold text-g-900">{plan.name}</p>
-                  <p className="text-xs text-g-400 mt-0.5">{plan.description}</p>
+            <div key={plan.name} className={`rounded-2xl p-6 flex flex-col gap-4 border ${plan.highlight ? 'border-green-400 bg-navy-950 text-white shadow-2xl shadow-green-500/20 scale-105' : 'border-navy-100 bg-white text-navy-900'}`}>
+              <div>
+                <p className={`text-xs font-semibold uppercase tracking-wider mb-1 ${plan.highlight ? 'text-green-400' : 'text-navy-400'}`}>{plan.name}</p>
+                <div className="flex items-end gap-1 mb-1">
+                  <span className="text-4xl font-bold">{plan.price}€</span>
+                  <span className={`text-sm mb-1 ${plan.highlight ? 'text-white/60' : 'text-navy-500'}`}>/mois</span>
                 </div>
-                {plan.badge && (
-                  <span className="text-[11px] font-bold px-2 py-1 rounded-full bg-p-soft text-p border border-p/20">
-                    {plan.badge}
-                  </span>
-                )}
+                <p className={`text-sm ${plan.highlight ? 'text-white/60' : 'text-navy-500'}`}>{plan.desc}</p>
               </div>
-
-              {/* Prix */}
-              <div className="flex items-end gap-1">
-                <span className="text-4xl font-extrabold text-g-900">
-                  {plan.price}€
-                </span>
-                <span className="text-sm text-g-400 mb-1">{plan.period}</span>
-              </div>
-
-              {/* CTA */}
-              <Link
-                to="/contact"
-                className={`block text-center py-2.5 rounded-xl text-sm font-bold transition-colors ${
-                  plan.highlight
-                    ? 'bg-p text-white hover:bg-p-hover'
-                    : 'border border-g-200 text-g-700 hover:bg-g-100'
-                }`}
-              >
-                {plan.cta}
-              </Link>
-
-              {/* Features incluses */}
-              <ul className="space-y-2">
+              <ul className="space-y-2 flex-1">
                 {plan.features.map((f) => (
-                  <li key={f} className="flex items-start gap-2 text-xs text-g-700">
-                    <span className="text-green font-bold mt-0.5">✓</span>
-                    {f}
-                  </li>
-                ))}
-                {plan.missing.map((f) => (
-                  <li key={f} className="flex items-start gap-2 text-xs text-g-400">
-                    <span className="mt-0.5">✗</span>
-                    <span className="line-through">{f}</span>
+                  <li key={f} className="flex items-start gap-2 text-sm">
+                    <CheckCircle2 className={`w-4 h-4 mt-0.5 flex-shrink-0 ${plan.highlight ? 'text-green-400' : 'text-green-500'}`} />
+                    <span>{f}</span>
                   </li>
                 ))}
               </ul>
+              <Link
+                to="/contact"
+                className={`inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full text-sm font-semibold transition-all hover:-translate-y-0.5 ${
+                  plan.highlight
+                    ? 'bg-green-500 text-white shadow-lg shadow-green-500/30 hover:bg-green-600'
+                    : 'bg-navy-50 text-navy-900 hover:bg-navy-100 border border-navy-200'
+                }`}
+              >
+                {plan.cta} <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
           ))}
         </div>
-
-        {/* Garantie */}
-        <div className="mt-12 text-center glass-card p-6 max-w-2xl mx-auto space-y-2">
-          <p className="text-sm font-bold text-g-900">
-            🛡️ Satisfait ou remboursé 30 jours
-          </p>
-          <p className="text-xs text-g-500">
-            Si Pisteur ne génère pas de valeur sur votre marché dans les 30 premiers
-            jours, on vous rembourse intégralement. Sans question.
-          </p>
-        </div>
-
-        {/* FAQ rapide */}
-        <div className="mt-10 grid sm:grid-cols-2 gap-4 max-w-3xl mx-auto">
-          {[
-            { q: 'Puis-je changer de plan ?', r: 'Oui, à tout moment depuis votre espace client, sans frais.' },
-            { q: 'Y a-t-il un engagement ?', r: 'Non, tous les plans sont sans engagement, résiliables mensuellement.' },
-            { q: 'Comment fonctionne l\'essai ?', r: '7 jours gratuits, accès complet au plan Pro, sans CB requise.' },
-            { q: 'Puis-je avoir une facture ?', r: 'Oui, toutes les factures sont disponibles dans votre espace client.' },
-          ].map(({ q, r }) => (
-            <div key={q} className="glass-card p-4 space-y-1">
-              <p className="text-sm font-semibold text-g-900">{q}</p>
-              <p className="text-xs text-g-500">{r}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }

@@ -1,111 +1,109 @@
-import { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 
-const navItems = [
+const navLinks = [
   { to: '/', label: 'Accueil' },
-  { to: '/simulation', label: 'Simulation' },
   { to: '/tarifs', label: 'Tarifs' },
   { to: '/faq', label: 'FAQ' },
   { to: '/contact', label: 'Contact' },
 ];
 
-const linkClass = ({ isActive }) =>
-  `px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${isActive
-    ? 'bg-g-100 text-g-900'
-    : 'text-g-500 hover:text-g-900 hover:bg-g-100'
-  }`;
-
 export default function Header() {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => { setMobileOpen(false); }, [location]);
+
+  const isHome = location.pathname === '/';
+  const darkLinks = !isHome || scrolled;
 
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-g-200 shadow-s0">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-[68px] flex items-center justify-between">
+    <header className={`fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 lg:px-8 pt-4 transition-all duration-300 ${scrolled ? 'bg-white/90 backdrop-blur-md shadow-sm pt-2 pb-2' : ''}`}>
+      <div className="max-w-7xl mx-auto flex items-center h-14 lg:h-16">
 
-        {/* Logo */}
-        <Link to="/" className="flex items-center gap-2 no-underline">
-          <div className="w-[45px] h-[45px] rounded-lg bg-p flex items-center justify-center font-extrabold text-white text-lg">
-            P
-          </div>
-          <span className="text-[18px] font-extrabold text-g-900 tracking-tight">
-            Piste<span className="text-p">ur</span>
+        {/* LOGO — un seul Link, aucun Link à l'intérieur */}
+        <Link to="/" className="flex items-center gap-2 flex-shrink-0 w-36">
+          <div className="w-8 h-8 rounded-xl bg-green-500 flex items-center justify-center text-white text-xs font-bold">P</div>
+          <span className={`text-lg font-bold transition-colors ${darkLinks ? 'text-navy-900' : 'text-white'}`}>
+            Pisteur
           </span>
         </Link>
 
-        {/* Nav desktop */}
-        <nav className="hidden md:flex items-center gap-1">
-          {navItems.map(({ to, label }) => (
-            <NavLink key={to} to={to} className={linkClass}>
-              {label}
-            </NavLink>
-          ))}
+        {/* NAV desktop — Link simples, pas imbriqués */}
+        <nav className="hidden lg:flex items-center justify-center flex-1">
+          <div className={`flex items-center gap-1 backdrop-blur-sm rounded-full px-2 py-1.5 border shadow-lg transition-colors ${darkLinks ? 'bg-green-500 text-white border-green-400/50' : 'bg-green-500/90 border-green-400/50'}`}>
+            {navLinks.map((link) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                className={`text-sm font-medium px-4 py-1.5 rounded-full transition-all duration-200 ${
+                  location.pathname === link.to
+                    ? 'bg-white text-green-700'
+                    : 'text-white hover:bg-white/20'
+                }`}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
         </nav>
 
-        {/* Actions desktop */}
-        <div className="hidden md:flex items-center gap-2">
-          <a
-            href="https://app.pisteur.fr"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-4 py-[7px] text-[13px] font-semibold rounded-lg border border-g-200 text-g-700 hover:bg-g-100 transition-colors"
-          >
-            Connexion
-          </a>
+        {/* CTA desktop — Link seul */}
+        <div className="hidden lg:flex items-center justify-end flex-shrink-0 w-36">
           <Link
             to="/contact"
-            className="px-4 py-[7px] text-[13px] font-bold rounded-lg bg-p text-white hover:bg-p-hover transition-colors"
+            className={`inline-flex items-center justify-center px-5 py-2 text-sm font-semibold rounded-full transition-all duration-200 hover:-translate-y-0.5 ${
+              darkLinks
+                ? 'bg-green-500 text-white shadow-lg shadow-green-500/25 hover:bg-green-600'
+                : 'bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20'
+            }`}
           >
             Demander une démo
           </Link>
         </div>
 
-        {/* Burger mobile */}
+        {/* Hamburger mobile */}
         <button
-          className="md:hidden p-2 rounded-lg text-g-500 hover:text-g-900 hover:bg-g-100 transition-colors"
-          onClick={() => setMenuOpen((v) => !v)}
-          aria-label={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
+          onClick={() => setMobileOpen(!mobileOpen)}
+          className={`lg:hidden ml-auto p-2 rounded-full transition-colors ${darkLinks ? 'text-navy-700' : 'text-white'}`}
+          aria-label="Menu"
         >
-          {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </div>
 
       {/* Menu mobile */}
-      {menuOpen && (
-        <div className="md:hidden border-t border-g-200 bg-white px-4 py-4 space-y-1 animate-slideUp">
-          {navItems.map(({ to, label }) => (
-            <NavLink
-              key={to}
-              to={to}
-              className={({ isActive }) =>
-                `block px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${isActive
-                  ? 'bg-p-soft text-p'
-                  : 'text-g-700 hover:bg-g-100'
-                }`
-              }
-              onClick={() => setMenuOpen(false)}
-            >
-              {label}
-            </NavLink>
-          ))}
-
-          <div className="pt-3 space-y-2 border-t border-g-200 mt-3">
-            <a
-              href="https://app.pisteur.fr"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block text-center px-4 py-2.5 text-sm font-semibold rounded-lg border border-g-200 text-g-700 hover:bg-g-100 transition-colors"
-            >
-              Connexion
-            </a>
+      {mobileOpen && (
+        <div className="lg:hidden bg-white rounded-2xl shadow-2xl mx-2 mt-2 p-4 border border-navy-100">
+          <nav className="flex flex-col gap-1">
+            {navLinks.map((link) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                className={`px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
+                  location.pathname === link.to
+                    ? 'bg-green-50 text-green-700'
+                    : 'text-navy-700 hover:bg-gray-50'
+                }`}
+              >
+                {link.label}
+              </Link>
+            ))}
             <Link
               to="/contact"
-              className="block text-center px-4 py-2.5 text-sm font-bold rounded-lg bg-p text-white hover:bg-p-hover transition-colors"
-              onClick={() => setMenuOpen(false)}
+              className="mt-2 px-4 py-3 rounded-xl bg-green-500 text-white text-sm font-semibold text-center hover:bg-green-600 transition-colors"
             >
               Demander une démo
             </Link>
-          </div>
+          </nav>
         </div>
       )}
     </header>

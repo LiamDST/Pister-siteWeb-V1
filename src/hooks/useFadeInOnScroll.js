@@ -1,4 +1,3 @@
-// src/hooks/useFadeInOnScroll.js
 import { useEffect, useRef, useState } from 'react';
 
 export function useFadeInOnScroll(options = {}) {
@@ -8,7 +7,6 @@ export function useFadeInOnScroll(options = {}) {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -16,9 +14,8 @@ export function useFadeInOnScroll(options = {}) {
           observer.unobserve(el);
         }
       },
-      { threshold: 0.15, ...options }
+      { threshold: 0.12, ...options }
     );
-
     observer.observe(el);
     return () => observer.disconnect();
   }, []);

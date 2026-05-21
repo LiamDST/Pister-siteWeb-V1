@@ -1,153 +1,55 @@
 import { useState } from 'react';
-import { ChevronDown } from 'lucide-react';
-import { useSeoMeta } from '../hooks/useSeoMeta';
+import { Link } from 'react-router-dom';
+import { ChevronDown, ArrowRight } from 'lucide-react';
 
 const faqs = [
-  {
-    category: 'Le produit',
-    items: [
-      {
-        q: 'Comment Pisteur identifie-t-il les bâtiments à cibler ?',
-        a: 'Pisteur agrège plus de 100 sources de données publiques et propriétaires (ADEME, BDNB, DVF, permis de construire, registre des copropriétés…) et les croise avec un algorithme de scoring pour identifier les bâtiments les plus susceptibles d\'avoir besoin de vos services.',
-      },
-      {
-        q: 'D\'où proviennent les coordonnées des décideurs ?',
-        a: 'Nous croisons les registres légaux (Infogreffe, SIRENE), les bases de syndics, les appels d\'offres publics et des sources propriétaires pour identifier le gestionnaire ou décideur nominatif de chaque bâtiment. Toutes les données sont conformes RGPD.',
-      },
-      {
-        q: 'Combien de bâtiments sont disponibles en France ?',
-        a: 'Pisteur couvre plus de 1,2 million de bâtiments tertiaires et résidentiels collectifs en France. La base est mise à jour en continu avec les nouvelles données publiques.',
-      },
-      {
-        q: 'Les données sont-elles à jour ?',
-        a: 'Oui. Les signaux temps réel (permis de construire, mutations, nouveaux DPE) sont mis à jour quotidiennement. Les données décideur sont actualisées mensuellement.',
-      },
-    ],
-  },
-  {
-    category: 'Fonctionnement',
-    items: [
-      {
-        q: 'Comment configurer mes critères de ciblage ?',
-        a: 'Depuis votre tableau de bord, vous définissez votre ICP en quelques minutes : zone géographique, type de bâtiment, classe DPE, tranche de surface, code NAF du gestionnaire. Pisteur génère immédiatement une prévisualisation du volume adressable.',
-      },
-      {
-        q: 'À quelle fréquence reçois-je des leads ?',
-        a: 'Vous recevez une liste de leads chaque matin par email et dans votre tableau de bord. La fréquence et le volume dépendent de votre plan.',
-      },
-      {
-        q: 'Comment fonctionnent les emails personnalisés ?',
-        a: 'Pour chaque lead, Pisteur génère un email commercial prêt à envoyer qui cite l\'adresse exacte du bâtiment, son DPE, sa surface et le contexte réglementaire. Vous pouvez personnaliser le ton (formel, direct) et envoyer en un clic.',
-      },
-      {
-        q: 'Puis-je exporter mes leads vers mon CRM ?',
-        a: 'Oui. Pisteur s\'intègre nativement avec HubSpot, Pipedrive et Salesforce sur les plans Pro et Growth. L\'export CSV/Excel est disponible sur tous les plans.',
-      },
-    ],
-  },
-  {
-    category: 'Tarifs & engagement',
-    items: [
-      {
-        q: 'Y a-t-il un engagement de durée ?',
-        a: 'Non. Tous les plans Pisteur sont sans engagement, facturés mensuellement, résiliables à tout moment depuis votre espace client.',
-      },
-      {
-        q: 'L\'essai gratuit est-il vraiment gratuit ?',
-        a: 'Oui, 7 jours d\'accès complet au plan Pro, sans carte bancaire requise. Aucun prélèvement automatique à l\'issue de la période d\'essai.',
-      },
-      {
-        q: 'Que se passe-t-il si je dépasse mon quota de leads ?',
-        a: 'Vous recevez une notification et pouvez choisir d\'upgrader votre plan ou d\'attendre le prochain cycle mensuel. Aucun frais supplémentaire automatique.',
-      },
-    ],
-  },
-  {
-    category: 'Données & RGPD',
-    items: [
-      {
-        q: 'Les données de Pisteur sont-elles conformes RGPD ?',
-        a: 'Oui. Pisteur ne collecte que des données professionnelles issues de sources légales publiques. Les données personnelles (nom, email) de décideurs sont traitées dans le cadre de l\'intérêt légitime B2B, conformément à la doctrine de la CNIL.',
-      },
-      {
-        q: 'Mes données clients sont-elles partagées ?',
-        a: 'Non. Vos données de configuration, vos leads et vos résultats commerciaux ne sont jamais partagés avec d\'autres clients ni avec des tiers.',
-      },
-      {
-        q: 'Où sont hébergées les données ?',
-        a: 'Les données sont hébergées en Europe (Vercel — région EU) et ne transitent jamais hors de l\'Union Européenne.',
-      },
-    ],
-  },
+  { question: "Qu'est-ce que Pisteur exactement ?", answer: "Pisteur est une plateforme de prospection B2B pour les professionnels du bâtiment. Elle analyse automatiquement des millions de bâtiments en France et vous envoie chaque jour ceux qui correspondent à votre cible, avec le décideur nominatif et le potentiel de chantier estimé." },
+  { question: "Quels types de bâtiments sont couverts ?", answer: "Pisteur couvre les bâtiments résidentiels collectifs, tertiaires et industriels : copropriétés, bureaux, hôtels, entrepôts, établissements de santé. Nous disposons de données sur plus de 1,2 million de bâtiments en France." },
+  { question: "Comment fonctionne le ciblage ?", answer: "Vous configurez vos filtres : type de bâtiment, DPE, énergie principale, surface, département, code NAF du propriétaire. Pisteur croise ces critères avec plus de 100 signaux d'intention pour scorer et prioriser vos leads." },
+  { question: "Les données sont-elles fiables ?", answer: "Nos données sont issues de sources certifiées : base ADEME, DPE, registre foncier, données cadastrales. Elles sont recoupées par nos algorithmes et mises à jour en continu." },
+  { question: "Combien coûte la plateforme ?", answer: "Pisteur propose plusieurs formules adaptées à la taille de votre équipe commerciale. Un essai gratuit est disponible sans carte bancaire. Consultez la page Tarifs ou contactez-nous pour un devis personnalisé." },
+  { question: "Puis-je intégrer Pisteur à mon CRM ?", answer: "Oui, Pisteur propose une API et des exports CSV compatibles avec les principaux CRM du marché (HubSpot, Pipedrive, Salesforce)." },
+  { question: "Quelle est la durée d'engagement ?", answer: "Aucun engagement minimum. Vous pouvez utiliser Pisteur tant qu'il vous apporte de la valeur. Formules mensuelles et annuelles disponibles." },
 ];
 
-function FaqItem({ q, a }) {
+function FaqItem({ question, answer }) {
   const [open, setOpen] = useState(false);
-
   return (
-    <div className="border-b border-g-200 last:border-0">
-      <button
-        onClick={() => setOpen((v) => !v)}
-        className="w-full flex items-center justify-between gap-4 py-4 text-left"
-        aria-expanded={open}
-      >
-        <span className="text-sm font-semibold text-g-900">{q}</span>
-        <ChevronDown
-          className={`w-4 h-4 text-g-400 shrink-0 transition-transform duration-200 ${
-            open ? 'rotate-180' : ''
-          }`}
-        />
+    <div className="border-b border-navy-100 last:border-0">
+      <button onClick={() => setOpen(!open)} className="w-full flex items-center justify-between py-5 text-left group">
+        <span className="text-navy-900 font-medium pr-8 group-hover:text-green-600 transition-colors">{question}</span>
+        <ChevronDown className={`w-5 h-5 text-navy-400 flex-shrink-0 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
       </button>
-
-      {open && (
-        <p className="text-sm text-g-500 leading-relaxed pb-4 animate-slideUp">
-          {a}
-        </p>
-      )}
+      <div className={`overflow-hidden transition-all duration-300 ${open ? 'max-h-96 pb-5' : 'max-h-0'}`}>
+        <p className="text-navy-600 text-sm leading-relaxed">{answer}</p>
+      </div>
     </div>
   );
 }
 
 export default function Faq() {
-  useSeoMeta({
-    title: 'FAQ',
-    description: 'Toutes les réponses sur Pisteur : fonctionnement, données, tarifs, RGPD, intégrations CRM et emails automatisés.',
-    canonical: '/faq',
-  });
-
   return (
-    <section className="section">
-      <div className="section-inner py-12 max-w-3xl mx-auto">
-        <div className="text-center mb-12">
-          <p className="text-xs font-semibold tracking-widest text-g-400 uppercase mb-2">
-            FAQ
-          </p>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-g-900 mb-4">
-            Questions fréquentes
-          </h1>
-          <p className="text-g-500 text-sm">
-            Une question non listée ?{' '}
-            <a href="/contact" className="text-p underline hover:text-p-hover">
-              Contactez-nous directement.
-            </a>
-          </p>
+    <>
+      <section className="relative pt-32 pb-16 bg-navy-950">
+        <div className="absolute inset-0 bg-gradient-to-b from-navy-950 to-navy-900 pointer-events-none" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6">Questions fréquentes</h1>
+          <p className="text-white/60 text-lg max-w-2xl mx-auto">Tout ce que vous devez savoir sur Pisteur et la prospection bâtiment intelligente.</p>
         </div>
-
-        <div className="space-y-8">
-          {faqs.map(({ category, items }) => (
-            <div key={category}>
-              <h2 className="text-xs font-bold tracking-widest text-p uppercase mb-4">
-                {category}
-              </h2>
-              <div className="glass-card px-6 divide-y divide-g-100">
-                {items.map(({ q, a }) => (
-                  <FaqItem key={q} q={q} a={a} />
-                ))}
-              </div>
-            </div>
-          ))}
+      </section>
+      <section className="px-4 sm:px-6 lg:px-8 py-16 sm:py-20 bg-white">
+        <div className="max-w-3xl mx-auto">
+          <div className="bg-white rounded-2xl border border-navy-100 px-6 sm:px-8">
+            {faqs.map((faq) => <FaqItem key={faq.question} {...faq} />)}
+          </div>
+          <div className="text-center mt-16">
+            <p className="text-navy-600 mb-4">Vous avez d'autres questions ?</p>
+            <Link to="/contact" className="inline-flex items-center gap-2 px-6 py-3 bg-green-500 text-white font-semibold rounded-full hover:bg-green-600 transition-all shadow-lg shadow-green-500/25">
+              Contactez-nous <ArrowRight className="w-5 h-5" />
+            </Link>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }
