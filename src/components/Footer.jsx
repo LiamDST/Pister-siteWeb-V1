@@ -7,12 +7,18 @@ export default function Footer() {
         <p className="text-xs text-white/50">
           © {new Date().getFullYear()} Pisteur — Prospection bâtiment intelligente.
         </p>
-        <div className="flex items-center gap-4 text-xs text-white/60">
-          <Link to="/mentions-legales" className="hover:text-white">
+        <div className="flex items-center gap-4 text-xs text-g-400">
+          <Link to="/mentions-legales" className="hover:text-g-700 transition-colors">
             Mentions légales
           </Link>
           <span>·</span>
-          <span>Made with React & Tailwind</span>
+          <Link to="/confidentialite" className="hover:text-g-700 transition-colors">
+            Confidentialité
+          </Link>
+          <span>·</span>
+          <Link to="/contact" className="hover:text-g-700 transition-colors">
+            Contact
+          </Link>
         </div>
       </div>
     </footer>

@@ -2,42 +2,66 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import Manrope — police exacte de Pisteur */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+
 html,
 body {
-  @apply text-white scroll-smooth;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
-}
-
-body {
-  background:
-    radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), transparent 55%),
-    radial-gradient(circle at bottom right, rgba(129, 140, 248, 0.18), transparent 55%),
-    #020617;
+  background-color: #f8fafc;
+  color: #0f172a;
+  font-family: 'Manrope', system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
 main {
-  @apply min-h-screen;
+  min-height: 100vh;
+  background-color: #f8fafc;
 }
 
+/* Sections */
 .section {
   @apply py-20 px-4 sm:px-6 lg:px-8;
 }
 
 .section-inner {
-  @apply max-w-6xl mx-auto;
+  @apply max-w-5xl mx-auto;
 }
 
+/* Glass card (fond blanc avec bordure) */
 .glass-card {
-  @apply bg-white/5 border border-white/10 rounded-3xl backdrop-blur-xl shadow-soft;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,.08), 0 2px 4px rgba(0,0,0,.04);
 }
 
-.chip {
-  @apply inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-white/5 border border-white/10 text-white/70;
+/* Badge violet style Pisteur */
+.badge-p {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: #ede9fe;
+  color: #7c3aed;
+  padding: 5px 13px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 700;
+  border: 1px solid rgba(124,58,237,.15);
 }
 
-.gradient-text {
-  background: linear-gradient(120deg, #a855f7, #22d3ee, #4f46e5);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+.badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 0 2px rgba(16,185,129,.25);
+  animation: lp 2s infinite;
+}
+
+@keyframes lp {
+  0%, 100% { box-shadow: 0 0 0 2px rgba(16,185,129,.25); }
+  50%       { box-shadow: 0 0 0 5px rgba(16,185,129,.10); }
 }

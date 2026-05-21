@@ -1,328 +1,128 @@
 import { Link } from 'react-router-dom';
+import { useFadeInOnScroll } from '../hooks/useFadeInOnScroll';
 
+// ─── Hero ────────────────────────────────────────────────────────────────────
 function HeroSection() {
   return (
-    <section className="section relative overflow-hidden">
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-30">
-        <div className="w-[540px] h-[540px] rounded-full border border-neon-500/20 bg-neon-500/5 blur-3xl animate-pulse-soft" />
-      </div>
-
-      <div className="section-inner grid md:grid-cols-2 gap-10 items-center relative">
+    <section className="section">
+      <div className="section-inner grid lg:grid-cols-2 gap-12 items-center">
         <div className="space-y-6">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="chip">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-              Prospection bâtiment · temps réel
-            </span>
-            <span className="chip bg-emerald-500/15 border-emerald-400/40 text-emerald-300">
-              Boosté à l&apos;IA
-            </span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-medium">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            Prospection bâtiment intelligente
           </div>
 
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight">
-            <span className="block mb-1 text-white/60 text-base sm:text-lg">
-              La prospection qui connaît déjà vos prochains chantiers.
-            </span>
-            <span className="gradient-text">
-              Pisteur scanne le parc immobilier et vous pousse uniquement les bâtiments
-              où vous pouvez gagner.
-            </span>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight leading-tight">
+            Trouvez chaque jour les bâtiments qui ont vraiment besoin de vous.
           </h1>
 
           <p className="text-base sm:text-lg text-white/70 max-w-xl">
-            Un signal bâtiment ultra précis, des décideurs nominatifs et des emails
-            sur-mesure générés automatiquement. Vous concentrez votre temps sur les
-            conversations, pas sur le sourcing.
+            Pisteur analyse des millions de bâtiments et vous envoie uniquement ceux
+            où votre expertise a un impact concret : DPE, surface, gestionnaire,
+            décideur nominatif et potentiel de chantier estimé.
           </p>
 
           <div className="flex flex-wrap items-center gap-3">
             <Link
               to="/contact"
-              className="inline-flex items-center justify-center px-5 py-3 rounded-full bg-white text-navy-900 font-medium text-sm shadow-glow hover:bg-gray-100 transition-transform hover:-translate-y-0.5"
+              className="inline-flex items-center justify-center px-5 py-3 rounded-xl bg-white text-navy-900 font-medium text-sm shadow-soft hover:bg-gray-100 transition-colors"
             >
               Essai gratuit — sans CB
             </Link>
-            <a
-              href="https://app.pisteur.fr"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center px-4 py-2 rounded-full border border-white/20 text-sm text-white/80 hover:bg-white/5 transition-colors"
+            <Link
+              to="/simulation"
+              className="inline-flex items-center justify-center px-4 py-2 rounded-xl border border-white/15 text-sm text-white/80 hover:bg-white/5 transition-colors"
             >
-              Voir la démo interactive
-            </a>
+              Estimer mon marché →
+            </Link>
           </div>
 
-          <div className="flex flex-wrap gap-6 text-xs text-white/60">
-            <div>
-              <p className="text-white font-semibold text-lg">73</p>
-              <p>leads générés aujourd&apos;hui</p>
-            </div>
-            <div>
-              <p className="text-white font-semibold text-lg">100+</p>
-              <p>équipes commerciales accompagnées</p>
-            </div>
-            <div>
-              <p className="text-white font-semibold text-lg">1,2M+</p>
-              <p>bâtiments analysés en France</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="relative">
-          <div className="glass-card p-4 sm:p-5 relative overflow-hidden">
-            <div className="pointer-events-none absolute -top-20 -right-10 w-56 h-56 rounded-full bg-neon-500/20 blur-3xl" />
-
-            <div className="flex items-center justify-between mb-4 relative">
-              <div>
-                <p className="text-xs text-white/60 mb-1">Vue marché</p>
-                <p className="text-sm font-medium">Résidentiel collectif · DPE E–G</p>
-              </div>
-              <span className="px-2 py-1 rounded-full text-[10px] font-medium bg-emerald-500/20 text-emerald-300 border border-emerald-400/40">
-                Score de match 92%
-              </span>
-            </div>
-
-            <div className="grid grid-cols-2 gap-3 text-xs mb-4">
-              <div className="bg-white/5 rounded-2xl p-3 border border-white/10">
-                <p className="text-white/60 mb-1">Bâtiments ciblés</p>
-                <p className="text-lg font-semibold">2 500</p>
-                <p className="text-[11px] text-white/60">priorisés par probabilité de signature</p>
-              </div>
-              <div className="bg-white/5 rounded-2xl p-3 border border-white/10">
-                <p className="text-white/60 mb-1">Décideurs identifiés</p>
-                <p className="text-lg font-semibold">1 500</p>
-                <p className="text-[11px] text-white/60">DG, syndics, gestionnaires d&apos;actifs</p>
-              </div>
-            </div>
-
-            <div className="grid gap-2 text-[11px]">
-              <div className="flex items-center justify-between bg-white/5 rounded-xl px-3 py-2 border border-white/10">
-                <div>
-                  <p className="font-medium">Paris · 7 200 m²</p>
-                  <p className="text-white/60">DPE F · Chauffage gaz collectif</p>
-                </div>
-                <p className="text-emerald-300 font-semibold">+58% match</p>
-              </div>
-              <div className="flex items-center justify-between bg-white/5 rounded-xl px-3 py-2 border border-white/10">
-                <div>
-                  <p className="font-medium">Lyon · 3 800 m²</p>
-                  <p className="text-white/60">DPE G · Toiture non isolée</p>
-                </div>
-                <p className="text-emerald-300 font-semibold">+64% match</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function HowItWorksSection() {
-  const steps = [
-    {
-      title: '1 · Calibrez votre marché',
-      desc: 'Type de bâtiment, DPE, énergie, surface, code NAF, zones. Pisteur crée un modèle exact de votre ICP.',
-    },
-    {
-      title: '2 · Le signal bâtiment tourne en continu',
-      desc: 'Notre moteur scanne le parc et met à jour votre cible en temps réel dès qu&apos;un bâtiment devient éligible.',
-    },
-    {
-      title: '3 · Vous contactez avec un email déjà prêt',
-      desc: 'Pisteur génère un message personnalisé qui cite le bâtiment, le contexte énergétique et le décideur par son prénom.',
-    },
-  ];
-
-  return (
-    <section className="section">
-      <div className="section-inner">
-        <div className="flex items-center justify-between gap-4 mb-8">
-          <div>
-            <p className="text-xs font-semibold tracking-[0.2em] text-white/50 uppercase mb-2">
-              Comment ça marche
-            </p>
-            <h2 className="text-2xl sm:text-3xl font-semibold">
-              De la donnée brute à un rendez-vous dans votre agenda.
-            </h2>
-          </div>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-6">
-          {steps.map((step) => (
-            <div
-              key={step.title}
-              className="glass-card p-5 flex flex-col gap-3 hover:shadow-glow hover:-translate-y-1 transition-transform duration-200"
-            >
-              <h3 className="text-sm font-semibold">{step.title}</h3>
-              <p className="text-sm text-white/70">{step.desc}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function AICopilotSection() {
-  const cards = [
-    {
-      title: 'Priorisation automatique',
-      desc: 'Un score % Match par bâtiment qui tient compte du DPE, de la surface, de l&apos;énergie, du type de propriétaire et de l&apos;historique.',
-    },
-    {
-      title: 'Emails générés en 1 clic',
-      desc: 'Des messages personnalisés qui citent le bâtiment, la situation énergétique et la raison précise du contact.',
-    },
-    {
-      title: 'Vue “pipeline” temps réel',
-      desc: 'Visualisez combien de bâtiments sont à sourcer, à appeler, en relance ou gagnés, directement depuis Pisteur.',
-    },
-  ];
-
-  return (
-    <section className="section">
-      <div className="section-inner grid md:grid-cols-[1.2fr,1fr] gap-8 items-start">
-        <div>
-          <p className="text-xs font-semibold tracking-[0.2em] text-white/50 uppercase mb-2">
-            Copilote IA
-          </p>
-          <h2 className="text-2xl sm:text-3xl font-semibold mb-3">
-            Un copilote pour vos équipes commerciales, pas un énième fichier Excel.
-          </h2>
-          <p className="text-sm text-white/70 max-w-xl">
-            Pisteur ne se contente pas de sortir des listes. Il met en musique votre
-            prospection, de l&apos;identification du bâtiment à la relance du décideur, en
-            passant par la rédaction des emails.
-          </p>
-        </div>
-
-        <div className="grid sm:grid-cols-3 md:grid-cols-1 gap-3 text-sm">
-          {cards.map((card) => (
-            <div key={card.title} className="glass-card p-4 bg-white/5">
-              <p className="font-semibold mb-1 text-sm">{card.title}</p>
-              <p className="text-xs text-white/70">{card.desc}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function SignalSection() {
-  const filters = [
-    {
-      title: 'Énergie & performance',
-      items: ['DPE E', 'DPE F', 'DPE G', 'Gaz collectif', 'Fioul', 'Électrique'],
-    },
-    {
-      title: 'Type de bâtiment',
-      items: ['Résidentiel collectif', 'Tertiaire', 'Industriel'],
-    },
-    {
-      title: 'Technique',
-      items: ['Isolation manquante', 'Chaudière fioul', 'VMC simple flux', 'Sans PAC'],
-    },
-  ];
-
-  return (
-    <section className="section">
-      <div className="section-inner">
-        <h2 className="text-2xl sm:text-3xl font-semibold mb-4">
-          Ciblez au millimètre avec le signal bâtiment.
-        </h2>
-        <p className="text-white/70 max-w-2xl mb-8">
-          Plus de 100 signaux bâtiment pour transformer l&apos;intuition en ciblage
-          scientifique. Vous choisissez vos critères, Pisteur trouve les bâtiments qui
-          matchent vraiment.
-        </p>
-
-        <div className="grid md:grid-cols-[2fr,1fr] gap-6 items-start">
-          <div className="grid md:grid-cols-3 gap-4">
-            {filters.map((block) => (
-              <div key={block.title} className="glass-card p-4">
-                <p className="text-xs font-semibold text-white/80 mb-2">
-                  {block.title}
-                </p>
-                <div className="flex flex-wrap gap-1.5 text-[11px] text-white/80">
-                  {block.items.map((item) => (
-                    <span
-                      key={item}
-                      className="px-2 py-1 rounded-full bg-navy-900/70 border border-white/10"
-                    >
-                      {item}
-                    </span>
-                  ))}
-                </div>
+          <div className="flex flex-wrap gap-8 pt-2">
+            {[
+              { val: '73', label: 'leads générés aujourd\'hui' },
+              { val: '100+', label: 'clients actifs' },
+              { val: '1,2M+', label: 'bâtiments analysés' },
+            ].map(({ val, label }) => (
+              <div key={label}>
+                <p className="text-white font-semibold text-xl">{val}</p>
+                <p className="text-xs text-white/60">{label}</p>
               </div>
             ))}
           </div>
+        </div>
 
-          <div className="glass-card p-4 text-xs text-white/75">
-            <p className="text-sm font-medium text-white mb-2">
-              Vue d&apos;ensemble de votre marché
-            </p>
-            <div className="flex flex-col gap-2 mb-3">
-              <div className="flex items-baseline justify-between">
-                <span>Bâtiments correspondants</span>
-                <span className="text-lg font-semibold">2 500</span>
+        <div className="bg-white/5 border border-white/10 rounded-3xl p-5 space-y-4">
+          <p className="text-sm font-medium text-white/80">Votre cible en quelques filtres</p>
+          <div className="grid grid-cols-2 gap-3 text-xs">
+            {[
+              { label: 'Type de bâtiment', val: 'Résidentiel collectif' },
+              { label: 'Code NAF', val: '68.32A' },
+              { label: 'DPE', val: 'E / F / G' },
+              { label: 'Surface', val: '> 2 000 m²' },
+            ].map(({ label, val }) => (
+              <div key={label} className="bg-navy-900/60 rounded-2xl p-3 border border-white/5">
+                <p className="text-white/60 mb-1">{label}</p>
+                <p className="font-semibold">{val}</p>
               </div>
-              <div className="flex items-baseline justify-between">
-                <span>Contacts identifiés</span>
-                <span className="text-lg font-semibold">1 500</span>
-              </div>
-            </div>
-            <p>
-              Résultats triés par pertinence avec un score % Match et un classement
-              automatique des meilleures opportunités.
-            </p>
+            ))}
           </div>
+          <p className="text-xs text-white/50 pt-1">
+            Pisteur croise plus de 100 signaux pour ne livrer que les bâtiments
+            où vous avez une vraie chance de signer.
+          </p>
         </div>
       </div>
     </section>
   );
 }
 
-function ImpactSection() {
-  const impacts = [
+// ─── Comment ça marche ───────────────────────────────────────────────────────
+function HowItWorksSection() {
+  const { ref, visible } = useFadeInOnScroll();
+
+  const steps = [
     {
-      metric: '+40%',
-      label: 'de conversion en rendez-vous',
-      detail:
-        'Chaque appel est contextualisé avec le DPE, la surface et le gestionnaire identifié.',
+      n: '1',
+      title: 'Configurez votre marché',
+      desc: 'Type de bâtiment, DPE, énergie, surface, géographie, code NAF… en moins de 5 minutes.',
     },
     {
-      metric: '2/3',
-      label: 'des RDV inutiles évités',
-      detail:
-        'Vous ciblez uniquement les bâtiments où votre expertise crée vraiment de la valeur.',
+      n: '2',
+      title: 'Recevez vos leads chaque matin',
+      desc: 'Une liste de bâtiments priorisés avec décideur nominatif, coordonnées et potentiel chiffré.',
     },
     {
-      metric: '+60%',
-      label: 'de CA sur les bâtiments identifiés',
-      detail:
-        'Vous visualisez votre marché adressable au lieu de rester sur un périmètre intuitif.',
+      n: '3',
+      title: 'Contactez avec un email personnalisé',
+      desc: 'Un email généré automatiquement qui cite le bâtiment exact et son contexte énergétique.',
     },
   ];
 
   return (
-    <section className="section">
+    <section
+      ref={ref}
+      className={`section transition-all duration-700 ease-out ${
+        visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+      }`}
+    >
       <div className="section-inner">
-        <h2 className="text-2xl sm:text-3xl font-semibold mb-4">
-          Un impact direct sur vos chiffres.
-        </h2>
-        <p className="text-white/70 max-w-2xl mb-8">
-          Les équipes commerciales qui utilisent Pisteur mesurent plus de rendez-vous
-          utiles, moins de temps perdu et une meilleure visibilité sur leur marché.
+        <p className="text-xs font-semibold tracking-[0.2em] text-white/40 uppercase mb-2">
+          Fonctionnement
+        </p>
+        <h2 className="text-2xl sm:text-3xl font-semibold mb-4">Comment ça marche</h2>
+        <p className="text-white/70 max-w-2xl mb-10">
+          Pisteur fait le travail de ciblage à votre place et transforme des données
+          bâtiment brutes en actions commerciales prêtes à l&apos;emploi.
         </p>
 
         <div className="grid md:grid-cols-3 gap-6">
-          {impacts.map((item) => (
-            <div key={item.label} className="glass-card p-5 flex flex-col gap-2">
-              <p className="text-3xl font-semibold text-accent-500">{item.metric}</p>
-              <p className="text-sm font-medium">{item.label}</p>
-              <p className="text-xs text-white/70">{item.detail}</p>
+          {steps.map((s) => (
+            <div key={s.n} className="bg-white/5 border border-white/10 rounded-2xl p-5 flex flex-col gap-3">
+              <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-sm font-semibold">
+                {s.n}
+              </div>
+              <h3 className="font-medium">{s.title}</h3>
+              <p className="text-sm text-white/70">{s.desc}</p>
             </div>
           ))}
         </div>
@@ -331,113 +131,52 @@ function ImpactSection() {
   );
 }
 
-function CreditsSection() {
+// ─── Market Signals Timeline ─────────────────────────────────────────────────
+function MarketSignalsTimelineSection() {
+  const { ref, visible } = useFadeInOnScroll();
+
+  const signals = [
+    { time: 'J-0', label: 'Dépôt de permis de construire détecté', color: 'bg-blue-400' },
+    { time: 'J+2', label: 'DPE classé F/G identifié sur le bâtiment', color: 'bg-orange-400' },
+    { time: 'J+3', label: 'Gestionnaire contactable trouvé (nom + email)', color: 'bg-emerald-400' },
+    { time: 'J+5', label: 'Lead livré dans votre tableau de bord', color: 'bg-white' },
+  ];
+
   return (
-    <section className="section">
-      <div className="section-inner grid md:grid-cols-2 gap-8 items-start">
+    <section
+      ref={ref}
+      className={`section transition-all duration-700 ease-out ${
+        visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+      }`}
+    >
+      <div className="section-inner grid lg:grid-cols-2 gap-12 items-center">
         <div>
+          <p className="text-xs font-semibold tracking-[0.2em] text-white/40 uppercase mb-2">
+            Signal bâtiment
+          </p>
           <h2 className="text-2xl sm:text-3xl font-semibold mb-4">
-            Un système de crédits simple, sans mauvaise surprise.
+            De la donnée brute à l&apos;opportunité en 5 jours.
           </h2>
-          <p className="text-white/70 mb-4">
-            Vous consommez des crédits uniquement quand une information est trouvée.
-            Aucun crédit n&apos;est débité si l&apos;email ou le numéro de téléphone est
-            introuvable.
-          </p>
-          <p className="text-white/70 text-sm">
-            Les crédits se renouvellent chaque mois et vous gardez une visibilité
-            claire sur votre consommation grâce à un tableau de bord dédié.
+          <p className="text-white/70 max-w-xl">
+            Pisteur agrège en temps réel les signaux publics (permis, DPE, mutation,
+            copropriété) et les croise avec la base décideur pour créer un lead
+            actionnable avant vos concurrents.
           </p>
         </div>
 
-        <div className="space-y-3 text-sm">
-          <div className="glass-card p-4">
-            <p className="text-xs uppercase tracking-wide text-white/50 mb-1">
-              1 crédit
-            </p>
-            <p className="font-semibold mb-1">1 lead qualifié</p>
-            <p className="text-white/70 text-xs">
-              Association bâtiment × entreprise gestionnaire avec score % Match,
-              potentiel chantier estimé et données énergétiques complètes.
-            </p>
-          </div>
-
-          <div className="glass-card p-4">
-            <p className="text-xs uppercase tracking-wide text-white/50 mb-1">
-              1 crédit
-            </p>
-            <p className="font-semibold mb-1">1 adresse email nominative</p>
-            <p className="text-white/70 text-xs">
-              Email professionnel du décideur ciblé (DG, PDG, syndic…). 0 crédit
-              débité si l&apos;email n&apos;est pas trouvé.
-            </p>
-          </div>
-
-          <div className="glass-card p-4">
-            <p className="text-xs uppercase tracking-wide text-white/50 mb-1">
-              10 crédits
-            </p>
-            <p className="font-semibold mb-1">1 numéro de téléphone portable</p>
-            <p className="text-white/70 text-xs">
-              Numéro direct du contact nominatif. 0 crédit consommé si le numéro est
-              indisponible dans les bases.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function DataStackSection() {
-  const blocks = [
-    {
-      title: 'Données bâtiment',
-      items: [
-        'BDNB — Base de Données Nationale des Bâtiments',
-        'Cadastre — Plan parcellaire national',
-        'Etalab — Open data gouvernemental',
-        'ENEDIS & GRDF — consommations énergie',
-      ],
-    },
-    {
-      title: 'Données entreprise',
-      items: [
-        'SIRENE / SIRET — registre national des entreprises',
-        'RNIC & MAJIC — implantations et informations cadastrales',
-        'Pappers — données juridiques et dirigeants',
-      ],
-    },
-    {
-      title: 'Données contact',
-      items: [
-        'Societeinfo — identification des contacts nominatifs',
-        'FullEnrich & Hunter.io — enrichissement email & téléphone',
-        'Base propriétaire Pisteur — unification des IDs bâtiment',
-      ],
-    },
-  ];
-
-  return (
-    <section className="section">
-      <div className="section-inner">
-        <h2 className="text-2xl sm:text-3xl font-semibold mb-4">
-          Une infrastructure de données construite sur les meilleures sources.
-        </h2>
-        <p className="text-white/70 max-w-2xl mb-8">
-          Pisteur agrège, normalise et enrichit des dizaines de sources officielles
-          et privées pour construire une vision fiable du parc immobilier français.
-        </p>
-
-        <div className="grid md:grid-cols-3 gap-6">
-          {blocks.map((block) => (
-            <div key={block.title} className="glass-card p-5 text-sm flex flex-col gap-2">
-              <p className="font-semibold mb-1">{block.title}</p>
-              <ul className="list-disc list-inside text-white/70 text-xs space-y-1">
-                {block.items.map((item) => (
-                  <li key={item}>{item}</li>
-                ))}
-              </ul>
+        <div className="space-y-4">
+          {signals.map((s, i) => (
+            <div key={i} className="flex items-start gap-4">
+              <div className="flex flex-col items-center">
+                <div className={`w-3 h-3 rounded-full mt-1 ${s.color}`} />
+                {i < signals.length - 1 && (
+                  <div className="w-px flex-1 bg-white/10 mt-1 min-h-[2rem]" />
+                )}
+              </div>
+              <div className="bg-white/5 border border-white/10 rounded-xl p-3 flex-1">
+                <p className="text-xs text-white/50 mb-0.5">{s.time}</p>
+                <p className="text-sm font-medium">{s.label}</p>
+              </div>
             </div>
           ))}
         </div>
@@ -446,40 +185,384 @@ function DataStackSection() {
   );
 }
 
+// ─── Email Examples ──────────────────────────────────────────────────────────
+function EmailExamplesSection() {
+  const { ref, visible } = useFadeInOnScroll();
+
+  return (
+    <section
+      ref={ref}
+      className={`section transition-all duration-700 ease-out ${
+        visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+      }`}
+    >
+      <div className="section-inner grid lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <p className="text-xs font-semibold tracking-[0.2em] text-white/40 uppercase mb-2">
+            Email automatisé
+          </p>
+          <h2 className="text-2xl sm:text-3xl font-semibold mb-4">
+            Un email personnalisé généré pour chaque bâtiment.
+          </h2>
+          <p className="text-white/70 max-w-xl mb-4">
+            Pisteur rédige automatiquement un email commercial qui cite le bâtiment
+            par son adresse, son DPE et son potentiel estimé. Vous envoyez en un clic,
+            sans rien réécrire.
+          </p>
+          <ul className="space-y-2 text-sm text-white/70">
+            <li className="flex items-center gap-2">
+              <span className="text-emerald-400">✓</span> Nom du décideur intégré
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="text-emerald-400">✓</span> Contexte DPE et surface cités
+            </li>
+            <li className="flex items-center gap-2">
+              <span className="text-emerald-400">✓</span> Ton ajustable (formel / direct)
+            </li>
+          </ul>
+        </div>
+
+        <div className="bg-white/5 border border-white/10 rounded-2xl p-5 text-sm space-y-3 font-mono text-white/80">
+          <p className="text-white/40 text-xs">Aperçu email généré</p>
+          <p>
+            <span className="text-white/50">À :</span> m.dupont@syndic-paris.fr
+          </p>
+          <p>
+            <span className="text-white/50">Objet :</span> Rénovation énergétique — 12 rue
+            des Acacias, Paris 14e (DPE F)
+          </p>
+          <hr className="border-white/10" />
+          <p>Bonjour M. Dupont,</p>
+          <p>
+            Je me permets de vous contacter au sujet du bâtiment situé au{' '}
+            <span className="text-emerald-300">12 rue des Acacias (75014)</span>, classé{' '}
+            <span className="text-orange-300">DPE F</span>, dont vous êtes le gestionnaire.
+          </p>
+          <p>
+            Avec une surface de <span className="text-blue-300">3 200 m²</span>, ce
+            bâtiment représente un potentiel estimé de{' '}
+            <span className="text-emerald-300">180 000 €</span> de travaux de rénovation.
+          </p>
+          <p className="text-white/50 text-xs pt-2">…</p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Comparison ──────────────────────────────────────────────────────────────
+function ComparisonSection() {
+  const { ref, visible } = useFadeInOnScroll();
+
+  const rows = [
+    { feature: 'Leads qualifiés chaque matin', pisteur: true, manual: false },
+    { feature: 'Décideur nominatif identifié', pisteur: true, manual: false },
+    { feature: 'DPE et surface croisés', pisteur: true, manual: false },
+    { feature: 'Email personnalisé généré', pisteur: true, manual: false },
+    { feature: 'Temps de setup', pisteur: '5 min', manual: '2 semaines' },
+    { feature: 'Coût par lead', pisteur: '< 3 €', manual: '> 50 €' },
+  ];
+
+  return (
+    <section
+      ref={ref}
+      className={`section transition-all duration-700 ease-out ${
+        visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+      }`}
+    >
+      <div className="section-inner">
+        <p className="text-xs font-semibold tracking-[0.2em] text-white/40 uppercase mb-2">
+          Comparaison
+        </p>
+        <h2 className="text-2xl sm:text-3xl font-semibold mb-10">
+          Pisteur vs. prospection manuelle
+        </h2>
+
+        <div className="overflow-x-auto rounded-2xl border border-white/10">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-white/10">
+                <th className="text-left px-5 py-3 text-white/50 font-medium">Critère</th>
+                <th className="px-5 py-3 text-emerald-400 font-semibold">Pisteur</th>
+                <th className="px-5 py-3 text-white/40 font-medium">Manuel</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((r, i) => (
+                <tr
+                  key={r.feature}
+                  className={`border-b border-white/5 ${i % 2 === 0 ? 'bg-white/[0.02]' : ''}`}
+                >
+                  <td className="px-5 py-3 text-white/80">{r.feature}</td>
+                  <td className="px-5 py-3 text-center">
+                    {typeof r.pisteur === 'boolean' ? (
+                      r.pisteur ? (
+                        <span className="text-emerald-400 font-bold">✓</span>
+                      ) : (
+                        <span className="text-red-400">✗</span>
+                      )
+                    ) : (
+                      <span className="text-emerald-300 font-medium">{r.pisteur}</span>
+                    )}
+                  </td>
+                  <td className="px-5 py-3 text-center">
+                    {typeof r.manual === 'boolean' ? (
+                      r.manual ? (
+                        <span className="text-emerald-400 font-bold">✓</span>
+                      ) : (
+                        <span className="text-red-400">✗</span>
+                      )
+                    ) : (
+                      <span className="text-white/50">{r.manual}</span>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Advanced Intention Signals ──────────────────────────────────────────────
+function AdvancedIntentionSignalsSection() {
+  const { ref, visible } = useFadeInOnScroll();
+
+  const signals = [
+    { icon: '🏗️', title: 'Permis de construire', desc: 'Dépôts et modifications en temps réel sur toute la France.' },
+    { icon: '⚡', title: 'DPE F & G', desc: 'Bâtiments à rénover obligatoirement d\'ici 2028 selon la loi Climat.' },
+    { icon: '🏢', title: 'Mutation de propriété', desc: 'Nouveau propriétaire = nouvelle opportunité de contact à chaud.' },
+    { icon: '📋', title: 'Copropriétés en déficit', desc: 'AG prévues, fonds travaux insuffisants, syndic en recherche de devis.' },
+    { icon: '📍', title: 'Zones prioritaires', desc: 'QPV, OPAH, dispositifs MaPrimeRénov\' actifs dans votre secteur.' },
+    { icon: '👤', title: 'Décideur nominatif', desc: 'Nom, email, téléphone du gestionnaire ou du syndic responsable.' },
+  ];
+
+  return (
+    <section
+      ref={ref}
+      className={`section transition-all duration-700 ease-out ${
+        visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+      }`}
+    >
+      <div className="section-inner">
+        <p className="text-xs font-semibold tracking-[0.2em] text-white/40 uppercase mb-2">
+          Sources de données
+        </p>
+        <h2 className="text-2xl sm:text-3xl font-semibold mb-4">
+          100+ signaux d&apos;intention croisés en temps réel.
+        </h2>
+        <p className="text-white/70 max-w-2xl mb-10">
+          Pisteur agrège des sources publiques et propriétaires pour créer un score
+          de priorité unique sur chaque bâtiment.
+        </p>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {signals.map((s) => (
+            <div
+              key={s.title}
+              className="bg-white/5 border border-white/10 rounded-2xl p-5 flex flex-col gap-2 hover:bg-white/[0.08] transition-colors"
+            >
+              <span className="text-2xl">{s.icon}</span>
+              <h3 className="font-medium text-sm">{s.title}</h3>
+              <p className="text-xs text-white/60">{s.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Integrations ────────────────────────────────────────────────────────────
+function IntegrationsSection() {
+  const { ref, visible } = useFadeInOnScroll();
+
+  const tools = ['HubSpot', 'Salesforce', 'Pipedrive', 'Notion', 'Google Sheets', 'Zapier'];
+
+  return (
+    <section
+      ref={ref}
+      className={`section transition-all duration-700 ease-out ${
+        visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+      }`}
+    >
+      <div className="section-inner text-center max-w-2xl mx-auto">
+        <p className="text-xs font-semibold tracking-[0.2em] text-white/40 uppercase mb-2">
+          Intégrations
+        </p>
+        <h2 className="text-2xl sm:text-3xl font-semibold mb-4">
+          Pisteur s&apos;intègre dans votre workflow.
+        </h2>
+        <p className="text-white/70 mb-10">
+          Exportez vos leads directement vers votre CRM ou outil préféré en quelques
+          clics. Aucun développement requis.
+        </p>
+
+        <div className="flex flex-wrap justify-center gap-3">
+          {tools.map((t) => (
+            <div
+              key={t}
+              className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-sm text-white/80 hover:bg-white/10 transition-colors"
+            >
+              {t}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Analytics Preview ───────────────────────────────────────────────────────
+function AnalyticsPreviewSection() {
+  const { ref, visible } = useFadeInOnScroll();
+
+  const kpis = [
+    { label: 'Leads reçus ce mois', val: '142', delta: '+18%' },
+    { label: 'Taux d\'ouverture emails', val: '34%', delta: '+5pt' },
+    { label: 'RDV générés', val: '27', delta: '+11%' },
+    { label: 'CA pipeline estimé', val: '480k€', delta: '+22%' },
+  ];
+
+  return (
+    <section
+      ref={ref}
+      className={`section transition-all duration-700 ease-out ${
+        visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+      }`}
+    >
+      <div className="section-inner">
+        <p className="text-xs font-semibold tracking-[0.2em] text-white/40 uppercase mb-2">
+          Tableau de bord
+        </p>
+        <h2 className="text-2xl sm:text-3xl font-semibold mb-4">
+          Visualisez l&apos;impact sur votre activité.
+        </h2>
+        <p className="text-white/70 max-w-2xl mb-10">
+          Suivez en temps réel vos leads reçus, vos emails envoyés, vos rendez-vous
+          et votre pipeline commercial directement depuis Pisteur.
+        </p>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {kpis.map((k) => (
+            <div
+              key={k.label}
+              className="bg-white/5 border border-white/10 rounded-2xl p-5"
+            >
+              <p className="text-xs text-white/50 mb-2">{k.label}</p>
+              <p className="text-3xl font-semibold">{k.val}</p>
+              <p className="text-xs text-emerald-400 mt-1">{k.delta} ce mois</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── Early Adopters / Témoignages ────────────────────────────────────────────
+function EarlyAdoptersSection() {
+  const { ref, visible } = useFadeInOnScroll();
+
+  const testimonials = [
+    {
+      name: 'Marc L.',
+      role: 'Directeur commercial — Entreprise de rénovation',
+      quote:
+        'En 3 semaines, on a eu plus de leads qualifiés qu\'en 6 mois de prospection terrain. Le fait d\'avoir le nom du gestionnaire change tout.',
+    },
+    {
+      name: 'Sophie K.',
+      role: 'Responsable développement — Bureau d\'études thermiques',
+      quote:
+        'On cible uniquement les DPE F/G sur notre zone. Les leads arrivent chaque matin, on n\'a plus qu\'à appeler. Le ROI est évident.',
+    },
+    {
+      name: 'Thomas B.',
+      role: 'Gérant — Société de maintenance CVC',
+      quote:
+        'Les emails générés automatiquement avec l\'adresse exacte du bâtiment font vraiment la différence. Les taux d\'ouverture ont doublé.',
+    },
+  ];
+
+  return (
+    <section
+      ref={ref}
+      className={`section transition-all duration-700 ease-out ${
+        visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+      }`}
+    >
+      <div className="section-inner">
+        <p className="text-xs font-semibold tracking-[0.2em] text-white/40 uppercase mb-2">
+          Témoignages
+        </p>
+        <h2 className="text-2xl sm:text-3xl font-semibold mb-10">
+          Ce que disent nos premiers clients.
+        </h2>
+
+        <div className="grid md:grid-cols-3 gap-6">
+          {testimonials.map((t) => (
+            <div
+              key={t.name}
+              className="bg-white/5 border border-white/10 rounded-2xl p-5 flex flex-col gap-4"
+            >
+              <p className="text-sm text-white/80 leading-relaxed">
+                &ldquo;{t.quote}&rdquo;
+              </p>
+              <div className="mt-auto pt-4 border-t border-white/10">
+                <p className="text-sm font-medium">{t.name}</p>
+                <p className="text-xs text-white/50">{t.role}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// ─── CTA Final ───────────────────────────────────────────────────────────────
 function CtaSection() {
   return (
     <section className="section">
-      <div className="section-inner glass-card bg-gradient-to-r from-primary-500/40 via-neon-500/40 to-accent-500/40 border-white/20 p-8 flex flex-col md:flex-row items-center justify-between gap-6">
-        <div>
-          <h2 className="text-2xl font-semibold mb-2">
-            Prêt à voir les bâtiments qui vous correspondent ?
-          </h2>
-          <p className="text-sm text-white/80 max-w-md">
-            Notre équipe configure Pisteur sur votre ICP réel et vous montre les
-            bâtiments disponibles dans votre marché. Réponse sous 24h.
-          </p>
+      <div className="section-inner">
+        <div className="bg-gradient-to-r from-primary-600 to-accent-600 rounded-3xl p-8 sm:p-12 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div>
+            <h2 className="text-2xl sm:text-3xl font-semibold mb-2">
+              Prêt à voir les bâtiments qui vous correspondent ?
+            </h2>
+            <p className="text-sm text-white/80 max-w-md">
+              Configurez Pisteur sur votre ICP réel et recevez une vue claire de votre
+              marché adressable. Essai gratuit, sans carte bancaire.
+            </p>
+          </div>
+          <Link
+            to="/contact"
+            className="shrink-0 inline-flex items-center justify-center px-6 py-3 rounded-xl bg-white text-navy-900 font-medium text-sm hover:bg-gray-100 transition-colors shadow-soft"
+          >
+            Voir Pisteur sur mes cibles
+          </Link>
         </div>
-        <Link
-          to="/contact"
-          className="inline-flex items-center justify-center px-5 py-3 rounded-full bg-white text-navy-900 font-medium text-sm hover:bg-gray-100 transition-colors"
-        >
-          Voir Pisteur sur mes cibles
-        </Link>
       </div>
     </section>
   );
 }
 
+// ─── Export ──────────────────────────────────────────────────────────────────
 export default function Home() {
   return (
     <>
       <HeroSection />
       <HowItWorksSection />
-      <AICopilotSection />
-      <SignalSection />
-      <ImpactSection />
-      <CreditsSection />
-      <DataStackSection />
+      <MarketSignalsTimelineSection />
+      <EmailExamplesSection />
+      <ComparisonSection />
+      <AdvancedIntentionSignalsSection />
+      <IntegrationsSection />
+      <AnalyticsPreviewSection />
+      <EarlyAdoptersSection />
       <CtaSection />
     </>
   );

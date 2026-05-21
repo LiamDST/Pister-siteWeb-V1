@@ -1,55 +1,21 @@
-/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['./index.html', './src/**/*.{js,jsx}'],
   theme: {
     extend: {
       colors: {
-        navy: {
-          50: '#f4f6fb',
-          100: '#e4e8f5',
-          500: '#1d2b53',
-          700: '#111939',
-          900: '#020617',
-        },
-        primary: {
-          500: '#6366f1',
-          600: '#4f46e5',
-        },
-        accent: {
-          500: '#22c55e',
-          600: '#16a34a',
-        },
-        neon: {
-          500: '#22d3ee',
-          600: '#06b6d4',
-        },
+        navy: { 50: '#f4f6fb', 100: '#e4e8f5', 400: '#6b7db3', 500: '#1d2b53', 700: '#111939', 900: '#0b1023' },
+        brand: { 500: '#2563eb', 600: '#1d4ed8' },
+        accent: { 400: '#4ade80', 500: '#22c55e', 600: '#16a34a' },
       },
-      boxShadow: {
-        soft: '0 20px 40px rgba(15, 23, 42, 0.35)',
-        glow: '0 0 80px rgba(56, 189, 248, 0.45)',
-      },
-      borderRadius: {
-        xl2: '1.25rem',
-      },
-      backdropBlur: {
-        xs: '2px',
-      },
-      animation: {
-        slideUp: 'slideUp 0.25s ease-out',
-        'pulse-soft': 'pulseSoft 2.5s ease-in-out infinite',
-        'spin-slow': 'spin 18s linear infinite',
-      },
+      fontFamily: { sans: ['Manrope', 'system-ui', 'sans-serif'] },
+      boxShadow: { soft: '0 20px 40px rgba(15,23,42,0.22)', glow: '0 0 30px rgba(34,197,94,0.15)' },
+      animation: { slideUp: 'slideUp 0.3s ease-out', fadeIn: 'fadeIn 0.4s ease-out', pulse2: 'pulse2 2s ease-in-out infinite' },
       keyframes: {
-        slideUp: {
-          from: { opacity: 0, transform: 'translateY(8px)' },
-          to: { opacity: 1, transform: 'translateY(0)' },
-        },
-        pulseSoft: {
-          '0%, 100%': { opacity: 0.5, transform: 'scale(1)' },
-          '50%': { opacity: 1, transform: 'scale(1.04)' },
-        },
+        slideUp: { from: { opacity: 0, transform: 'translateY(10px)' }, to: { opacity: 1, transform: 'translateY(0)' } },
+        fadeIn: { from: { opacity: 0 }, to: { opacity: 1 } },
+        pulse2: { '0%,100%': { opacity: 1 }, '50%': { opacity: 0.5 } },
       },
     },
   },
   plugins: [],
-};
+}
