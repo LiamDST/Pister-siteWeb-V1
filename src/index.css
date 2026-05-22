@@ -185,7 +185,7 @@ html[data-theme='light'] .bg-grid-pattern {
 
 /* Radar: rotor + center pulse */
 .radar-rotor path { mix-blend-mode: screen; }
-.radar-rotor { transform-box: fill-box; transform-origin: 50% 50%; animation: sweep 3s linear infinite; }
+.radar-rotor { transform-box: fill-box; transform-origin: 50% 50%; animation: sweep 8s linear infinite; }
 .radar-center-outer { transform-origin: 50% 50%; animation: centerPulse 1.6s ease-out infinite; }
 .radar-center-inner { transform-origin: 50% 50%; }
 
@@ -238,10 +238,11 @@ html[data-theme='light'] .bg-grid-pattern {
 .partner-marquee-track {
   display: flex;
   align-items: center;
-  width: max-content;
-  gap: 2.75rem;
-  padding-inline: 1.5rem;
-  animation: marqueeLeft 28s linear infinite;
+  justify-content: space-between;
+  min-width: 100%;
+  gap: clamp(1.5rem, 5vw, 4rem);
+  padding-inline: clamp(1rem, 4vw, 3rem);
+  animation: marqueeLeft 45s linear infinite;
 }
 
 .partner-chip {
@@ -293,8 +294,8 @@ html[data-theme='light'] .partner-logo-image {
   }
 
   .partner-marquee-track {
-    gap: 1.5rem;
-    animation-duration: 20s;
+    gap: 1.25rem;
+    animation-duration: 35s;
   }
 
   .partner-chip {

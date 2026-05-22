@@ -117,19 +117,33 @@ function HeroSection() {
         </div>
       </div>
 
-      <div className="section-inner relative mt-8 md:mt-12 flex justify-center">
-        <div className="w-full max-w-4xl card-glass overflow-hidden border-white/10 shadow-2xl shadow-black/20">
-          <div className="aspect-video bg-navy-950/80">
-            <iframe
-              src={demoVideoUrl}
-              title="Démo de l'utilisation de Pisteur"
-              className="h-full w-full"
-              loading="lazy"
-              allow="autoplay; fullscreen; picture-in-picture"
-              allowFullScreen
-            />
+      {/* Bloc vidéo de démonstration */}
+      <div className="section-inner relative mt-10 md:mt-14">
+        <FadeSection>
+          <div className="text-center mb-5 md:mb-6">
+            <p className="text-emerald-400 text-[11px] sm:text-xs font-semibold uppercase tracking-[0.28em] mb-2">
+              Démonstration produit
+            </p>
+            <h2 className="text-xl sm:text-2xl font-semibold text-white/90 max-w-2xl mx-auto">
+              En 2 minutes, voyez comment Pisteur trouve vos bâtiments cibles
+            </h2>
           </div>
-        </div>
+        </FadeSection>
+
+        <FadeSection delay={80}>
+          <div className="w-full max-w-4xl mx-auto card-glass overflow-hidden border-white/10 shadow-2xl shadow-black/20">
+            <div className="aspect-video bg-navy-950/80">
+              <iframe
+                src={demoVideoUrl}
+                title="Démo de l'utilisation de Pisteur"
+                className="h-full w-full"
+                loading="lazy"
+                allow="autoplay; fullscreen; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          </div>
+        </FadeSection>
       </div>
 
       <div className="relative mt-14 md:mt-20">
