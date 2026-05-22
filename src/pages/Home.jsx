@@ -5,6 +5,8 @@ import {
   CheckCircle2, Star
 } from 'lucide-react';
 
+const demoVideoUrl = 'https://demo.arcade.software/NadC049RYMZAgOJ6mjFM?embed&embed_mobile=inline&embed_desktop=inline&show_copy_link=false';
+
 /* ── Helper ─────────────────────────────────────────── */
 function FadeSection({ children, delay = 0, className = '' }) {
   const { ref, visible } = useFadeInOnScroll();
@@ -91,6 +93,21 @@ function HeroSection() {
           <Link to="/simulation" className="btn-accent w-full text-center text-xs">
             Simuler mon marché
           </Link>
+        </div>
+      </div>
+
+      <div className="section-inner relative mt-8 md:mt-12 flex justify-center">
+        <div className="w-full max-w-4xl card-glass overflow-hidden border-white/10 shadow-2xl shadow-black/20">
+          <div className="aspect-video bg-navy-950/80">
+            <iframe
+              src={demoVideoUrl}
+              title="Démo de l'utilisation de Pisteur"
+              className="h-full w-full"
+              loading="lazy"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowFullScreen
+            />
+          </div>
         </div>
       </div>
     </section>

@@ -12,6 +12,92 @@ import Demo from './pages/Demo';
 import Simulation from './pages/Simulation';
 import Blog from './pages/Blog';
 
+const seoByPath = {
+  '/': {
+    title: 'Pisteur — Prospection bâtiment intelligente',
+    description: 'Pisteur identifie les bâtiments à fort potentiel, qualifie les leads et automatise la prospection pour les professionnels du bâtiment.',
+    keywords: 'prospection bâtiment, leads bâtiment, DPE, CRM, email IA, qualification de prospects',
+  },
+  '/demo': {
+    title: 'Démo Pisteur — voir l’outil en action',
+    description: 'Découvrez la démo Pisteur pour voir comment identifier des leads bâtiment, qualifier les cibles et gagner du temps sur la prospection.',
+    keywords: 'démo Pisteur, démonstration prospection bâtiment, leads qualifiés, outil bâtiment',
+  },
+  '/simulation': {
+    title: 'Simulation de marché — Pisteur',
+    description: 'Simulez votre marché bâtiment, estimez votre potentiel de leads et obtenez une projection rapide adaptée à votre zone.',
+    keywords: 'simulation marché bâtiment, estimation leads, prospection géographique, ICP bâtiment',
+  },
+  '/tarifs': {
+    title: 'Tarifs Pisteur — crédits et abonnements',
+    description: 'Consultez les abonnements Pisteur et comprenez le fonctionnement des crédits pour les leads, emails et téléphones.',
+    keywords: 'tarifs Pisteur, crédits prospection, abonnement leads bâtiment, prix logiciel bâtiment',
+  },
+  '/blog': {
+    title: 'Blog Pisteur — guides et insights bâtiment',
+    description: 'Lisez nos guides sur la prospection bâtiment, les tendances DPE et les bonnes pratiques pour générer plus de leads qualifiés.',
+    keywords: 'blog prospection bâtiment, DPE 2025, leads qualifiés, conseils commerciaux',
+  },
+  '/faq': {
+    title: 'FAQ Pisteur — questions fréquentes',
+    description: 'Retrouvez les réponses aux questions fréquentes sur Pisteur, les crédits, les données et l’utilisation de la plateforme.',
+    keywords: 'FAQ Pisteur, questions fréquentes, crédits, données bâtiment',
+  },
+  '/contact': {
+    title: 'Contact Pisteur — demandez une démo',
+    description: 'Contactez l’équipe Pisteur pour poser vos questions, demander une démo personnalisée ou lancer un essai.',
+    keywords: 'contact Pisteur, démo personnalisée, essai gratuit, prospection bâtiment',
+  },
+};
+
+function SeoManager() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    const seo = seoByPath[pathname] ?? seoByPath['/'];
+    const canonicalUrl = `${window.location.origin}${pathname}`;
+
+    document.title = seo.title;
+
+    const upsertMeta = (selector, attributes) => {
+      let element = document.head.querySelector(selector);
+      if (!element) {
+        element = document.createElement('meta');
+        Object.entries(attributes).forEach(([key, value]) => element.setAttribute(key, value));
+        document.head.appendChild(element);
+        return;
+      }
+
+      Object.entries(attributes).forEach(([key, value]) => element.setAttribute(key, value));
+    };
+
+    const upsertLink = (selector, attributes) => {
+      let element = document.head.querySelector(selector);
+      if (!element) {
+        element = document.createElement('link');
+        Object.entries(attributes).forEach(([key, value]) => element.setAttribute(key, value));
+        document.head.appendChild(element);
+        return;
+      }
+
+      Object.entries(attributes).forEach(([key, value]) => element.setAttribute(key, value));
+    };
+
+    upsertMeta('meta[name="description"]', { name: 'description', content: seo.description });
+    upsertMeta('meta[name="keywords"]', { name: 'keywords', content: seo.keywords });
+    upsertMeta('meta[property="og:title"]', { property: 'og:title', content: seo.title });
+    upsertMeta('meta[property="og:description"]', { property: 'og:description', content: seo.description });
+    upsertMeta('meta[property="og:type"]', { property: 'og:type', content: 'website' });
+    upsertMeta('meta[property="og:url"]', { property: 'og:url', content: canonicalUrl });
+    upsertMeta('meta[name="twitter:card"]', { name: 'twitter:card', content: 'summary_large_image' });
+    upsertMeta('meta[name="twitter:title"]', { name: 'twitter:title', content: seo.title });
+    upsertMeta('meta[name="twitter:description"]', { name: 'twitter:description', content: seo.description });
+    upsertLink('link[rel="canonical"]', { rel: 'canonical', href: canonicalUrl });
+  }, [pathname]);
+
+  return null;
+}
+
 // ─── Scroll restauration ─────────────────────────────────
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -82,10 +168,26 @@ function ContactWidget() {
 
 // ─── App ─────────────────────────────────────────────────
 export default function App() {
+  const [theme, setTheme] = useState(() => {
+    if (typeof window === 'undefined') return 'dark';
+
+    const storedTheme = window.localStorage.getItem('theme');
+    if (storedTheme === 'light' || storedTheme === 'dark') return storedTheme;
+
+    return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  });
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.style.colorScheme = theme;
+    window.localStorage.setItem('theme', theme);
+  }, [theme]);
+
   return (
-    <div className="min-h-screen flex flex-col bg-navy-950 text-white">
+    <div className="min-h-screen flex flex-col">
+      <SeoManager />
       <ScrollToTop />
-      <Header />
+      <Header theme={theme} onToggleTheme={() => setTheme(current => (current === 'dark' ? 'light' : 'dark'))} />
       <main className="flex-1">
         <Routes>
           <Route path="/" element={<Home />} />
