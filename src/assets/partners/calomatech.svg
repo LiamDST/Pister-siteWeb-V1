@@ -1,0 +1,7 @@
+<svg width="300" height="96" viewBox="0 0 300 96" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Calomatech">
+  <rect width="300" height="96" fill="none"/>
+  <circle cx="42" cy="36" r="18" fill="none" stroke="#9aa3b2" stroke-width="8"/>
+  <circle cx="42" cy="36" r="10" fill="none" stroke="#f6b21a" stroke-width="6" stroke-dasharray="44 16" transform="rotate(-35 42 36)"/>
+  <text x="8" y="82" font-family="Arial, sans-serif" font-size="58" font-weight="500" fill="#9aa3b2">Caloma</text>
+  <text x="176" y="82" font-family="Arial, sans-serif" font-size="58" font-weight="500" fill="#f6b21a">tech</text>
+</svg>

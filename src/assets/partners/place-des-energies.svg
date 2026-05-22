@@ -1,0 +1,7 @@
+<svg width="360" height="96" viewBox="0 0 360 96" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Place des Energies">
+  <rect width="360" height="96" fill="none"/>
+  <rect x="16" y="18" width="58" height="58" rx="14" fill="#1ca8cf"/>
+  <rect x="28" y="30" width="34" height="34" rx="8" fill="#ffffff" transform="rotate(-4 45 47)"/>
+  <text x="92" y="48" font-family="Arial, sans-serif" font-size="22" font-weight="500" fill="#666b71">Place des</text>
+  <text x="92" y="76" font-family="Arial, sans-serif" font-size="32" font-weight="700" fill="#666b71">Energies</text>
+</svg>

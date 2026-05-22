@@ -4,8 +4,27 @@ import {
   MapPin, Zap, Mail, BarChart3, Building2, ChevronRight,
   CheckCircle2, Star
 } from 'lucide-react';
+import logoMonCourtierEnergie from '../assets/partners/mon-courtier-energie.svg';
+import logoPlaceDesEnergies from '../assets/partners/place-des-energies.svg';
+import logoMieuxRenover from '../assets/partners/mieux-renover.svg';
+import logoFnaim from '../assets/partners/fnaim.svg';
+import logoEmera from '../assets/partners/emera.svg';
+import logoCalomatech from '../assets/partners/calomatech.svg';
+import logoCbre from '../assets/partners/cbre.svg';
+import logoFoncia from '../assets/partners/foncia.svg';
 
 const demoVideoUrl = 'https://demo.arcade.software/NadC049RYMZAgOJ6mjFM?embed&embed_mobile=inline&embed_desktop=inline&show_copy_link=false';
+
+const partnerLogos = [
+  { name: 'Mon courtier energie', image: logoMonCourtierEnergie },
+  { name: 'Place des Energies', image: logoPlaceDesEnergies },
+  { name: 'Mieux Renover', image: logoMieuxRenover },
+  { name: 'FNAIM', image: logoFnaim },
+  { name: 'Emera', image: logoEmera },
+  { name: 'Calomatech', image: logoCalomatech },
+  { name: 'CBRE', image: logoCbre },
+  { name: 'Foncia', image: logoFoncia },
+];
 
 /* ── Helper ─────────────────────────────────────────── */
 function FadeSection({ children, delay = 0, className = '' }) {
@@ -23,6 +42,8 @@ function FadeSection({ children, delay = 0, className = '' }) {
 
 /* ── Hero ────────────────────────────────────────────── */
 function HeroSection() {
+  const marqueeLogos = [...partnerLogos, ...partnerLogos];
+
   return (
     <section className="relative overflow-hidden section">
       {/* Grid background */}
@@ -107,6 +128,30 @@ function HeroSection() {
               allow="autoplay; fullscreen; picture-in-picture"
               allowFullScreen
             />
+          </div>
+        </div>
+      </div>
+
+      <div className="relative mt-14 md:mt-20">
+        <div className="partners-strip-fullbleed">
+          <div className="section-inner-wide py-8 md:py-10">
+            <p className="text-center text-[11px] sm:text-xs uppercase tracking-[0.28em] text-white/45 font-semibold mb-6 md:mb-7">
+              Ils utilisent Pisteur
+            </p>
+            <div className="partner-marquee" aria-label="Partenaires Pisteur">
+              <div className="partner-marquee-track">
+                {marqueeLogos.map((partner, index) => (
+                  <div key={`${partner.name}-${index}`} className="partner-chip">
+                    <img
+                      src={partner.image}
+                      alt={partner.name}
+                      loading="lazy"
+                      className="partner-logo-image"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>

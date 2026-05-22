@@ -1,0 +1,8 @@
+<svg width="320" height="96" viewBox="0 0 320 96" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mon courtier energie">
+  <rect width="320" height="96" fill="none"/>
+  <circle cx="44" cy="48" r="30" fill="#6d4ed3"/>
+  <path d="M30 52 L44 38 L58 52" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M30 52 L44 66 L58 52" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="86" y="46" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#6d4ed3">mon courtier</text>
+  <text x="86" y="74" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#6d4ed3">énergie</text>
+</svg>
