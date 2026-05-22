@@ -3,31 +3,31 @@ import { ChevronDown, Search, MessageCircle, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useFadeInOnScroll } from '../hooks/useFadeInOnScroll';
 
-/* ─────────────────────────────────────────────────────────────
+/* ─────────────────────────────────────────────────────────────────
    DATA
-───────────────────────────────────────────────────────────── */
+───────────────────────────────────────────────────────────────── */
 const CATEGORIES = [
-  { id: 'Données',          emoji: '🗄️' },
-  { id: 'Fonctionnalités',  emoji: '⚡' },
-  { id: 'Tarifs & Essai',   emoji: '💳' },
-  { id: 'Technique',        emoji: '🔒' },
+  { id: 'Données',         emoji: '🗂️' },
+  { id: 'Fonctionnalités', emoji: '⚡' },
+  { id: 'Tarifs & Essai',  emoji: '💳' },
+  { id: 'Technique',       emoji: '🔒' },
 ];
 
 const FAQS = [
   {
     category: 'Données',
     q: 'Quelles sources de données Pisteur utilise-t-il ?',
-    a: 'Pisteur croise la BDNB (Base de Données Nationale des Bâtiments), les fichiers DPE de l'ADEME, les données Sirene pour l'identification des gestionnaires, et plusieurs annuaires décisionnels. La base est mise à jour chaque mois.',
+    a: 'Pisteur croise la BDNB (Base de Données Nationale des Bâtiments), les fichiers DPE de l\'ADEME, les données Sirene pour l\'identification des gestionnaires, et plusieurs annuaires décisionnels. La base est mise à jour chaque mois.',
   },
   {
     category: 'Données',
     q: 'Les données personnelles des contacts sont-elles légales ?',
-    a: 'Oui. Toutes les données de contact (décideurs, gestionnaires) proviennent exclusivement de sources publiques légalement accessibles : Sirene, publications légales, sites institutionnels. Pisteur est hébergé en France et entièrement conforme au RGPD.',
+    a: 'Oui. Toutes les données de contact proviennent exclusivement de sources publiques légalement accessibles : Sirene, publications légales, sites institutionnels. Pisteur est hébergé en France et entièrement conforme au RGPD.',
   },
   {
     category: 'Données',
     q: 'Combien de bâtiments sont couverts en France ?',
-    a: 'La base Pisteur couvre plus de 1,2 million de bâtiments analysés sur l'ensemble du territoire français, avec un focus sur le tertiaire, le résidentiel collectif et les bâtiments publics.',
+    a: 'La base Pisteur couvre plus de 1,2 million de bâtiments analysés sur l\'ensemble du territoire français, avec un focus sur le tertiaire, le résidentiel collectif et les bâtiments publics.',
   },
   {
     category: 'Fonctionnalités',
@@ -36,18 +36,18 @@ const FAQS = [
   },
   {
     category: 'Fonctionnalités',
-    q: 'Comment fonctionne l'email personnalisé par IA ?',
-    a: 'À partir des données du bâtiment (DPE, surface, énergie, gestionnaire identifié), notre modèle génère un email de prospection contextualisé que vous pouvez relire avant envoi. Le taux d'ouverture moyen est de 38 %, contre 21 % pour un email générique.',
+    q: 'Comment fonctionne l\'email personnalisé par IA ?',
+    a: 'À partir des données du bâtiment (DPE, surface, énergie, gestionnaire identifié), notre modèle génère un email de prospection contextualisé. Le taux d\'ouverture moyen est de 38 %, contre 21 % pour un email générique.',
   },
   {
     category: 'Fonctionnalités',
     q: 'Peut-on filtrer les leads par région ou département ?',
-    a: 'Oui, le ciblage géographique est disponible à la commune, au département ou à la région. Vous pouvez combiner ce filtre avec d'autres critères comme le DPE, la surface ou le type d'usage du bâtiment.',
+    a: 'Oui, le ciblage géographique est disponible à la commune, au département ou à la région. Vous pouvez combiner ce filtre avec d\'autres critères comme le DPE, la surface ou le type d\'usage.',
   },
   {
     category: 'Fonctionnalités',
     q: 'Peut-on intégrer Pisteur à un CRM ?',
-    a: 'Oui. Le plan Growth inclut des intégrations natives avec HubSpot, Pipedrive et Salesforce. En plan Pro, un export CSV quotidien permet d'importer les leads manuellement dans n'importe quel CRM.',
+    a: 'Oui. Le plan Growth inclut des intégrations natives avec HubSpot, Pipedrive et Salesforce. En plan Pro, un export CSV quotidien permet d\'importer les leads manuellement dans n\'importe quel CRM.',
   },
   {
     category: 'Tarifs & Essai',
@@ -57,7 +57,7 @@ const FAQS = [
   {
     category: 'Tarifs & Essai',
     q: 'Quels plans sont disponibles ?',
-    a: 'Pisteur propose trois offres : Starter (accès self-service, leads quotidiens de base), Pro (personnalisation avancée, IA email, export CSV) et Growth (CRM natif, équipe multi-utilisateurs, onboarding dédié).',
+    a: 'Pisteur propose trois offres : Starter (self-service, leads de base), Pro (personnalisation avancée, IA email, export CSV) et Growth (CRM natif, multi-utilisateurs, onboarding dédié).',
   },
   {
     category: 'Tarifs & Essai',
@@ -67,7 +67,7 @@ const FAQS = [
   {
     category: 'Technique',
     q: 'Pisteur est-il conforme RGPD ?',
-    a: 'Oui. Pisteur est hébergé en France (OVHcloud), les données personnelles proviennent de sources publiques légales, et notre DPA est disponible sur demande pour les entreprises soumises à des obligations contractuelles spécifiques.',
+    a: 'Oui. Pisteur est hébergé en France (OVHcloud). Notre DPA est disponible sur demande pour les entreprises soumises à des obligations contractuelles spécifiques.',
   },
   {
     category: 'Technique',
@@ -76,9 +76,9 @@ const FAQS = [
   },
 ];
 
-/* ─────────────────────────────────────────────────────────────
+/* ─────────────────────────────────────────────────────────────────
    ACCORDION ITEM
-───────────────────────────────────────────────────────────── */
+───────────────────────────────────────────────────────────────── */
 function FaqItem({ q, a, isOpen, onToggle }) {
   const bodyRef = useRef(null);
   const [height, setHeight] = useState(0);
@@ -93,7 +93,7 @@ function FaqItem({ q, a, isOpen, onToggle }) {
       className={`rounded-xl border transition-all duration-200 ${
         isOpen
           ? 'border-emerald-500/30 bg-emerald-500/5'
-          : 'border-white/8 bg-white/4 hover:border-white/14'
+          : 'border-white/8 bg-white/[0.03] hover:border-white/15'
       }`}
     >
       <button
@@ -121,23 +121,21 @@ function FaqItem({ q, a, isOpen, onToggle }) {
   );
 }
 
-/* ─────────────────────────────────────────────────────────────
+/* ─────────────────────────────────────────────────────────────────
    PAGE
-───────────────────────────────────────────────────────────── */
+───────────────────────────────────────────────────────────────── */
 export default function Faq() {
   const [activeCategory, setActiveCategory] = useState('Toutes');
-  const [search, setSearch] = useState('');
-  const [openIndex, setOpenIndex] = useState(null);
+  const [search, setSearch]                 = useState('');
+  const [openIndex, setOpenIndex]           = useState(null);
 
-  const { ref: heroRef, visible: heroVisible } = useFadeInOnScroll();
   const { ref: ctaRef, visible: ctaVisible } = useFadeInOnScroll();
 
   const filtered = useMemo(() => {
     return FAQS.filter((item) => {
       const matchCat = activeCategory === 'Toutes' || item.category === activeCategory;
       const q = search.toLowerCase();
-      const matchSearch =
-        !q || item.q.toLowerCase().includes(q) || item.a.toLowerCase().includes(q);
+      const matchSearch = !q || item.q.toLowerCase().includes(q) || item.a.toLowerCase().includes(q);
       return matchCat && matchSearch;
     });
   }, [activeCategory, search]);
@@ -146,7 +144,6 @@ export default function Faq() {
 
   const handleToggle = (idx) => setOpenIndex((prev) => (prev === idx ? null : idx));
 
-  // Group filtered items by category for the sidebar display
   const groupedByCategory = useMemo(() => {
     if (activeCategory !== 'Toutes') return null;
     return CATEGORIES.map((cat) => ({
@@ -159,13 +156,8 @@ export default function Faq() {
     <section className="section">
       <div className="section-inner max-w-5xl mx-auto">
 
-        {/* ── Hero ── */}
-        <div
-          ref={heroRef}
-          className={`text-center mb-10 transition-all duration-700 ${
-            heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-          }`}
-        >
+        {/* ── Hero — PAS d'animation fade pour éviter le blanc initial ── */}
+        <div className="text-center mb-10">
           <p className="text-emerald-400 text-[11px] font-semibold uppercase tracking-[0.28em] mb-3">
             Centre d'aide
           </p>
@@ -196,7 +188,7 @@ export default function Faq() {
         <div className="flex flex-col lg:flex-row gap-6 items-start">
 
           {/* Sidebar catégories */}
-          <aside className="lg:sticky lg:top-24 w-full lg:w-56 shrink-0 flex flex-row lg:flex-col gap-2 flex-wrap">
+          <aside className="lg:sticky lg:top-24 w-full lg:w-52 shrink-0 flex flex-row lg:flex-col gap-1.5 flex-wrap">
             <button
               onClick={() => setActiveCategory('Toutes')}
               className={`flex items-center gap-2.5 px-4 py-2.5 rounded-xl text-sm font-medium text-left transition-all duration-200 w-full ${
@@ -229,7 +221,6 @@ export default function Faq() {
               );
             })}
 
-            {/* Séparateur + CTA sidebar */}
             <div className="hidden lg:block mt-4 pt-4 border-t border-white/8 w-full">
               <p className="text-xs text-white/40 mb-3">Besoin d'aide ?</p>
               <Link
@@ -242,7 +233,7 @@ export default function Faq() {
             </div>
           </aside>
 
-          {/* Contenu questions */}
+          {/* Contenu questions — PAS d'animation fade ici non plus */}
           <div className="flex-1 min-w-0">
             {filtered.length === 0 ? (
               <div className="text-center py-16 text-white/40 text-sm rounded-2xl border border-white/8 bg-white/3">
@@ -255,7 +246,6 @@ export default function Faq() {
                 </p>
               </div>
             ) : groupedByCategory ? (
-              /* Vue "Toutes" → groupé par catégorie */
               <div className="space-y-8">
                 {groupedByCategory.map((group) => {
                   const globalOffset = filtered.filter(
@@ -289,7 +279,6 @@ export default function Faq() {
                 })}
               </div>
             ) : (
-              /* Vue filtre unique → liste plate */
               <div className="space-y-2">
                 {filtered.map((item, idx) => (
                   <FaqItem
@@ -308,7 +297,7 @@ export default function Faq() {
         {/* ── CTA bas de page ── */}
         <div
           ref={ctaRef}
-          className={`mt-12 transition-all duration-700 delay-100 ${
+          className={`mt-12 transition-all duration-700 ${
             ctaVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
           }`}
         >
