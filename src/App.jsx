@@ -26,7 +26,7 @@ const seoByPath = {
     keywords: 'prospection bâtiment, leads bâtiment, DPE, CRM, email IA, qualification de prospects',
   },
   '/demo': {
-    title: 'Démo Pisteur — voir l'outil en action',
+    title: 'Démo Pisteur — voir loutil en action',
     description: 'Découvrez la démo Pisteur pour voir comment identifier des leads bâtiment, qualifier les cibles et gagner du temps sur la prospection.',
     keywords: 'démo Pisteur, démonstration prospection bâtiment, leads qualifiés, outil bâtiment',
   },
@@ -47,12 +47,12 @@ const seoByPath = {
   },
   '/faq': {
     title: 'FAQ Pisteur — questions fréquentes',
-    description: 'Retrouvez les réponses aux questions fréquentes sur Pisteur, les crédits, les données et l'utilisation de la plateforme.',
+    description: 'Retrouvez les réponses aux questions fréquentes sur Pisteur, les crédits, les données et lutilisation de la plateforme.',
     keywords: 'FAQ Pisteur, questions fréquentes, crédits, données bâtiment',
   },
   '/contact': {
     title: 'Contact Pisteur — demandez une démo',
-    description: 'Contactez l'équipe Pisteur pour poser vos questions, demander une démo personnalisée ou lancer un essai.',
+    description: 'Contactez l équipe Pisteur pour poser vos questions, demander une démo personnalisée ou lancer un essai.',
     keywords: 'contact Pisteur, démo personnalisée, essai gratuit, prospection bâtiment',
   },
   '/cas-clients': {

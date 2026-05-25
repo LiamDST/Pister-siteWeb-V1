@@ -19,7 +19,7 @@ const sections = [
     content: [
       { subtitle: 'Données que vous nous fournissez', text: 'Lorsque vous remplissez un formulaire de contact ou de démo, nous collectons votre nom, prénom, adresse e-mail professionnelle, nom de votre entreprise, numéro de téléphone (optionnel) et votre message. Ces données sont strictement nécessaires pour traiter votre demande.' },
       { subtitle: 'Données de navigation (avec votre consentement)', text: 'Avec votre accord, nous collectons des données de navigation anonymisées : pages visitées, durée de session, source de trafic. Ces données nous aident à améliorer le site. Elles ne sont jamais revendues.' },
-      { subtitle: 'Données techniques nécessaires', text: 'Certaines données techniques sont collectées automatiquement pour le bon fonctionnement du site : adresse IP (anonymisée), type de navigateur, système d'exploitation. Ces données ne permettent pas de vous identifier personnellement.' },
+      { subtitle: 'Données techniques nécessaires', text: 'Certaines données techniques sont collectées automatiquement pour le bon fonctionnement du site : adresse IP (anonymisée), type de navigateur, système dexploitation. Ces données ne permettent pas de vous identifier personnellement.' },
     ],
   },
   {
@@ -53,16 +53,16 @@ const sections = [
     icon: <Shield className="w-5 h-5" />,
     title: '5. Vos droits (RGPD)',
     content: [
-      { subtitle: 'Droits applicables', text: 'Conformément au Règlement Général sur la Protection des Données (RGPD — UE 2016/679), vous disposez des droits suivants : accès à vos données, rectification, effacement (droit à l'oubli), portabilité, opposition au traitement, limitation du traitement.' },
-      { subtitle: 'Comment exercer vos droits', text: 'Pour exercer vos droits, envoyez un e-mail à : rgpd@pisteur.fr avec l'objet « Exercice de droits RGPD » et une description de votre demande. Nous répondons sous 30 jours. En cas de désaccord, vous pouvez saisir la CNIL : cnil.fr.' },
+      { subtitle: 'Droits applicables', text: 'Conformément au Règlement Général sur la Protection des Données (RGPD — UE 2016/679), vous disposez des droits suivants : accès à vos données, rectification, effacement (droit à l oubli), portabilité, opposition au traitement, limitation du traitement.' },
+      { subtitle: 'Comment exercer vos droits', text: 'Pour exercer vos droits, envoyez un e-mail à : rgpd@pisteur.fr avec l objet « Exercice de droits RGPD » et une description de votre demande. Nous répondons sous 30 jours. En cas de désaccord, vous pouvez saisir la CNIL : cnil.fr.' },
     ],
   },
   {
     icon: <Lock className="w-5 h-5" />,
     title: '6. Sécurité',
     content: [
-      { subtitle: 'Mesures techniques', text: 'Toutes les données transitent via HTTPS (TLS 1.3). Les mots de passe sont hachés (bcrypt). L'accès à la base de données est restreint par rôle. Les sauvegardes sont chiffrées.' },
-      { subtitle: 'En cas de violation', text: 'En cas de violation de données susceptible de porter atteinte à vos droits, nous nous engageons à vous notifier dans les 72h suivant la détection, conformément à l'Art. 33 RGPD.' },
+      { subtitle: 'Mesures techniques', text: 'Toutes les données transitent via HTTPS (TLS 1.3). Les mots de passe sont hachés (bcrypt). L accès à la base de données est restreint par rôle. Les sauvegardes sont chiffrées.' },
+      { subtitle: 'En cas de violation', text: 'En cas de violation de données susceptible de porter atteinte à vos droits, nous nous engageons à vous notifier dans les 72h suivant la détection, conformément à l Art. 33 RGPD.' },
     ],
   },
   {
@@ -70,7 +70,7 @@ const sections = [
     title: '7. Cookies',
     content: [
       { subtitle: 'Cookies nécessaires', text: 'Ces cookies sont indispensables au fonctionnement du site (session, sécurité). Ils ne nécessitent pas votre consentement.' },
-      { subtitle: 'Cookies analytiques (consentement requis)', text: 'Avec votre accord, nous utilisons des cookies anonymisés pour mesurer l'audience du site. Vous pouvez retirer votre consentement à tout moment via le bandeau cookies.' },
+      { subtitle: 'Cookies analytiques (consentement requis)', text: 'Avec votre accord, nous utilisons des cookies anonymisés pour mesurer l audience du site. Vous pouvez retirer votre consentement à tout moment via le bandeau cookies.' },
       { subtitle: 'Cookies marketing (consentement requis)', text: 'Uniquement avec votre accord explicite, pour personnaliser les publicités. Non activés par défaut.' },
     ],
   },
