@@ -4,6 +4,9 @@ import { MessageCircle, Phone, Mail, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import ScrollProgress from './components/ScrollProgress';
+import ExitIntentModal from './components/ExitIntentModal';
+import { ToastProvider } from './components/Toast';
 import Home from './pages/Home';
 import Pricing from './pages/Pricing';
 import Faq from './pages/Faq';
@@ -11,6 +14,8 @@ import Contact from './pages/Contact';
 import Demo from './pages/Demo';
 import Simulation from './pages/Simulation';
 import Blog from './pages/Blog';
+import CaseStudies from './pages/CaseStudies';
+import NotFound from './pages/NotFound';
 
 const seoByPath = {
   '/': {
@@ -48,6 +53,11 @@ const seoByPath = {
     description: 'Contactez l’équipe Pisteur pour poser vos questions, demander une démo personnalisée ou lancer un essai.',
     keywords: 'contact Pisteur, démo personnalisée, essai gratuit, prospection bâtiment',
   },
+  '/cas-clients': {
+    title: 'Études de cas Pisteur — résultats réels',
+    description: 'Découvrez comment IsolPro, EnergétiK et RénoPlus ont transformé leur prospection bâtiment avec Pisteur.',
+    keywords: 'études de cas prospection bâtiment, résultats Pisteur, ROI, témoignages clients',
+  },
 };
 
 function SeoManager() {
@@ -67,7 +77,6 @@ function SeoManager() {
         document.head.appendChild(element);
         return;
       }
-
       Object.entries(attributes).forEach(([key, value]) => element.setAttribute(key, value));
     };
 
@@ -79,33 +88,31 @@ function SeoManager() {
         document.head.appendChild(element);
         return;
       }
-
       Object.entries(attributes).forEach(([key, value]) => element.setAttribute(key, value));
     };
 
-    upsertMeta('meta[name="description"]', { name: 'description', content: seo.description });
-    upsertMeta('meta[name="keywords"]', { name: 'keywords', content: seo.keywords });
-    upsertMeta('meta[property="og:title"]', { property: 'og:title', content: seo.title });
-    upsertMeta('meta[property="og:description"]', { property: 'og:description', content: seo.description });
-    upsertMeta('meta[property="og:type"]', { property: 'og:type', content: 'website' });
-    upsertMeta('meta[property="og:url"]', { property: 'og:url', content: canonicalUrl });
-    upsertMeta('meta[name="twitter:card"]', { name: 'twitter:card', content: 'summary_large_image' });
-    upsertMeta('meta[name="twitter:title"]', { name: 'twitter:title', content: seo.title });
-    upsertMeta('meta[name="twitter:description"]', { name: 'twitter:description', content: seo.description });
-    upsertLink('link[rel="canonical"]', { rel: 'canonical', href: canonicalUrl });
+    upsertMeta('meta[name="description"]',         { name: 'description', content: seo.description });
+    upsertMeta('meta[name="keywords"]',             { name: 'keywords',    content: seo.keywords });
+    upsertMeta('meta[property="og:title"]',         { property: 'og:title',       content: seo.title });
+    upsertMeta('meta[property="og:description"]',   { property: 'og:description', content: seo.description });
+    upsertMeta('meta[property="og:type"]',           { property: 'og:type',        content: 'website' });
+    upsertMeta('meta[property="og:url"]',            { property: 'og:url',         content: canonicalUrl });
+    upsertMeta('meta[name="twitter:card"]',          { name: 'twitter:card',        content: 'summary_large_image' });
+    upsertMeta('meta[name="twitter:title"]',         { name: 'twitter:title',       content: seo.title });
+    upsertMeta('meta[name="twitter:description"]',   { name: 'twitter:description', content: seo.description });
+    upsertLink('link[rel="canonical"]',              { rel: 'canonical', href: canonicalUrl });
   }, [pathname]);
 
   return null;
 }
 
-// ─── Scroll restauration ─────────────────────────────────
 function ScrollToTop() {
   const { pathname } = useLocation();
   useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
   return null;
 }
 
-// ─── Widget WhatsApp/Contact (inspiré Optee) ────────────
+// ─── Widget WhatsApp/Contact ──────────────────────────────────
 function ContactWidget() {
   const [open, setOpen] = useState(false);
   const whatsappUrl = 'https://wa.me/33600000000?text=Bonjour%2C%20je%20voudrais%20en%20savoir%20plus%20sur%20Pisteur.';
@@ -115,7 +122,7 @@ function ContactWidget() {
       {open && (
         <div className="absolute bottom-16 right-0 w-72 bg-white rounded-2xl shadow-2xl border border-navy-100 overflow-hidden animate-slideUp">
           <div className="bg-navy-900 px-5 py-4 flex items-center justify-between">
-            <p className="text-white font-semibold text-sm">Besoin d&apos;aide ?</p>
+            <p className="text-white font-semibold text-sm">Besoin d&apos;aide ?</p>
             <button onClick={() => setOpen(false)} className="text-white/60 hover:text-white transition-colors">
               <X className="w-4 h-4" />
             </button>
@@ -152,6 +159,21 @@ function ContactWidget() {
                 <p className="text-xs text-navy-500">Message rapide</p>
               </div>
             </a>
+
+            {/* Lien cas clients */}
+            <Link
+              to="/cas-clients"
+              onClick={() => setOpen(false)}
+              className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors border-t border-gray-100 mt-1 pt-3"
+            >
+              <div className="w-9 h-9 bg-purple-50 rounded-full flex items-center justify-center">
+                <MessageCircle className="w-4 h-4 text-purple-600" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-navy-900">Études de cas</p>
+                <p className="text-xs text-navy-500">Résultats réels</p>
+              </div>
+            </Link>
           </div>
         </div>
       )}
@@ -166,14 +188,12 @@ function ContactWidget() {
   );
 }
 
-// ─── App ─────────────────────────────────────────────────
+// ─── App ───────────────────────────────────────────────────
 export default function App() {
   const [theme, setTheme] = useState(() => {
     if (typeof window === 'undefined') return 'dark';
-
     const storedTheme = window.localStorage.getItem('theme');
     if (storedTheme === 'light' || storedTheme === 'dark') return storedTheme;
-
     return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
   });
 
@@ -184,23 +204,30 @@ export default function App() {
   }, [theme]);
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <SeoManager />
-      <ScrollToTop />
-      <Header theme={theme} onToggleTheme={() => setTheme(current => (current === 'dark' ? 'light' : 'dark'))} />
-      <main className="flex-1">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/demo" element={<Demo />} />
-          <Route path="/simulation" element={<Simulation />} />
-          <Route path="/tarifs" element={<Pricing />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/faq" element={<Faq />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
-      </main>
-      <Footer />
-      <ContactWidget />
-    </div>
+    <ToastProvider>
+      <div className="min-h-screen flex flex-col">
+        <ScrollProgress />
+        <SeoManager />
+        <ScrollToTop />
+        <ExitIntentModal />
+        <Header theme={theme} onToggleTheme={() => setTheme(current => (current === 'dark' ? 'light' : 'dark'))} />
+        <main className="flex-1">
+          <Routes>
+            <Route path="/"            element={<Home />} />
+            <Route path="/demo"        element={<Demo />} />
+            <Route path="/simulation"  element={<Simulation />} />
+            <Route path="/tarifs"      element={<Pricing />} />
+            <Route path="/blog"        element={<Blog />} />
+            <Route path="/faq"         element={<Faq />} />
+            <Route path="/contact"     element={<Contact />} />
+            <Route path="/cas-clients" element={<CaseStudies />} />
+            {/* 404 catch-all */}
+            <Route path="*"            element={<NotFound />} />
+          </Routes>
+        </main>
+        <Footer />
+        <ContactWidget />
+      </div>
+    </ToastProvider>
   );
 }
