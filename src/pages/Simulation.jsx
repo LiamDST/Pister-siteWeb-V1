@@ -12,7 +12,7 @@ const regions = [
   'Île-de-France', 'Auvergne-Rhône-Alpes', 'Occitanie',
   'Nouvelle-Aquitaine', 'Bretagne', 'Grand Est',
   'Normandie', 'Hauts-de-France', 'Pays de la Loire',
-  'Provence-Alpes-Côte d\'Azur',
+  "Provence-Alpes-Côte d'Azur",
 ];
 
 const buildingTypes = [
@@ -104,6 +104,16 @@ function StepsBar({ step }) {
   );
 }
 
+/* ─── Recap row (grille 2 colonnes, labels fixes) ────── */
+function RecapRow({ label, children }) {
+  return (
+    <div className="grid grid-cols-[7rem_1fr] gap-2 items-center py-2 border-b border-white/5 last:border-0">
+      <span className="text-xs text-white/40 whitespace-nowrap">{label}</span>
+      <span className="text-xs font-semibold text-white/85 text-right">{children}</span>
+    </div>
+  );
+}
+
 /* ─── Live Preview Panel ──────────────────────────────── */
 function PreviewPanel({ form, liveCount, status, result }) {
   const animated = useCountUp(liveCount);
@@ -142,7 +152,7 @@ function PreviewPanel({ form, liveCount, status, result }) {
                 <p className="text-xs font-semibold text-white truncate">{l.city}</p>
                 <p className="text-[11px] text-white/40 truncate">{l.type} · {l.surface}</p>
               </div>
-              <span className={`text-[10px] font-black px-1.5 py-0.5 rounded ${dpeGrades.find(d => d.label === l.dpe)?.color}`}>{l.dpe}</span>
+              <span className={`text-[10px] font-black px-1.5 py-0.5 rounded shrink-0 ${dpeGrades.find(d => d.label === l.dpe)?.color}`}>{l.dpe}</span>
             </div>
           ))}
           <p className="text-[10px] text-white/25 mt-1">Exemples de leads — données illustratives</p>
@@ -165,7 +175,6 @@ function PreviewPanel({ form, liveCount, status, result }) {
 
   return (
     <div className="card-glass p-8 flex flex-col gap-6 min-h-[420px]">
-      {/* Compteur live */}
       <div className="text-center">
         <p className="text-xs text-white/40 uppercase tracking-wider mb-1">Bâtiments estimés</p>
         <p className="text-5xl font-black text-emerald-400 tabular-nums transition-all duration-300">
@@ -174,7 +183,6 @@ function PreviewPanel({ form, liveCount, status, result }) {
         <p className="text-xs text-white/30 mt-1">mis à jour en temps réel</p>
       </div>
 
-      {/* Mini indicateurs */}
       <div className="grid grid-cols-2 gap-3">
         <div className="bg-white/5 rounded-xl p-3 text-center">
           <MapPin className="w-4 h-4 text-emerald-400 mx-auto mb-1" />
@@ -198,7 +206,6 @@ function PreviewPanel({ form, liveCount, status, result }) {
         </div>
       </div>
 
-      {/* Exemples de leads */}
       <div className="space-y-2">
         <p className="text-[10px] text-white/30 uppercase tracking-wider">Exemples de leads</p>
         {fakeleads.map((l, i) => (
@@ -208,7 +215,7 @@ function PreviewPanel({ form, liveCount, status, result }) {
               <p className="text-xs font-semibold text-white truncate">{l.city}</p>
               <p className="text-[11px] text-white/40 truncate">{l.type} · {l.surface}</p>
             </div>
-            <span className={`text-[10px] font-black px-1.5 py-0.5 rounded ${dpeGrades.find(d => d.label === l.dpe)?.color}`}>{l.dpe}</span>
+            <span className={`text-[10px] font-black px-1.5 py-0.5 rounded shrink-0 ${dpeGrades.find(d => d.label === l.dpe)?.color}`}>{l.dpe}</span>
           </div>
         ))}
         <p className="text-[10px] text-white/20">Lancez la simulation pour voir vos vrais leads</p>
@@ -323,7 +330,6 @@ export default function Simulation() {
               {/* Étape 1 : Type + DPE + Surface */}
               {step === 1 && (
                 <div className="space-y-5 animate-[fadeIn_0.3s_ease-out]">
-                  {/* Type de bâtiment */}
                   <div>
                     <label className="text-xs text-white/50 mb-2 block font-medium">Type de bâtiment</label>
                     <div className="space-y-2">
@@ -344,7 +350,6 @@ export default function Simulation() {
                     </div>
                   </div>
 
-                  {/* DPE toggles */}
                   <div>
                     <label className="text-xs text-white/50 mb-2 block font-medium">
                       DPE ciblés{' '}
@@ -371,7 +376,6 @@ export default function Simulation() {
                     )}
                   </div>
 
-                  {/* Slider surface */}
                   <div>
                     <label className="text-xs text-white/50 mb-2 flex justify-between">
                       <span className="font-medium">Surface minimale</span>
@@ -412,30 +416,47 @@ export default function Simulation() {
                 </div>
               )}
 
-              {/* Étape 2 : Email + Submit */}
+              {/* Étape 2 : Récapitulatif + Email + Submit */}
               {step === 2 && (
                 <div className="space-y-5 animate-[fadeIn_0.3s_ease-out]">
-                  <div className="card-glass bg-emerald-500/5 border-emerald-500/20 p-4 rounded-2xl space-y-2">
-                    <p className="text-xs font-semibold text-emerald-400 mb-2">Récapitulatif de votre ICP</p>
-                    {[
-                      ['Région', form.region],
-                      ['Type', form.buildingType],
-                      ['DPE', form.dpeSelected.join(' · ') || '—'],
-                      ['Surface min.', `${parseInt(form.minSurface).toLocaleString('fr-FR')} m²`],
-                    ].map(([k, v]) => (
-                      <div key={k} className="flex justify-between text-xs">
-                        <span className="text-white/40">{k}</span>
-                        <span className="text-white/80 font-medium">{v}</span>
-                      </div>
-                    ))}
-                    <div className="border-t border-white/8 pt-2 mt-2 flex justify-between">
+
+                  {/* ── Récapitulatif ICP ── */}
+                  <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-4">
+                    <p className="text-xs font-semibold text-emerald-400 mb-3">Récapitulatif de votre ICP</p>
+
+                    <RecapRow label="Région">{form.region}</RecapRow>
+                    <RecapRow label="Type">{form.buildingType}</RecapRow>
+                    <RecapRow label="DPE">
+                      <span className="inline-flex items-center justify-end gap-1 flex-wrap">
+                        {form.dpeSelected.length > 0
+                          ? form.dpeSelected.map(d => {
+                              const grade = dpeGrades.find(g => g.label === d);
+                              return (
+                                <span
+                                  key={d}
+                                  className={`inline-flex items-center justify-center w-5 h-5 rounded text-[10px] font-black ${grade?.color}`}
+                                >
+                                  {d}
+                                </span>
+                              );
+                            })
+                          : '—'}
+                      </span>
+                    </RecapRow>
+                    <RecapRow label="Surface min.">
+                      &gt; {parseInt(form.minSurface).toLocaleString('fr-FR')} m²
+                    </RecapRow>
+
+                    <div className="flex items-center justify-between pt-3 mt-1 border-t border-white/10">
                       <span className="text-xs text-white/40">Estimation</span>
-                      <span className="text-sm font-black text-emerald-400">{liveCount.toLocaleString('fr-FR')} bâtiments</span>
+                      <span className="text-sm font-black text-emerald-400 tabular-nums">
+                        {liveCount.toLocaleString('fr-FR')} bâtiments
+                      </span>
                     </div>
                   </div>
 
                   <div>
-                    <label className="text-xs text-white/50 mb-2 block font-medium flex items-center gap-1.5">
+                    <label className="text-xs text-white/50 mb-2 flex items-center gap-1.5 font-medium">
                       <Mail className="w-3.5 h-3.5 text-emerald-400" />
                       Recevez votre simulation par email
                       <span className="text-white/25 font-normal">(optionnel)</span>
