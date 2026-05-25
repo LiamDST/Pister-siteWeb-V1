@@ -106,7 +106,7 @@ html[data-theme='light'] .bg-white {
   background-color: #ffffff !important;
 }
 
-/* ── Fonds emerald foncés → clairs en light ─────── */
+/* ── Fonds emerald/amber foncés → clairs en light ─ */
 html[data-theme='light'] .bg-emerald-950\/40 {
   background-color: rgba(236, 253, 245, 0.90) !important;
 }
@@ -115,8 +115,29 @@ html[data-theme='light'] .bg-emerald-500\/10 {
   background-color: rgba(16, 185, 129, 0.10) !important;
 }
 
+html[data-theme='light'] .bg-emerald-500\/15 {
+  background-color: rgba(16, 185, 129, 0.12) !important;
+}
+
+html[data-theme='light'] .bg-emerald-500\/20 {
+  background-color: rgba(16, 185, 129, 0.14) !important;
+}
+
 html[data-theme='light'] .bg-amber-500\/10 {
   background-color: rgba(245, 158, 11, 0.10) !important;
+}
+
+html[data-theme='light'] .bg-amber-400\/20 {
+  background-color: rgba(245, 158, 11, 0.12) !important;
+}
+
+html[data-theme='light'] .bg-red-500\/10 {
+  background-color: rgba(239, 68, 68, 0.10) !important;
+}
+
+/* ── Fonds navy-950/70 (crédits FAQ) ────────────── */
+html[data-theme='light'] .bg-navy-950\/70 {
+  background-color: #f1f5f9 !important;
 }
 
 /* ── Bordures blanches → bordures sombres ───────── */
@@ -126,6 +147,10 @@ html[data-theme='light'] [class*='border-white/'] {
 
 html[data-theme='light'] .border-white\/5 {
   border-color: rgba(15, 23, 42, 0.07) !important;
+}
+
+html[data-theme='light'] .border-white\/6 {
+  border-color: rgba(15, 23, 42, 0.08) !important;
 }
 
 html[data-theme='light'] .border-white\/8 {
@@ -144,7 +169,7 @@ html[data-theme='light'] .border-white\/20 {
   border-color: rgba(15, 23, 42, 0.16) !important;
 }
 
-/* ── Bordure ICP encadré ────────────────────────── */
+/* ── Bordures emerald ───────────────────────────── */
 html[data-theme='light'] .border-emerald-500\/25 {
   border-color: rgba(16, 185, 129, 0.35) !important;
 }
@@ -157,7 +182,7 @@ html[data-theme='light'] .border-emerald-500\/20 {
   border-color: rgba(16, 185, 129, 0.25) !important;
 }
 
-/* ── Texte ──────────────────────────────────────── */
+/* ── Texte — couverture COMPLÈTE des opacités ───── */
 html[data-theme='light'] .text-white {
   color: #0f172a !important;
 }
@@ -172,6 +197,11 @@ html[data-theme='light'] .text-white\/80 {
 
 html[data-theme='light'] .text-white\/70 {
   color: rgba(15, 23, 42, 0.70) !important;
+}
+
+/* BUG FIX FAQ: text-white/65 manquant → texte invisible */
+html[data-theme='light'] .text-white\/65 {
+  color: rgba(15, 23, 42, 0.65) !important;
 }
 
 html[data-theme='light'] .text-white\/60 {
@@ -190,7 +220,6 @@ html[data-theme='light'] .text-white\/45 {
   color: rgba(15, 23, 42, 0.50) !important;
 }
 
-/* BUG FIX: était rgb(255,255,255) — texte blanc sur fond blanc ! */
 html[data-theme='light'] .text-white\/40 {
   color: rgba(15, 23, 42, 0.40) !important;
 }
@@ -211,6 +240,11 @@ html[data-theme='light'] .text-white\/20 {
   color: rgba(15, 23, 42, 0.22) !important;
 }
 
+/* BUG FIX FAQ: text-white/15 manquant (votes, labels) */
+html[data-theme='light'] .text-white\/15 {
+  color: rgba(15, 23, 42, 0.18) !important;
+}
+
 html[data-theme='light'] .text-navy-900 {
   color: #0f172a !important;
 }
@@ -228,8 +262,33 @@ html[data-theme='light'] .text-emerald-400 {
   color: #059669 !important;
 }
 
+html[data-theme='light'] .text-amber-300 {
+  color: #b45309 !important;
+}
+
 html[data-theme='light'] .text-amber-400 {
   color: #d97706 !important;
+}
+
+html[data-theme='light'] .text-red-400 {
+  color: #dc2626 !important;
+}
+
+/* ── Hover text couleurs (FAQ votes) ────────────── */
+html[data-theme='light'] .hover\:text-emerald-400:hover {
+  color: #059669 !important;
+}
+
+html[data-theme='light'] .hover\:text-red-400:hover {
+  color: #dc2626 !important;
+}
+
+html[data-theme='light'] .hover\:text-white\/80:hover {
+  color: rgba(15, 23, 42, 0.75) !important;
+}
+
+html[data-theme='light'] .hover\:text-white\/60:hover {
+  color: rgba(15, 23, 42, 0.60) !important;
 }
 
 /* ── Boutons ────────────────────────────────────── */
@@ -290,6 +349,26 @@ html[data-theme='light'] header {
 html[data-theme='light'] footer {
   background-color: #f1f5f9 !important;
   border-top-color: rgba(15, 23, 42, 0.08) !important;
+}
+
+/* ── Input recherche FAQ ────────────────────────── */
+html[data-theme='light'] input[type='text'] {
+  background-color: rgba(15, 23, 42, 0.04) !important;
+  border-color: rgba(15, 23, 42, 0.12) !important;
+  color: #0f172a !important;
+}
+
+html[data-theme='light'] input[type='text']::placeholder {
+  color: rgba(15, 23, 42, 0.35) !important;
+}
+
+html[data-theme='light'] input[type='text']:focus {
+  border-color: rgba(16, 185, 129, 0.50) !important;
+}
+
+/* ── Diviseur FAQ (border-t border-white/6) ─────── */
+html[data-theme='light'] .border-t.border-white\/6 {
+  border-color: rgba(15, 23, 42, 0.08) !important;
 }
 
 /* ═══════════════════════════════════════════════
