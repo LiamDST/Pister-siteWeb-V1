@@ -26,6 +26,19 @@ html[data-theme='dark'] {
   --input-border: rgba(255, 255, 255, 0.10);
   --input-text: #ffffff;
   --input-placeholder: rgba(255, 255, 255, 0.30);
+
+  /* ICP Summary tokens — dark */
+  --icp-bg: rgba(6, 78, 59, 0.25);
+  --icp-border: rgba(16, 185, 129, 0.25);
+  --icp-header-border: rgba(16, 185, 129, 0.15);
+  --icp-divider: rgba(255, 255, 255, 0.05);
+  --icp-icon-bg: rgba(16, 185, 129, 0.10);
+  --icp-icon-bg-amber: rgba(245, 158, 11, 0.10);
+  --icp-label: rgba(255, 255, 255, 0.40);
+  --icp-value: #ffffff;
+  --icp-footer-bg: rgba(16, 185, 129, 0.10);
+  --icp-footer-border: rgba(16, 185, 129, 0.20);
+  --icp-source: rgba(255, 255, 255, 0.25);
 }
 
 html[data-theme='light'] {
@@ -43,6 +56,19 @@ html[data-theme='light'] {
   --input-border: rgba(15, 23, 42, 0.12);
   --input-text: #0f172a;
   --input-placeholder: rgba(15, 23, 42, 0.35);
+
+  /* ICP Summary tokens — light */
+  --icp-bg: rgba(236, 253, 245, 0.90);
+  --icp-border: rgba(16, 185, 129, 0.30);
+  --icp-header-border: rgba(16, 185, 129, 0.20);
+  --icp-divider: rgba(15, 23, 42, 0.06);
+  --icp-icon-bg: rgba(16, 185, 129, 0.12);
+  --icp-icon-bg-amber: rgba(245, 158, 11, 0.12);
+  --icp-label: rgba(15, 23, 42, 0.45);
+  --icp-value: #0f172a;
+  --icp-footer-bg: rgba(16, 185, 129, 0.10);
+  --icp-footer-border: rgba(16, 185, 129, 0.25);
+  --icp-source: rgba(15, 23, 42, 0.30);
 }
 
 /* ═══════════════════════════════════════════════
@@ -80,6 +106,19 @@ html[data-theme='light'] .bg-white {
   background-color: #ffffff !important;
 }
 
+/* ── Fonds emerald foncés → clairs en light ─────── */
+html[data-theme='light'] .bg-emerald-950\/40 {
+  background-color: rgba(236, 253, 245, 0.90) !important;
+}
+
+html[data-theme='light'] .bg-emerald-500\/10 {
+  background-color: rgba(16, 185, 129, 0.10) !important;
+}
+
+html[data-theme='light'] .bg-amber-500\/10 {
+  background-color: rgba(245, 158, 11, 0.10) !important;
+}
+
 /* ── Bordures blanches → bordures sombres ───────── */
 html[data-theme='light'] [class*='border-white/'] {
   border-color: rgba(15, 23, 42, 0.12) !important;
@@ -103,6 +142,19 @@ html[data-theme='light'] .border-white\/15 {
 
 html[data-theme='light'] .border-white\/20 {
   border-color: rgba(15, 23, 42, 0.16) !important;
+}
+
+/* ── Bordure ICP encadré ────────────────────────── */
+html[data-theme='light'] .border-emerald-500\/25 {
+  border-color: rgba(16, 185, 129, 0.35) !important;
+}
+
+html[data-theme='light'] .border-emerald-500\/15 {
+  border-color: rgba(16, 185, 129, 0.20) !important;
+}
+
+html[data-theme='light'] .border-emerald-500\/20 {
+  border-color: rgba(16, 185, 129, 0.25) !important;
 }
 
 /* ── Texte ──────────────────────────────────────── */
@@ -138,12 +190,21 @@ html[data-theme='light'] .text-white\/45 {
   color: rgba(15, 23, 42, 0.50) !important;
 }
 
+/* BUG FIX: était rgb(255,255,255) — texte blanc sur fond blanc ! */
 html[data-theme='light'] .text-white\/40 {
-  color: rgb(255, 255, 255) !important;
+  color: rgba(15, 23, 42, 0.40) !important;
+}
+
+html[data-theme='light'] .text-white\/35 {
+  color: rgba(15, 23, 42, 0.35) !important;
 }
 
 html[data-theme='light'] .text-white\/30 {
   color: rgba(15, 23, 42, 0.30) !important;
+}
+
+html[data-theme='light'] .text-white\/25 {
+  color: rgba(15, 23, 42, 0.25) !important;
 }
 
 html[data-theme='light'] .text-white\/20 {
@@ -159,17 +220,16 @@ html[data-theme='light'] .text-navy-500 {
 }
 
 /* ── Badges / pills verts ───────────────────────── */
-html[data-theme='light'] .bg-emerald-500\/10 {
-  background-color: rgba(16, 185, 129, 0.12) !important;
-  border-color: rgba(16, 185, 129, 0.25) !important;
-}
-
 html[data-theme='light'] .text-emerald-300 {
   color: #059669 !important;
 }
 
 html[data-theme='light'] .text-emerald-400 {
   color: #059669 !important;
+}
+
+html[data-theme='light'] .text-amber-400 {
+  color: #d97706 !important;
 }
 
 /* ── Boutons ────────────────────────────────────── */
@@ -293,6 +353,53 @@ body {
 
   .fade-in-up {
     animation: fadeInUp 0.6s ease-out both;
+  }
+
+  /* ICP Summary — composant adaptatif light/dark via CSS vars */
+  .icp-card {
+    background-color: var(--icp-bg);
+    border: 1px solid var(--icp-border);
+    @apply rounded-2xl overflow-hidden;
+  }
+
+  .icp-header {
+    border-bottom: 1px solid var(--icp-header-border);
+    @apply px-4 py-3 flex items-center gap-2;
+  }
+
+  .icp-divider {
+    border-top: 1px solid var(--icp-divider);
+  }
+
+  .icp-icon {
+    background-color: var(--icp-icon-bg);
+    @apply w-7 h-7 rounded-lg flex items-center justify-center shrink-0;
+  }
+
+  .icp-icon-amber {
+    background-color: var(--icp-icon-bg-amber);
+    @apply w-7 h-7 rounded-lg flex items-center justify-center shrink-0;
+  }
+
+  .icp-label {
+    color: var(--icp-label);
+    @apply text-[10px] uppercase tracking-wide leading-none mb-0.5;
+  }
+
+  .icp-value {
+    color: var(--icp-value);
+    @apply text-sm font-semibold truncate;
+  }
+
+  .icp-footer {
+    background-color: var(--icp-footer-bg);
+    border-top: 1px solid var(--icp-footer-border);
+    @apply px-4 py-3 flex items-center justify-between;
+  }
+
+  .icp-source {
+    color: var(--icp-source);
+    @apply text-[10px];
   }
 }
 

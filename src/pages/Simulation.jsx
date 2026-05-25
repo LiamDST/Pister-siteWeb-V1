@@ -104,74 +104,78 @@ function StepsBar({ step }) {
   );
 }
 
-/* ─── ICP Summary Card ──────────────────────────────── */
+/* ─── ICP Summary — utilise les CSS vars icp-* ────────── */
 function ICPSummary({ form, liveCount }) {
   const buildingTypeIcon = buildingTypes.find(t => t.value === form.buildingType)?.icon ?? '🏢';
 
   return (
-    <div className="rounded-2xl border border-emerald-500/25 bg-emerald-950/40 overflow-hidden">
+    <div className="icp-card">
       {/* Header */}
-      <div className="px-4 py-3 border-b border-emerald-500/15 flex items-center gap-2">
-        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-        <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wider">Récapitulatif de votre ICP</span>
+      <div className="icp-header">
+        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+        <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wider">
+          Récapitulatif de votre ICP
+        </span>
       </div>
 
       {/* Lignes */}
-      <div className="divide-y divide-white/5">
-
+      <div>
         {/* Région */}
-        <div className="flex items-center gap-3 px-4 py-3">
-          <div className="w-7 h-7 rounded-lg bg-emerald-500/10 flex items-center justify-center shrink-0">
+        <div className="icp-divider flex items-center gap-3 px-4 py-3">
+          <div className="icp-icon">
             <MapPin className="w-3.5 h-3.5 text-emerald-400" />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-[10px] text-white/40 uppercase tracking-wide leading-none mb-0.5">Région</p>
-            <p className="text-sm font-semibold text-white truncate">{form.region}</p>
+            <p className="icp-label">Région</p>
+            <p className="icp-value">{form.region}</p>
           </div>
         </div>
 
         {/* Type */}
-        <div className="flex items-center gap-3 px-4 py-3">
-          <div className="w-7 h-7 rounded-lg bg-emerald-500/10 flex items-center justify-center shrink-0 text-base leading-none">
+        <div className="icp-divider flex items-center gap-3 px-4 py-3">
+          <div className="icp-icon text-base leading-none">
             {buildingTypeIcon}
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-[10px] text-white/40 uppercase tracking-wide leading-none mb-0.5">Type de bâtiment</p>
-            <p className="text-sm font-semibold text-white truncate">{form.buildingType}</p>
+            <p className="icp-label">Type de bâtiment</p>
+            <p className="icp-value">{form.buildingType}</p>
           </div>
         </div>
 
         {/* DPE */}
-        <div className="flex items-center gap-3 px-4 py-3">
-          <div className="w-7 h-7 rounded-lg bg-amber-500/10 flex items-center justify-center shrink-0">
+        <div className="icp-divider flex items-center gap-3 px-4 py-3">
+          <div className="icp-icon-amber">
             <Zap className="w-3.5 h-3.5 text-amber-400" />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-[10px] text-white/40 uppercase tracking-wide leading-none mb-1.5">DPE ciblés</p>
-            <div className="flex items-center gap-1 flex-wrap">
+            <p className="icp-label">DPE ciblés</p>
+            <div className="flex items-center gap-1 flex-wrap mt-1">
               {form.dpeSelected.length > 0
                 ? form.dpeSelected.map(d => {
                     const grade = dpeGrades.find(g => g.label === d);
                     return (
-                      <span key={d} className={`inline-flex items-center justify-center w-6 h-6 rounded-md text-[11px] font-black ${grade?.color}`}>
+                      <span
+                        key={d}
+                        className={`inline-flex items-center justify-center w-6 h-6 rounded-md text-[11px] font-black ${grade?.color}`}
+                      >
                         {d}
                       </span>
                     );
                   })
-                : <span className="text-sm text-white/30">—</span>
+                : <span className="text-sm" style={{ color: 'var(--icp-label)' }}>—</span>
               }
             </div>
           </div>
         </div>
 
         {/* Surface */}
-        <div className="flex items-center gap-3 px-4 py-3">
-          <div className="w-7 h-7 rounded-lg bg-emerald-500/10 flex items-center justify-center shrink-0">
+        <div className="icp-divider flex items-center gap-3 px-4 py-3">
+          <div className="icp-icon">
             <Ruler className="w-3.5 h-3.5 text-emerald-400" />
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-[10px] text-white/40 uppercase tracking-wide leading-none mb-0.5">Surface minimale</p>
-            <p className="text-sm font-semibold text-white">
+            <p className="icp-label">Surface minimale</p>
+            <p className="icp-value">
               {parseInt(form.minSurface) === 0
                 ? 'Toutes surfaces'
                 : `≥ ${parseInt(form.minSurface).toLocaleString('fr-FR')} m²`
@@ -182,17 +186,17 @@ function ICPSummary({ form, liveCount }) {
       </div>
 
       {/* Footer — estimation */}
-      <div className="px-4 py-3 bg-emerald-500/10 border-t border-emerald-500/20 flex items-center justify-between">
+      <div className="icp-footer">
         <div>
-          <p className="text-[10px] text-emerald-300/60 uppercase tracking-wide">Estimation</p>
+          <p className="icp-label">Estimation</p>
           <p className="text-xl font-black text-emerald-400 tabular-nums leading-tight">
             {liveCount.toLocaleString('fr-FR')}
             <span className="text-sm font-semibold text-emerald-400/70 ml-1">bâtiments</span>
           </p>
         </div>
         <div className="text-right">
-          <p className="text-[10px] text-white/30">Source BDNB · ADEME</p>
-          <p className="text-[10px] text-white/20">Données 2024</p>
+          <p className="icp-source">Source BDNB · ADEME</p>
+          <p className="icp-source" style={{ opacity: 0.6 }}>Données 2024</p>
         </div>
       </div>
     </div>
@@ -501,11 +505,10 @@ export default function Simulation() {
                 </div>
               )}
 
-              {/* Étape 2 : Récapitulatif + Email + Submit */}
+              {/* Étape 2 : Récap + Email + Submit */}
               {step === 2 && (
                 <div className="space-y-5 animate-[fadeIn_0.3s_ease-out]">
 
-                  {/* Nouveau récapitulatif */}
                   <ICPSummary form={form} liveCount={liveCount} />
 
                   <div>
