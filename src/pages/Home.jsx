@@ -278,27 +278,65 @@ function TestimonialsSection() {
     { name: 'Thomas Bernard', role: 'Responsable BDD, RénoPlus', quote: 'L\'email personnalisé est bluffant : chaque prospect a l\'impression qu\'on connaît son bâtiment. Taux d\'ouverture ×2.' },
   ];
 
+  const [index, setIndex] = React.useState(0);
+
+  React.useEffect(() => {
+    const id = setInterval(() => {
+      setIndex((prev) => (prev + 1) % items.length);
+    }, 9000); // vitesse lente: 9s entre chaque changement
+    return () => clearInterval(id);
+  }, [items.length]);
+
   return (
     <section className="section bg-navy-900/40">
       <div className="section-inner">
         <FadeSection>
           <h2 className="text-3xl font-bold mb-10 text-center">Ce que disent nos clients</h2>
         </FadeSection>
-        <div className="grid md:grid-cols-3 gap-5">
-          {items.map((t, i) => (
-            <FadeSection key={t.name} delay={i * 80}>
-              <div className="card-glass p-6 flex flex-col gap-4 h-full">
-                <div className="flex gap-1">
-                  {[...Array(5)].map((_, k) => <Star key={k} className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />)}
-                </div>
-                <p className="text-sm text-white/70 leading-relaxed italic">&quot;{t.quote}&quot;</p>
-                <div className="mt-auto">
-                  <p className="text-sm font-semibold">{t.name}</p>
-                  <p className="text-xs text-white/40">{t.role}</p>
+
+        {/* Carrousel auto-défilant */}
+        <div className="relative overflow-hidden">
+          <div
+            className="flex transition-transform duration-700 ease-out"
+            style={{ transform: `translateX(-${index * 100}%)` }}
+          >
+            {items.map((t) => (
+              <div key={t.name} className="min-w-full px-1 sm:px-4 flex justify-center">
+                <div className="card-glass p-6 flex flex-col gap-4 max-w-md w-full">
+                  <div className="flex gap-1">
+                    {[...Array(5)].map((_, k) => (
+                      <Star
+                        key={k}
+                        className="w-3.5 h-3.5 fill-amber-400 text-amber-400"
+                      />
+                    ))}
+                  </div>
+                  <p className="text-sm text-white/70 leading-relaxed italic">
+                    &quot;{t.quote}&quot;
+                  </p>
+                  <div className="mt-auto">
+                    <p className="text-sm font-semibold">{t.name}</p>
+                    <p className="text-xs text-white/40">{t.role}</p>
+                  </div>
                 </div>
               </div>
-            </FadeSection>
-          ))}
+            ))}
+          </div>
+
+          {/* Points de pagination */}
+          <div className="mt-5 flex justify-center gap-1.5">
+            {items.map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => setIndex(i)}
+                className={`w-2.5 h-2.5 rounded-full transition-colors border border-white/15 ${
+                  index === i ? 'bg-emerald-400' : 'bg-white/10'
+                }`}
+                aria-label={`Afficher l'avis ${i + 1}`}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>
