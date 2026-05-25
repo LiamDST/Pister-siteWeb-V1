@@ -40,7 +40,7 @@ function FadeSection({ children, delay = 0, className = '' }) {
   );
 }
 
-/* ── Stars helper (sans spread Array) ──────────────── */
+/* ── Stars helper ───────────────────────────────── */
 function Stars() {
   return (
     <div className="flex gap-1">
@@ -225,7 +225,7 @@ function HowItWorksSection() {
   const steps = [
     { n: '01', title: 'Configurez votre ICP', desc: 'Type de bâtiment, DPE, énergie, surface, NAF, géographie — en 5 minutes.' },
     { n: '02', title: 'Recevez vos leads qualifiés', desc: 'Chaque matin, une liste priorisée avec coordonnées et contexte décisionnel.' },
-    { n: '03', title: 'Contactez avec un email personnalisé', desc: 'L\'IA génère un email contextualisé pour chaque bâtiment en un clic.' },
+    { n: '03', title: 'Contactez avec un email personnalisé', desc: 'L\'IA gènere un email contextualisé pour chaque bâtiment en un clic.' },
     { n: '04', title: 'Suivez vos conversions', desc: 'Dashboard pour tracker les relances, RDV, conversions et CA généré.' },
   ];
 
@@ -304,16 +304,15 @@ const TESTIMONIALS = [
   {
     name: 'Nicolas Aubert',
     role: 'Commercial terrain, RénoBat',
-    quote: 'En 3 semaines j\'ai signé 4 nouveaux chantiers grâce aux leads Pisteur. Le filtre par code NAF est particulièrement utile.',
+    quote: "En 3 semaines j'ai signé 4 nouveaux chantiers grâce aux leads Pisteur. Le filtre par code NAF est particulièrement utile.",
   },
   {
     name: 'Camille Renard',
     role: 'Responsable dev. commercial, VertiConso',
-    quote: 'La personnalisation des emails fait toute la différence. Mes prospects me répondent en me demandant comment je connais leur immeuble !',
+    quote: 'La personnalisation des emails fait toute la différence. Mes prospects me répondent en me demandant comment je connais leur immeuble !',
   },
 ];
 
-/* On duplique pour le loop infini */
 const DOUBLED = [...TESTIMONIALS, ...TESTIMONIALS];
 
 function TestimonialCard({ name, role, quote }) {
@@ -335,10 +334,8 @@ function TestimonialCard({ name, role, quote }) {
 }
 
 function TestimonialsSection() {
-  /* Durée totale : nb de cartes × largeur (320px + 20px gap) / vitesse px/s
-     On vise ~60s pour 6 cartes → confortable et lisible */
-  const totalCards = DOUBLED.length; // 12
-  const cardW = 340; // 320px + 20px gap
+  const totalCards = DOUBLED.length;
+  const cardW = 340;
   const totalW = totalCards * cardW;
 
   return (
@@ -349,14 +346,8 @@ function TestimonialsSection() {
         </FadeSection>
       </div>
 
-      {/* Piste pleine-largeur pour masquer les débordements */}
-      <div className="relative w-full overflow-hidden">
-        {/* Dégradés de fondu sur les bords */}
-        <div className="pointer-events-none absolute left-0 top-0 h-full w-24 z-10"
-          style={{ background: 'linear-gradient(to right, rgb(10 14 23) 0%, transparent 100%)' }} />
-        <div className="pointer-events-none absolute right-0 top-0 h-full w-24 z-10"
-          style={{ background: 'linear-gradient(to left, rgb(10 14 23) 0%, transparent 100%)' }} />
-
+      {/* Piste sans dégradés */}
+      <div className="w-full overflow-hidden">
         <div
           className="flex gap-5 py-2"
           style={{
@@ -370,11 +361,10 @@ function TestimonialsSection() {
         </div>
       </div>
 
-      {/* Keyframe injecté inline pour éviter tout conflit Tailwind */}
       <style>{`
         @keyframes testimonials-scroll {
           0%   { transform: translateX(0); }
-          100% { transform: translateX(-${totalCards / 2 * cardW}px); }
+          100% { transform: translateX(-${(totalCards / 2) * cardW}px); }
         }
         @media (prefers-reduced-motion: reduce) {
           .testimonials-track { animation: none !important; }
@@ -392,7 +382,7 @@ function CtaSection() {
         <FadeSection>
           <div className="card-glass bg-gradient-to-br from-emerald-500/10 to-blue-500/5 p-10 rounded-3xl flex flex-col md:flex-row items-center justify-between gap-6">
             <div>
-              <h2 className="text-2xl font-bold mb-2">Prêt à voir vos cibles réelles ?</h2>
+              <h2 className="text-2xl font-bold mb-2">Prêt à voir vos cibles réelles ?</h2>
               <p className="text-white/60 text-sm max-w-md">
                 Configurez Pisteur sur votre ICP, simulez votre marché et recevez un aperçu de vos leads dès aujourd&apos;hui.
               </p>
