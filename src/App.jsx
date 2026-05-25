@@ -6,6 +6,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import ScrollProgress from './components/ScrollProgress';
 import ExitIntentModal from './components/ExitIntentModal';
+import CookieBanner from './components/CookieBanner';
 import { ToastProvider } from './components/Toast';
 import Home from './pages/Home';
 import Pricing from './pages/Pricing';
@@ -16,6 +17,7 @@ import Simulation from './pages/Simulation';
 import Blog from './pages/Blog';
 import CaseStudies from './pages/CaseStudies';
 import NotFound from './pages/NotFound';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 
 const seoByPath = {
   '/': {
@@ -24,7 +26,7 @@ const seoByPath = {
     keywords: 'prospection bâtiment, leads bâtiment, DPE, CRM, email IA, qualification de prospects',
   },
   '/demo': {
-    title: 'Démo Pisteur — voir l’outil en action',
+    title: 'Démo Pisteur — voir l'outil en action',
     description: 'Découvrez la démo Pisteur pour voir comment identifier des leads bâtiment, qualifier les cibles et gagner du temps sur la prospection.',
     keywords: 'démo Pisteur, démonstration prospection bâtiment, leads qualifiés, outil bâtiment',
   },
@@ -45,18 +47,23 @@ const seoByPath = {
   },
   '/faq': {
     title: 'FAQ Pisteur — questions fréquentes',
-    description: 'Retrouvez les réponses aux questions fréquentes sur Pisteur, les crédits, les données et l’utilisation de la plateforme.',
+    description: 'Retrouvez les réponses aux questions fréquentes sur Pisteur, les crédits, les données et l'utilisation de la plateforme.',
     keywords: 'FAQ Pisteur, questions fréquentes, crédits, données bâtiment',
   },
   '/contact': {
     title: 'Contact Pisteur — demandez une démo',
-    description: 'Contactez l’équipe Pisteur pour poser vos questions, demander une démo personnalisée ou lancer un essai.',
+    description: 'Contactez l'équipe Pisteur pour poser vos questions, demander une démo personnalisée ou lancer un essai.',
     keywords: 'contact Pisteur, démo personnalisée, essai gratuit, prospection bâtiment',
   },
   '/cas-clients': {
     title: 'Études de cas Pisteur — résultats réels',
     description: 'Découvrez comment IsolPro, EnergétiK et RénoPlus ont transformé leur prospection bâtiment avec Pisteur.',
     keywords: 'études de cas prospection bâtiment, résultats Pisteur, ROI, témoignages clients',
+  },
+  '/confidentialite': {
+    title: 'Politique de confidentialité — Pisteur',
+    description: 'Découvrez comment Pisteur collecte, utilise et protège vos données personnelles conformément au RGPD.',
+    keywords: 'RGPD, politique confidentialité, protection données, cookies Pisteur',
   },
 };
 
@@ -122,7 +129,7 @@ function ContactWidget() {
       {open && (
         <div className="absolute bottom-16 right-0 w-72 bg-white rounded-2xl shadow-2xl border border-navy-100 overflow-hidden animate-slideUp">
           <div className="bg-navy-900 px-5 py-4 flex items-center justify-between">
-            <p className="text-white font-semibold text-sm">Besoin d&apos;aide ?</p>
+            <p className="text-white font-semibold text-sm">Besoin d&apos;aide ?</p>
             <button onClick={() => setOpen(false)} className="text-white/60 hover:text-white transition-colors">
               <X className="w-4 h-4" />
             </button>
@@ -159,8 +166,6 @@ function ContactWidget() {
                 <p className="text-xs text-navy-500">Message rapide</p>
               </div>
             </a>
-
-            {/* Lien cas clients */}
             <Link
               to="/cas-clients"
               onClick={() => setOpen(false)}
@@ -188,46 +193,90 @@ function ContactWidget() {
   );
 }
 
+// ─── ErrorBoundary ──────────────────────────────────────────
+import { Component } from 'react';
+class ErrorBoundary extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+  static getDerivedStateFromError() { return { hasError: true }; }
+  componentDidCatch(error, info) { console.error('Pisteur ErrorBoundary:', error, info); }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen flex items-center justify-center bg-navy-950 px-4">
+          <div className="text-center max-w-md">
+            <div className="text-5xl mb-4">⚡</div>
+            <h1 className="text-2xl font-bold text-white mb-2">Quelque chose s'est mal passé</h1>
+            <p className="text-white/50 text-sm mb-6">Une erreur inattendue s'est produite. Rechargez la page ou revenez à l'accueil.</p>
+            <div className="flex justify-center gap-3">
+              <button
+                onClick={() => window.location.reload()}
+                className="px-5 py-2.5 rounded-xl bg-emerald-500 text-white text-sm font-semibold hover:bg-emerald-400 transition-colors"
+              >
+                Recharger
+              </button>
+              <a
+                href="/"
+                className="px-5 py-2.5 rounded-xl border border-white/10 text-white/70 text-sm font-semibold hover:border-white/25 hover:text-white transition-colors"
+              >
+                Accueil
+              </a>
+            </div>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 // ─── App ───────────────────────────────────────────────────
 export default function App() {
   const [theme, setTheme] = useState(() => {
     if (typeof window === 'undefined') return 'dark';
-    const storedTheme = window.localStorage.getItem('theme');
-    if (storedTheme === 'light' || storedTheme === 'dark') return storedTheme;
+    try {
+      const storedTheme = window.localStorage.getItem('theme');
+      if (storedTheme === 'light' || storedTheme === 'dark') return storedTheme;
+    } catch {}
     return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
   });
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
     document.documentElement.style.colorScheme = theme;
-    window.localStorage.setItem('theme', theme);
+    try { window.localStorage.setItem('theme', theme); } catch {}
   }, [theme]);
 
   return (
-    <ToastProvider>
-      <div className="min-h-screen flex flex-col">
-        <ScrollProgress />
-        <SeoManager />
-        <ScrollToTop />
-        <ExitIntentModal />
-        <Header theme={theme} onToggleTheme={() => setTheme(current => (current === 'dark' ? 'light' : 'dark'))} />
-        <main className="flex-1">
-          <Routes>
-            <Route path="/"            element={<Home />} />
-            <Route path="/demo"        element={<Demo />} />
-            <Route path="/simulation"  element={<Simulation />} />
-            <Route path="/tarifs"      element={<Pricing />} />
-            <Route path="/blog"        element={<Blog />} />
-            <Route path="/faq"         element={<Faq />} />
-            <Route path="/contact"     element={<Contact />} />
-            <Route path="/cas-clients" element={<CaseStudies />} />
-            {/* 404 catch-all */}
-            <Route path="*"            element={<NotFound />} />
-          </Routes>
-        </main>
-        <Footer />
-        <ContactWidget />
-      </div>
-    </ToastProvider>
+    <ErrorBoundary>
+      <ToastProvider>
+        <div className="min-h-screen flex flex-col">
+          <ScrollProgress />
+          <SeoManager />
+          <ScrollToTop />
+          <ExitIntentModal />
+          <CookieBanner />
+          <Header theme={theme} onToggleTheme={() => setTheme(current => (current === 'dark' ? 'light' : 'dark'))} />
+          <main className="flex-1">
+            <Routes>
+              <Route path="/"               element={<Home />} />
+              <Route path="/demo"           element={<Demo />} />
+              <Route path="/simulation"     element={<Simulation />} />
+              <Route path="/tarifs"         element={<Pricing />} />
+              <Route path="/blog"           element={<Blog />} />
+              <Route path="/faq"            element={<Faq />} />
+              <Route path="/contact"        element={<Contact />} />
+              <Route path="/cas-clients"    element={<CaseStudies />} />
+              <Route path="/confidentialite" element={<PrivacyPolicy />} />
+              <Route path="*"               element={<NotFound />} />
+            </Routes>
+          </main>
+          <Footer />
+          <ContactWidget />
+        </div>
+      </ToastProvider>
+    </ErrorBoundary>
   );
 }
