@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { useFadeInOnScroll } from '../hooks/useFadeInOnScroll';
 import {
   MapPin, Zap, Mail, BarChart3, Building2, ChevronRight,
@@ -273,17 +274,33 @@ function StatsSection() {
 /* ── Testimonials ────────────────────────────────────── */
 function TestimonialsSection() {
   const items = [
-    { name: 'Marc Dupont', role: 'Directeur commercial, IsolPro', quote: 'Pisteur nous a permis d\'identifier 3× plus de cibles qualifiées en moins d\'une semaine. Le ROI a été immédiat.' },
-    { name: 'Sophie Martin', role: 'Gérante, EnergétiK Conseil', quote: 'Je reçois chaque matin une liste exploitable. Fini les fichiers Excel, fini les heures perdues à qualifier.' },
-    { name: 'Thomas Bernard', role: 'Responsable BDD, RénoPlus', quote: 'L\'email personnalisé est bluffant : chaque prospect a l\'impression qu\'on connaît son bâtiment. Taux d\'ouverture ×2.' },
+    {
+      name: 'Marc Dupont',
+      role: 'Directeur commercial, IsolPro',
+      quote:
+        "Pisteur nous a permis d'identifier 3× plus de cibles qualifiées en moins d'une semaine. Le ROI a été immédiat.",
+    },
+    {
+      name: 'Sophie Martin',
+      role: 'Gérante, EnergétiK Conseil',
+      quote:
+        'Je reçois chaque matin une liste exploitable. Fini les fichiers Excel, fini les heures perdues à qualifier.',
+    },
+    {
+      name: 'Thomas Bernard',
+      role: 'Responsable BDD, RénoPlus',
+      quote:
+        "L'email personnalisé est bluffant : chaque prospect a l'impression qu'on connaît son bâtiment. Taux d'ouverture ×2.",
+    },
   ];
 
-  const [index, setIndex] = React.useState(0);
+  const [index, setIndex] = useState(0);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const id = setInterval(() => {
       setIndex((prev) => (prev + 1) % items.length);
-    }, 9000); // vitesse lente: 9s entre chaque changement
+    }, 9000); // vitesse lente : 9s entre chaque avis
+
     return () => clearInterval(id);
   }, [items.length]);
 
@@ -301,7 +318,10 @@ function TestimonialsSection() {
             style={{ transform: `translateX(-${index * 100}%)` }}
           >
             {items.map((t) => (
-              <div key={t.name} className="min-w-full px-1 sm:px-4 flex justify-center">
+              <div
+                key={t.name}
+                className="min-w-full px-1 sm:px-4 flex justify-center"
+              >
                 <div className="card-glass p-6 flex flex-col gap-4 max-w-md w-full">
                   <div className="flex gap-1">
                     {[...Array(5)].map((_, k) => (
@@ -316,7 +336,7 @@ function TestimonialsSection() {
                   </p>
                   <div className="mt-auto">
                     <p className="text-sm font-semibold">{t.name}</p>
-                    <p className="text-xs text-white/40">{t.role}</p>
+                    <p className="text-xs text.white/40">{t.role}</p>
                   </div>
                 </div>
               </div>
