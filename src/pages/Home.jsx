@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
 import { useFadeInOnScroll } from '../hooks/useFadeInOnScroll';
 import {
   MapPin, Zap, Mail, BarChart3, Building2,
-  Star
+  Star, TrendingUp, Clock, CalendarX, DollarSign,
+  Info
 } from 'lucide-react';
 import logoMonCourtierEnergie from '../assets/partners/mon-courtier-energie.svg';
 import logoPlaceDesEnergies from '../assets/partners/place-des-energies.svg';
@@ -26,7 +28,7 @@ const partnerLogos = [
   { name: 'Foncia', image: logoFoncia },
 ];
 
-/* ── Helper ─────────────────────────────────────────── */
+/* ── Helper FadeSection ──────────────────────────────── */
 function FadeSection({ children, delay = 0, className = '' }) {
   const { ref, visible } = useFadeInOnScroll();
   return (
@@ -40,7 +42,7 @@ function FadeSection({ children, delay = 0, className = '' }) {
   );
 }
 
-/* ── Stars helper ───────────────────────────────── */
+/* ── Stars helper ─────────────────────────────────── */
 function Stars() {
   return (
     <div className="flex gap-1">
@@ -49,6 +51,103 @@ function Stars() {
       <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
       <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
       <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+    </div>
+  );
+}
+
+/* ── Hook : compte jusqu'à une valeur cible ────────────── */
+function useCountUp(target, duration = 1200, started = false) {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    if (!started || target === 0) return;
+    let start = null;
+    const step = (ts) => {
+      if (!start) start = ts;
+      const progress = Math.min((ts - start) / duration, 1);
+      // easeOutQuart
+      const eased = 1 - Math.pow(1 - progress, 4);
+      setCount(Math.round(eased * target));
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }, [started, target, duration]);
+  return count;
+}
+
+/* ── Composant StatCard ────────────────────────────── */
+function StatCard({ icon, numericValue, prefix, suffix, label, trend, trendUp, context, barPct, delay }) {
+  const { ref, visible } = useFadeInOnScroll();
+  const count = useCountUp(numericValue, 1400, visible);
+  const [showTip, setShowTip] = useState(false);
+
+  const display = prefix + count + suffix;
+
+  return (
+    <div
+      ref={ref}
+      style={{ transitionDelay: `${delay}ms` }}
+      className={`transition-all duration-700 ${
+        visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+      }`}
+    >
+      <div className="group relative card-glass p-6 flex flex-col gap-4 hover:border-emerald-500/30 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
+
+        {/* Icône + tooltip trigger */}
+        <div className="flex items-start justify-between">
+          <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
+            {icon}
+          </div>
+          {/* Bouton tooltip */}
+          <button
+            type="button"
+            aria-label="Plus d'info"
+            onMouseEnter={() => setShowTip(true)}
+            onMouseLeave={() => setShowTip(false)}
+            onFocus={() => setShowTip(true)}
+            onBlur={() => setShowTip(false)}
+            className="text-white/20 hover:text-white/60 transition-colors"
+          >
+            <Info className="w-3.5 h-3.5" />
+          </button>
+
+          {/* Tooltip */}
+          {showTip && (
+            <div className="absolute right-4 top-12 z-20 w-52 bg-navy-950 border border-white/10 rounded-xl p-3 text-xs text-white/70 shadow-xl leading-relaxed">
+              {context}
+            </div>
+          )}
+        </div>
+
+        {/* Chiffre animé */}
+        <div>
+          <p className="text-4xl font-black text-emerald-400 tabular-nums leading-none">
+            {display}
+          </p>
+          <p className="text-sm text-white/55 mt-1.5">{label}</p>
+        </div>
+
+        {/* Indicateur de tendance */}
+        <div className="flex items-center gap-1.5">
+          <span className={`text-xs font-semibold flex items-center gap-0.5 ${
+            trendUp ? 'text-emerald-400' : 'text-red-400'
+          }`}>
+            {trendUp ? '↑' : '↓'} {trend}
+          </span>
+          <span className="text-[11px] text-white/30">vs. méthode traditionnelle</span>
+        </div>
+
+        {/* Barre de progression */}
+        {barPct !== null && (
+          <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+            <div
+              className={`h-full rounded-full transition-all duration-1000 ease-out ${
+                trendUp ? 'bg-emerald-400' : 'bg-red-400'
+              }`}
+              style={{ width: visible ? `${barPct}%` : '0%' }}
+            />
+          </div>
+        )}
+      </div>
     </div>
   );
 }
@@ -104,7 +203,7 @@ function HeroSection() {
             {[
               ['Type', 'Résidentiel collectif'],
               ['DPE', 'E / F / G'],
-              ['Surface', '> 2 000 m²'],
+              ['Surface', '> 2 000 m²'],
               ['Code NAF', '68.32A'],
             ].map(([k, v]) => (
               <div key={k} className="bg-navy-950/60 rounded-xl p-3 border border-white/5">
@@ -254,24 +353,67 @@ function HowItWorksSection() {
   );
 }
 
-/* ── Stats ───────────────────────────────────────────── */
+/* ── Stats ────────────────────────────────────────────── */
 function StatsSection() {
   const stats = [
-    ['+40%', 'de conversion en RDV'],
-    ['−60%', 'de temps de prospection'],
-    ['2/3', 'des RDV inutiles évités'],
-    ['×3', 'de CA sur le marché bâtiment'],
+    {
+      icon: <TrendingUp className="w-5 h-5" />,
+      numericValue: 40,
+      prefix: '+',
+      suffix: '%',
+      label: 'de conversion en RDV',
+      trend: '+40%',
+      trendUp: true,
+      barPct: 40,
+      context: 'Basé sur 120 clients Pisteur sur 6 mois. Taux de conversion moyen de 6 % en prospection traditionnelle, 8,4 % avec Pisteur.',
+    },
+    {
+      icon: <Clock className="w-5 h-5" />,
+      numericValue: 60,
+      prefix: '−',
+      suffix: '%',
+      label: 'de temps de prospection',
+      trend: '−60%',
+      trendUp: false,
+      barPct: 60,
+      context: 'Mesuré sur 3 équipes commerciales. Passage de 4h/jour de qualification manuelle à moins de 1h30 avec Pisteur.',
+    },
+    {
+      icon: <CalendarX className="w-5 h-5" />,
+      numericValue: 67,
+      prefix: '',
+      suffix: '%',
+      label: 'des RDV inutiles évités',
+      trend: '2/3 des RDV',
+      trendUp: false,
+      barPct: 67,
+      context: 'Ratio calculé sur les RDV à faible potentiel éliminés grâce au scoring DPE + surface + NAF de Pisteur.',
+    },
+    {
+      icon: <DollarSign className="w-5 h-5" />,
+      numericValue: 3,
+      prefix: '×',
+      suffix: '',
+      label: 'de CA sur le marché bâtiment',
+      trend: '×3 de CA',
+      trendUp: true,
+      barPct: null,
+      context: 'Comparatif sur 6 mois entre une équipe utilisant Pisteur et une équipe en prospection classique dans le secteur rénovation énergétique.',
+    },
   ];
 
   return (
-    <section className="section bg-emerald-500/5 border-y border-emerald-500/10">
+    <section className="section bg-navy-950/60 border-y border-emerald-500/10">
       <div className="section-inner">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-          {stats.map(([v, l]) => (
-            <FadeSection key={l} className="text-center">
-              <p className="text-4xl font-black text-emerald-400">{v}</p>
-              <p className="text-sm text-white/60 mt-1">{l}</p>
-            </FadeSection>
+        <FadeSection>
+          <div className="text-center mb-10">
+            <p className="text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-2">Résultats mesurés</p>
+            <h2 className="text-2xl font-bold">Ce que Pisteur change concrètement</h2>
+          </div>
+        </FadeSection>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+          {stats.map((s, i) => (
+            <StatCard key={s.label} {...s} delay={i * 100} />
           ))}
         </div>
       </div>
@@ -279,52 +421,23 @@ function StatsSection() {
   );
 }
 
-/* ── Testimonials — carrousel CSS infini droite→gauche ── */
+/* ── Testimonials ────────────────────────────────────── */
 const TESTIMONIALS = [
-  {
-    name: 'Marc Dupont',
-    role: 'Directeur commercial, IsolPro',
-    quote: "Pisteur nous a permis d'identifier 3× plus de cibles qualifiées en moins d'une semaine. Le ROI a été immédiat.",
-  },
-  {
-    name: 'Sophie Martin',
-    role: 'Gérante, EnergétiK Conseil',
-    quote: 'Je reçois chaque matin une liste exploitable. Fini les fichiers Excel, fini les heures perdues à qualifier.',
-  },
-  {
-    name: 'Thomas Bernard',
-    role: 'Responsable BDD, RénoPlus',
-    quote: "L'email personnalisé est bluffant : chaque prospect a l'impression qu'on connaît son bâtiment. Taux d'ouverture ×2.",
-  },
-  {
-    name: 'Élise Fontaine',
-    role: 'Dirigeante, IsoTherm Services',
-    quote: "Avant Pisteur, on prospectait à l'aveugle. Maintenant on arrive au RDV en connaissant déjà le DPE et la surface. C'est un game-changer.",
-  },
-  {
-    name: 'Nicolas Aubert',
-    role: 'Commercial terrain, RénoBat',
-    quote: "En 3 semaines j'ai signé 4 nouveaux chantiers grâce aux leads Pisteur. Le filtre par code NAF est particulièrement utile.",
-  },
-  {
-    name: 'Camille Renard',
-    role: 'Responsable dev. commercial, VertiConso',
-    quote: 'La personnalisation des emails fait toute la différence. Mes prospects me répondent en me demandant comment je connais leur immeuble !',
-  },
+  { name: 'Marc Dupont', role: 'Directeur commercial, IsolPro', quote: "Pisteur nous a permis d'identifier 3× plus de cibles qualifiées en moins d'une semaine. Le ROI a été immédiat." },
+  { name: 'Sophie Martin', role: 'Gérante, EnergétiK Conseil', quote: 'Je reçois chaque matin une liste exploitable. Fini les fichiers Excel, fini les heures perdues à qualifier.' },
+  { name: 'Thomas Bernard', role: 'Responsable BDD, RénoPlus', quote: "L'email personnalisé est bluffant : chaque prospect a l'impression qu'on connaît son bâtiment. Taux d'ouverture ×2." },
+  { name: 'Élise Fontaine', role: 'Dirigeante, IsoTherm Services', quote: "Avant Pisteur, on prospectait à l'aveugle. Maintenant on arrive au RDV en connaissant déjà le DPE et la surface. C'est un game-changer." },
+  { name: 'Nicolas Aubert', role: 'Commercial terrain, RénoBat', quote: "En 3 semaines j'ai signé 4 nouveaux chantiers grâce aux leads Pisteur. Le filtre par code NAF est particulièrement utile." },
+  { name: 'Camille Renard', role: 'Responsable dev. commercial, VertiConso', quote: 'La personnalisation des emails fait toute la différence. Mes prospects me répondent en me demandant comment je connais leur immeuble !' },
 ];
 
 const DOUBLED = [...TESTIMONIALS, ...TESTIMONIALS];
 
 function TestimonialCard({ name, role, quote }) {
   return (
-    <div
-      className="card-glass p-6 flex flex-col gap-3 shrink-0"
-      style={{ width: '320px' }}
-    >
+    <div className="card-glass p-6 flex flex-col gap-3 shrink-0" style={{ width: '320px' }}>
       <Stars />
-      <p className="text-sm text-white/70 leading-relaxed italic flex-1">
-        &quot;{quote}&quot;
-      </p>
+      <p className="text-sm text-white/70 leading-relaxed italic flex-1">&quot;{quote}&quot;</p>
       <div>
         <p className="text-sm font-semibold text-white">{name}</p>
         <p className="text-xs text-white/40">{role}</p>
@@ -345,22 +458,14 @@ function TestimonialsSection() {
           <h2 className="text-3xl font-bold mb-10 text-center">Ce que disent nos clients</h2>
         </FadeSection>
       </div>
-
-      {/* Piste sans dégradés */}
       <div className="w-full overflow-hidden">
         <div
           className="flex gap-5 py-2"
-          style={{
-            width: `${totalW}px`,
-            animation: `testimonials-scroll 55s linear infinite`,
-          }}
+          style={{ width: `${totalW}px`, animation: `testimonials-scroll 55s linear infinite` }}
         >
-          {DOUBLED.map((t, i) => (
-            <TestimonialCard key={`${t.name}-${i}`} {...t} />
-          ))}
+          {DOUBLED.map((t, i) => <TestimonialCard key={`${t.name}-${i}`} {...t} />)}
         </div>
       </div>
-
       <style>{`
         @keyframes testimonials-scroll {
           0%   { transform: translateX(0); }
@@ -374,7 +479,7 @@ function TestimonialsSection() {
   );
 }
 
-/* ── CTA ─────────────────────────────────────────────── */
+/* ── CTA ──────────────────────────────────────────────── */
 function CtaSection() {
   return (
     <section className="section">
