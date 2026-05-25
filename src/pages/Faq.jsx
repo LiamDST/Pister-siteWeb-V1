@@ -27,7 +27,7 @@ const faqData = [
     id: 1,
     cat: 'data',
     q: 'Pisteur utilise quelles sources de données ?',
-    a: 'Pisteur croise trois sources publiques officielles : la base BDNB (Base de Données Nationale des Bâtiments), les DPE publiés par l’ADEME, et le registre SIRENE pour les entreprises. Toutes les données sont mises à jour chaque mois.',
+    a: 'Pisteur croise trois sources publiques officielle : la base BDNB (Base de Données Nationale des Bâtiments), les DPE publiés par l’ADEME, et le registre SIRENE pour les entreprises. Toutes les données sont mises à jour chaque mois.',
     isNew: false,
   },
   {
@@ -48,7 +48,7 @@ const faqData = [
     id: 4,
     cat: 'product',
     q: 'Comment fonctionne l’email personnalisé IA ?',
-    a: "Notre moteur IA génère un email d'approche unique pour chaque prospect, en mentionnant le bâtiment spécifique (DPE, surface, année), l'entreprise cible et un angle de valeur adapté à votre offre. Le taux d'ouverture moyen observé est de 47 %, contre 22 % pour un email générique.",
+    a: "Notre moteur IA génère un email d'approche unique pour chaque prospect, en mentionnant le bâtiment spécifique (DPE, surface, année), l'entreprise cible et un angle de valeur adapté à votre offre. Le taux d'ouverture moyen observé est de 47%, contre 22% pour un email générique.",
     isNew: true,
   },
   {
@@ -76,7 +76,7 @@ const faqData = [
     id: 8,
     cat: 'billing',
     q: 'Que se passe-t-il si je dépasse mon quota de leads ?',
-    a: "Vous pouvez acheter des packs de crédits supplémentaires à la carte depuis votre espace client. Vous êtes notifié par email à 80 % d'utilisation de votre quota. Aucun débit automatique sans votre accord.",
+    a: "Vous pouvez acheter des packs de crédits supplémentaires à la carte depuis votre espace client. Vous êtes notifié par email à 80% d'utilisation de votre quota. Aucun débit automatique sans votre accord.",
     isNew: false,
   },
   {
@@ -145,6 +145,7 @@ function FaqItem({ item }) {
             {item.a}
           </p>
 
+          {/* Vote utile / pas utile */}
           {vote === null ? (
             <div className="mt-4 flex items-center gap-3">
               <span className="text-xs text-white/35">Cette réponse vous a-t-elle aidé ?</span>
@@ -174,6 +175,7 @@ function FaqItem({ item }) {
   );
 }
 
+/* ─── Page principale ──────────────────────────────────────── */
 export default function Faq() {
   const [activeCat, setActiveCat] = useState('all');
   const [query, setQuery]         = useState('');
@@ -190,6 +192,8 @@ export default function Faq() {
   return (
     <section className="section">
       <div className="section-inner max-w-3xl">
+
+        {/* ── En-tête ── */}
         <FadeSection className="text-center mb-10">
           <p className="text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-2">FAQ</p>
           <h1 className="text-4xl font-bold mb-3">Questions fréquentes</h1>
@@ -201,6 +205,7 @@ export default function Faq() {
           </p>
         </FadeSection>
 
+        {/* ── Barre de recherche ── */}
         <FadeSection className="mb-6">
           <div className="relative">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30 pointer-events-none" />
@@ -222,6 +227,7 @@ export default function Faq() {
           </div>
         </FadeSection>
 
+        {/* ── Filtres catégories ── */}
         <FadeSection className="mb-8">
           <div className="flex flex-wrap gap-2">
             {categories.map(cat => (
@@ -247,6 +253,7 @@ export default function Faq() {
           </div>
         </FadeSection>
 
+        {/* ── Liste questions ── */}
         <div className="space-y-3">
           {filtered.length > 0 ? (
             filtered.map((item, i) => (
@@ -269,6 +276,7 @@ export default function Faq() {
           )}
         </div>
 
+        {/* ── Encart lien Pricing ── */}
         <FadeSection className="mt-12">
           <div className="card-glass p-6 rounded-3xl border-white/8 flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
             <div className="flex-1">
@@ -285,6 +293,7 @@ export default function Faq() {
             </div>
           </div>
         </FadeSection>
+
       </div>
     </section>
   );
