@@ -4,7 +4,7 @@ import { supabase } from '../lib/supabase';
 import {
   Loader2, CheckCircle2, Building2, MapPin,
   TrendingUp, Mail, ArrowRight, ChevronLeft,
-  Users, Zap, BarChart3
+  Users, Zap, BarChart3, Ruler
 } from 'lucide-react';
 
 /* ─── Data ───────────────────────────────────────────── */
@@ -104,12 +104,97 @@ function StepsBar({ step }) {
   );
 }
 
-/* ─── Recap row (grille 2 colonnes, labels fixes) ────── */
-function RecapRow({ label, children }) {
+/* ─── ICP Summary Card ──────────────────────────────── */
+function ICPSummary({ form, liveCount }) {
+  const buildingTypeIcon = buildingTypes.find(t => t.value === form.buildingType)?.icon ?? '🏢';
+
   return (
-    <div className="grid grid-cols-[7rem_1fr] gap-2 items-center py-2 border-b border-white/5 last:border-0">
-      <span className="text-xs text-white/40 whitespace-nowrap">{label}</span>
-      <span className="text-xs font-semibold text-white/85 text-right">{children}</span>
+    <div className="rounded-2xl border border-emerald-500/25 bg-emerald-950/40 overflow-hidden">
+      {/* Header */}
+      <div className="px-4 py-3 border-b border-emerald-500/15 flex items-center gap-2">
+        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+        <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wider">Récapitulatif de votre ICP</span>
+      </div>
+
+      {/* Lignes */}
+      <div className="divide-y divide-white/5">
+
+        {/* Région */}
+        <div className="flex items-center gap-3 px-4 py-3">
+          <div className="w-7 h-7 rounded-lg bg-emerald-500/10 flex items-center justify-center shrink-0">
+            <MapPin className="w-3.5 h-3.5 text-emerald-400" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-[10px] text-white/40 uppercase tracking-wide leading-none mb-0.5">Région</p>
+            <p className="text-sm font-semibold text-white truncate">{form.region}</p>
+          </div>
+        </div>
+
+        {/* Type */}
+        <div className="flex items-center gap-3 px-4 py-3">
+          <div className="w-7 h-7 rounded-lg bg-emerald-500/10 flex items-center justify-center shrink-0 text-base leading-none">
+            {buildingTypeIcon}
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-[10px] text-white/40 uppercase tracking-wide leading-none mb-0.5">Type de bâtiment</p>
+            <p className="text-sm font-semibold text-white truncate">{form.buildingType}</p>
+          </div>
+        </div>
+
+        {/* DPE */}
+        <div className="flex items-center gap-3 px-4 py-3">
+          <div className="w-7 h-7 rounded-lg bg-amber-500/10 flex items-center justify-center shrink-0">
+            <Zap className="w-3.5 h-3.5 text-amber-400" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-[10px] text-white/40 uppercase tracking-wide leading-none mb-1.5">DPE ciblés</p>
+            <div className="flex items-center gap-1 flex-wrap">
+              {form.dpeSelected.length > 0
+                ? form.dpeSelected.map(d => {
+                    const grade = dpeGrades.find(g => g.label === d);
+                    return (
+                      <span key={d} className={`inline-flex items-center justify-center w-6 h-6 rounded-md text-[11px] font-black ${grade?.color}`}>
+                        {d}
+                      </span>
+                    );
+                  })
+                : <span className="text-sm text-white/30">—</span>
+              }
+            </div>
+          </div>
+        </div>
+
+        {/* Surface */}
+        <div className="flex items-center gap-3 px-4 py-3">
+          <div className="w-7 h-7 rounded-lg bg-emerald-500/10 flex items-center justify-center shrink-0">
+            <Ruler className="w-3.5 h-3.5 text-emerald-400" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-[10px] text-white/40 uppercase tracking-wide leading-none mb-0.5">Surface minimale</p>
+            <p className="text-sm font-semibold text-white">
+              {parseInt(form.minSurface) === 0
+                ? 'Toutes surfaces'
+                : `≥ ${parseInt(form.minSurface).toLocaleString('fr-FR')} m²`
+              }
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Footer — estimation */}
+      <div className="px-4 py-3 bg-emerald-500/10 border-t border-emerald-500/20 flex items-center justify-between">
+        <div>
+          <p className="text-[10px] text-emerald-300/60 uppercase tracking-wide">Estimation</p>
+          <p className="text-xl font-black text-emerald-400 tabular-nums leading-tight">
+            {liveCount.toLocaleString('fr-FR')}
+            <span className="text-sm font-semibold text-emerald-400/70 ml-1">bâtiments</span>
+          </p>
+        </div>
+        <div className="text-right">
+          <p className="text-[10px] text-white/30">Source BDNB · ADEME</p>
+          <p className="text-[10px] text-white/20">Données 2024</p>
+        </div>
+      </div>
     </div>
   );
 }
@@ -420,40 +505,8 @@ export default function Simulation() {
               {step === 2 && (
                 <div className="space-y-5 animate-[fadeIn_0.3s_ease-out]">
 
-                  {/* ── Récapitulatif ICP ── */}
-                  <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-4">
-                    <p className="text-xs font-semibold text-emerald-400 mb-3">Récapitulatif de votre ICP</p>
-
-                    <RecapRow label="Région">{form.region}</RecapRow>
-                    <RecapRow label="Type">{form.buildingType}</RecapRow>
-                    <RecapRow label="DPE">
-                      <span className="inline-flex items-center justify-end gap-1 flex-wrap">
-                        {form.dpeSelected.length > 0
-                          ? form.dpeSelected.map(d => {
-                              const grade = dpeGrades.find(g => g.label === d);
-                              return (
-                                <span
-                                  key={d}
-                                  className={`inline-flex items-center justify-center w-5 h-5 rounded text-[10px] font-black ${grade?.color}`}
-                                >
-                                  {d}
-                                </span>
-                              );
-                            })
-                          : '—'}
-                      </span>
-                    </RecapRow>
-                    <RecapRow label="Surface min.">
-                      &gt; {parseInt(form.minSurface).toLocaleString('fr-FR')} m²
-                    </RecapRow>
-
-                    <div className="flex items-center justify-between pt-3 mt-1 border-t border-white/10">
-                      <span className="text-xs text-white/40">Estimation</span>
-                      <span className="text-sm font-black text-emerald-400 tabular-nums">
-                        {liveCount.toLocaleString('fr-FR')} bâtiments
-                      </span>
-                    </div>
-                  </div>
+                  {/* Nouveau récapitulatif */}
+                  <ICPSummary form={form} liveCount={liveCount} />
 
                   <div>
                     <label className="text-xs text-white/50 mb-2 flex items-center gap-1.5 font-medium">
