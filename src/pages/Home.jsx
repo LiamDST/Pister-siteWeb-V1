@@ -4,7 +4,8 @@ import { useFadeInOnScroll } from '../hooks/useFadeInOnScroll';
 import {
   MapPin, Zap, Mail, BarChart3, Building2,
   Star, TrendingUp, Clock, CalendarX, DollarSign,
-  Info
+  Info, ChevronDown, Settings, ListChecks, Send, BarChart2,
+  ArrowRight, Play
 } from 'lucide-react';
 import logoMonCourtierEnergie from '../assets/partners/mon-courtier-energie.svg';
 import logoPlaceDesEnergies from '../assets/partners/place-des-energies.svg';
@@ -64,7 +65,6 @@ function useCountUp(target, duration = 1200, started = false) {
     const step = (ts) => {
       if (!start) start = ts;
       const progress = Math.min((ts - start) / duration, 1);
-      // easeOutQuart
       const eased = 1 - Math.pow(1 - progress, 4);
       setCount(Math.round(eased * target));
       if (progress < 1) requestAnimationFrame(step);
@@ -79,25 +79,19 @@ function StatCard({ icon, numericValue, prefix, suffix, label, trend, trendUp, c
   const { ref, visible } = useFadeInOnScroll();
   const count = useCountUp(numericValue, 1400, visible);
   const [showTip, setShowTip] = useState(false);
-
   const display = prefix + count + suffix;
 
   return (
     <div
       ref={ref}
       style={{ transitionDelay: `${delay}ms` }}
-      className={`transition-all duration-700 ${
-        visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-      }`}
+      className={`transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
     >
       <div className="group relative card-glass p-6 flex flex-col gap-4 hover:border-emerald-500/30 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
-
-        {/* Icône + tooltip trigger */}
         <div className="flex items-start justify-between">
           <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
             {icon}
           </div>
-          {/* Bouton tooltip */}
           <button
             type="button"
             aria-label="Plus d'info"
@@ -109,40 +103,26 @@ function StatCard({ icon, numericValue, prefix, suffix, label, trend, trendUp, c
           >
             <Info className="w-3.5 h-3.5" />
           </button>
-
-          {/* Tooltip */}
           {showTip && (
             <div className="absolute right-4 top-12 z-20 w-52 bg-navy-950 border border-white/10 rounded-xl p-3 text-xs text-white/70 shadow-xl leading-relaxed">
               {context}
             </div>
           )}
         </div>
-
-        {/* Chiffre animé */}
         <div>
-          <p className="text-4xl font-black text-emerald-400 tabular-nums leading-none">
-            {display}
-          </p>
+          <p className="text-4xl font-black text-emerald-400 tabular-nums leading-none">{display}</p>
           <p className="text-sm text-white/55 mt-1.5">{label}</p>
         </div>
-
-        {/* Indicateur de tendance */}
         <div className="flex items-center gap-1.5">
-          <span className={`text-xs font-semibold flex items-center gap-0.5 ${
-            trendUp ? 'text-emerald-400' : 'text-red-400'
-          }`}>
+          <span className={`text-xs font-semibold flex items-center gap-0.5 ${trendUp ? 'text-emerald-400' : 'text-red-400'}`}>
             {trendUp ? '↑' : '↓'} {trend}
           </span>
           <span className="text-[11px] text-white/30">vs. méthode traditionnelle</span>
         </div>
-
-        {/* Barre de progression */}
         {barPct !== null && (
           <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
             <div
-              className={`h-full rounded-full transition-all duration-1000 ease-out ${
-                trendUp ? 'bg-emerald-400' : 'bg-red-400'
-              }`}
+              className={`h-full rounded-full transition-all duration-1000 ease-out ${trendUp ? 'bg-emerald-400' : 'bg-red-400'}`}
               style={{ width: visible ? `${barPct}%` : '0%' }}
             />
           </div>
@@ -167,23 +147,18 @@ function HeroSection() {
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
             73 leads identifiés aujourd&apos;hui
           </div>
-
           <h1 className="text-4xl sm:text-5xl font-bold tracking-tight leading-tight">
             Trouvez les bâtiments{' '}
             <span className="text-emerald-400">qui ont besoin de vous.</span>
           </h1>
-
           <p className="text-base text-white/60 max-w-md leading-relaxed">
             Pisteur analyse 1,2 million de bâtiments et vous livre chaque matin les
-            cibles prioritaires avec DPE, décideur nominatif, coordonnées et potentiel
-            chiffré.
+            cibles prioritaires avec DPE, décideur nominatif, coordonnées et potentiel chiffré.
           </p>
-
           <div className="flex flex-wrap gap-3">
             <Link to="/contact" className="btn-primary">Essai gratuit — sans CB</Link>
             <Link to="/demo" className="btn-outline">Voir la démo</Link>
           </div>
-
           <div className="flex gap-6 pt-2">
             {[['1,2M+', 'bâtiments analysés'], ['100+', 'clients actifs'], ['73', 'leads / jour']].map(([v, l]) => (
               <div key={l}>
@@ -203,7 +178,7 @@ function HeroSection() {
             {[
               ['Type', 'Résidentiel collectif'],
               ['DPE', 'E / F / G'],
-              ['Surface', '> 2 000 m²'],
+              ['Surface', '> 2 000 m²'],
               ['Code NAF', '68.32A'],
             ].map(([k, v]) => (
               <div key={k} className="bg-navy-950/60 rounded-xl p-3 border border-white/5">
@@ -237,7 +212,6 @@ function HeroSection() {
             </h2>
           </div>
         </FadeSection>
-
         <FadeSection delay={80}>
           <div className="w-full max-w-4xl mx-auto card-glass overflow-hidden border-white/10 shadow-2xl shadow-black/20">
             <div className="aspect-video bg-navy-950/80">
@@ -282,54 +256,250 @@ function HeroSection() {
 }
 
 /* ── Features ────────────────────────────────────────── */
+const FEATURES_DATA = [
+  {
+    num: '01',
+    icon: <MapPin className="w-5 h-5" />,
+    tag: 'Ciblage',
+    badge: null,
+    title: 'Ciblage géographique précis',
+    desc: 'Filtrez par commune, département, secteur ou rayon GPS. Pisteur connaît chaque bâtiment en France.',
+    detail: [
+      'Rayon GPS configurable autour de vos équipes terrain',
+      'Filtres combinés : commune + DPE + surface + NAF',
+      'Export CSV ou intégration CRM direct',
+    ],
+    step: 'Utilisé à l\'étape 01',
+  },
+  {
+    num: '02',
+    icon: <Zap className="w-5 h-5" />,
+    tag: 'Automatisation',
+    badge: 'Populaire',
+    title: 'Leads livrés chaque matin',
+    desc: 'Recevez une liste priorisée avec DPE, surface, énergie, gestionnaire et décideur nominatif.',
+    detail: [
+      'Scoring automatique basé sur 12 critères',
+      'Décideur nominatif avec coordonnées directes',
+      'Notification email ou Slack à 8h chaque matin',
+    ],
+    step: 'Utilisé à l\'étape 02',
+  },
+  {
+    num: '03',
+    icon: <Mail className="w-5 h-5" />,
+    tag: 'Automatisation',
+    badge: 'Nouveau',
+    title: 'Emails personnalisés auto',
+    desc: 'Un email rédigé automatiquement, contextualisé avec le bâtiment exact et son profil énergétique.',
+    detail: [
+      'IA générative entraînée sur le secteur bâtiment',
+      'Taux d\'ouverture ×2 vs email générique',
+      'Relances automatiques configurables J+3, J+7',
+    ],
+    step: 'Utilisé à l\'étape 03',
+  },
+  {
+    num: '04',
+    icon: <BarChart3 className="w-5 h-5" />,
+    tag: 'Analyse',
+    badge: null,
+    title: 'Tableau de bord analytique',
+    desc: 'Suivez vos taux d\'ouverture, relances, conversions et potentiel de CA sur vos segments cibles.',
+    detail: [
+      'Pipeline visuel : envoyé → ouvert → répondu → RDV',
+      'CA potentiel estimé par segment géographique',
+      'Export PDF pour reporting équipe',
+    ],
+    step: 'Utilisé à l\'étape 04',
+  },
+];
+
+const FEATURE_FILTERS = ['Tous', 'Ciblage', 'Automatisation', 'Analyse'];
+
 function FeaturesSection() {
-  const features = [
-    { icon: <MapPin className="w-5 h-5" />, title: 'Ciblage géographique précis', desc: 'Filtrez par commune, département, secteur ou rayon GPS. Pisteur connaît chaque bâtiment en France.' },
-    { icon: <Zap className="w-5 h-5" />, title: 'Leads livrés chaque matin', desc: 'Recevez une liste priorisée avec DPE, surface, énergie, gestionnaire et décideur nominatif.' },
-    { icon: <Mail className="w-5 h-5" />, title: 'Emails personnalisés auto', desc: 'Un email rédigé automatiquement, contextualisé avec le bâtiment exact et son profil énergétique.' },
-    { icon: <BarChart3 className="w-5 h-5" />, title: 'Tableau de bord analytique', desc: 'Suivez vos taux d\'ouverture, relances, conversions et potentiel de CA sur vos segments cibles.' },
-  ];
+  const [activeFilter, setActiveFilter] = useState('Tous');
+  const [expandedIndex, setExpandedIndex] = useState(null);
+
+  const filtered = FEATURES_DATA.filter(
+    f => activeFilter === 'Tous' || f.tag === activeFilter
+  );
 
   return (
     <section className="section bg-navy-900/40">
       <div className="section-inner">
         <FadeSection>
-          <div className="text-center mb-12">
+          <div className="text-center mb-8">
             <h2 className="text-3xl font-bold mb-3">Tout ce dont vous avez besoin</h2>
             <p className="text-white/60 max-w-lg mx-auto text-sm">
               De la donnée brute à la prise de contact, Pisteur automatise toute la chaîne de prospection.
             </p>
+            {/* Filtres */}
+            <div className="flex flex-wrap justify-center gap-2 mt-6">
+              {FEATURE_FILTERS.map(f => (
+                <button
+                  key={f}
+                  type="button"
+                  onClick={() => { setActiveFilter(f); setExpandedIndex(null); }}
+                  className={`px-4 py-1.5 rounded-full text-xs font-semibold border transition-all duration-200 ${
+                    activeFilter === f
+                      ? 'bg-emerald-500/20 border-emerald-500/50 text-emerald-300'
+                      : 'border-white/10 text-white/50 hover:border-white/25 hover:text-white/70'
+                  }`}
+                >
+                  {f}
+                </button>
+              ))}
+            </div>
           </div>
         </FadeSection>
+
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
-          {features.map((f, i) => (
-            <FadeSection key={f.title} delay={i * 80}>
-              <div className="card-glass p-5 h-full flex flex-col gap-3 hover:border-white/20 transition-colors">
-                <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
-                  {f.icon}
+          {filtered.map((f, i) => {
+            const isOpen = expandedIndex === i;
+            return (
+              <FadeSection key={f.title} delay={i * 80}>
+                <div
+                  className={`card-glass p-5 flex flex-col gap-3 cursor-pointer transition-all duration-300 hover:-translate-y-1 ${
+                    isOpen ? 'border-emerald-500/40 bg-emerald-500/5' : 'hover:border-white/20'
+                  }`}
+                  onClick={() => setExpandedIndex(isOpen ? null : i)}
+                >
+                  {/* Numéro filigrane */}
+                  <div className="flex items-start justify-between">
+                    <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
+                      {f.icon}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {f.badge && (
+                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
+                          f.badge === 'Nouveau'
+                            ? 'bg-blue-500/15 border-blue-500/30 text-blue-300'
+                            : 'bg-amber-500/15 border-amber-500/30 text-amber-300'
+                        }`}>
+                          {f.badge}
+                        </span>
+                      )}
+                      <span className="text-2xl font-black text-white/8 select-none">{f.num}</span>
+                    </div>
+                  </div>
+
+                  <h3 className="font-semibold text-sm">{f.title}</h3>
+                  <p className="text-xs text-white/50 leading-relaxed">{f.desc}</p>
+
+                  {/* Expand toggle */}
+                  <button
+                    type="button"
+                    className="flex items-center gap-1 text-emerald-400 text-xs font-medium mt-auto w-fit"
+                    aria-label={isOpen ? 'Réduire' : 'En savoir plus'}
+                  >
+                    {isOpen ? 'Réduire' : 'En savoir plus'}
+                    <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+                  </button>
+
+                  {/* Panel expansible */}
+                  <div className={`overflow-hidden transition-all duration-400 ease-in-out ${isOpen ? 'max-h-60 opacity-100 mt-1' : 'max-h-0 opacity-0'}`}>
+                    <div className="border-t border-white/8 pt-3 space-y-2">
+                      {f.detail.map(d => (
+                        <div key={d} className="flex items-start gap-2 text-xs text-white/60">
+                          <span className="text-emerald-400 mt-0.5 shrink-0">✓</span>
+                          {d}
+                        </div>
+                      ))}
+                      <p className="text-[10px] text-white/25 mt-2 pt-2 border-t border-white/5">{f.step}</p>
+                    </div>
+                  </div>
                 </div>
-                <h3 className="font-semibold text-sm">{f.title}</h3>
-                <p className="text-xs text-white/50 leading-relaxed">{f.desc}</p>
-              </div>
-            </FadeSection>
-          ))}
+              </FadeSection>
+            );
+          })}
         </div>
+
+        {/* Lien de connexion vers la section suivante */}
+        <FadeSection delay={300}>
+          <div className="flex justify-center mt-8">
+            <a
+              href="#how-it-works"
+              className="flex items-center gap-2 text-xs text-white/40 hover:text-emerald-400 transition-colors"
+            >
+              Voir comment utiliser ces fonctionnalités
+              <ArrowRight className="w-3.5 h-3.5" />
+            </a>
+          </div>
+        </FadeSection>
       </div>
     </section>
   );
 }
 
 /* ── Comment ça marche ────────────────────────────────── */
+const STEPS_DATA = [
+  {
+    n: '01',
+    icon: <Settings className="w-5 h-5" />,
+    time: '5 min',
+    title: 'Configurez votre ICP',
+    desc: 'Type de bâtiment, DPE, énergie, surface, NAF, géographie — en 5 minutes.',
+    detail: 'Définissez votre client idéal une seule fois. Pisteur mémorise vos filtres et les applique automatiquement chaque jour sur l\'ensemble des 1,2 million de bâtiments français.',
+    cta: null,
+    featureTag: 'Ciblage',
+  },
+  {
+    n: '02',
+    icon: <ListChecks className="w-5 h-5" />,
+    time: 'Chaque matin',
+    title: 'Recevez vos leads qualifiés',
+    desc: 'Chaque matin, une liste priorisée avec coordonnées et contexte décisionnel.',
+    detail: 'À 8h chaque matin, votre liste est prête. Chaque lead inclut le DPE, la surface, le gestionnaire nominatif, ses coordonnées et un score de priorité calculé automatiquement.',
+    cta: null,
+    featureTag: 'Automatisation',
+  },
+  {
+    n: '03',
+    icon: <Send className="w-5 h-5" />,
+    time: '1 clic',
+    title: 'Contactez avec un email personnalisé',
+    desc: 'L\'IA génère un email contextualisé pour chaque bâtiment en un clic.',
+    detail: 'L\'IA rédige un email personnalisé mentionnant le DPE exact du bâtiment, sa surface et son potentiel d\'économie. Chaque prospect a l\'impression que vous connaissez déjà son immeuble.',
+    cta: null,
+    featureTag: 'Automatisation',
+  },
+  {
+    n: '04',
+    icon: <BarChart2 className="w-5 h-5" />,
+    time: 'Temps réel',
+    title: 'Suivez vos conversions',
+    desc: 'Dashboard pour tracker les relances, RDV, conversions et CA généré.',
+    detail: 'Visualisez en temps réel votre pipeline : emails envoyés, ouverts, répondus, RDV pris. Estimez le CA potentiel par segment et optimisez vos critères de ciblage.',
+    cta: { label: 'Voir la démo du dashboard', to: '/demo' },
+    featureTag: 'Analyse',
+  },
+];
+
 function HowItWorksSection() {
-  const steps = [
-    { n: '01', title: 'Configurez votre ICP', desc: 'Type de bâtiment, DPE, énergie, surface, NAF, géographie — en 5 minutes.' },
-    { n: '02', title: 'Recevez vos leads qualifiés', desc: 'Chaque matin, une liste priorisée avec coordonnées et contexte décisionnel.' },
-    { n: '03', title: 'Contactez avec un email personnalisé', desc: 'L\'IA gènere un email contextualisé pour chaque bâtiment en un clic.' },
-    { n: '04', title: 'Suivez vos conversions', desc: 'Dashboard pour tracker les relances, RDV, conversions et CA généré.' },
-  ];
+  const [activeStep, setActiveStep] = useState(0);
+  const sectionRef = useRef(null);
+
+  // Scroll-highlight : met à jour activeStep quand la section est visible
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            // on laisse l'utilisateur contrôler manuellement, pas de reset auto
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  const step = STEPS_DATA[activeStep];
 
   return (
-    <section className="section">
+    <section id="how-it-works" className="section" ref={sectionRef}>
       <div className="section-inner">
         <FadeSection>
           <h2 className="text-3xl font-bold mb-3">Comment ça marche</h2>
@@ -337,16 +507,150 @@ function HowItWorksSection() {
             En 4 étapes, Pisteur transforme la donnée bâtiment en chiffre d&apos;affaires.
           </p>
         </FadeSection>
-        <div className="grid md:grid-cols-4 gap-5">
-          {steps.map((s, i) => (
-            <FadeSection key={s.n} delay={i * 100}>
-              <div className="card-glass p-5 h-full flex flex-col gap-3">
-                <span className="text-2xl font-black text-emerald-500/30">{s.n}</span>
-                <h3 className="font-semibold">{s.title}</h3>
-                <p className="text-xs text-white/50 leading-relaxed">{s.desc}</p>
+
+        {/* ── Desktop : stepper horizontal ── */}
+        <div className="hidden md:block">
+          {/* Barre de progression */}
+          <div className="relative flex items-center mb-6">
+            {STEPS_DATA.map((s, i) => (
+              <div key={s.n} className="flex items-center flex-1 last:flex-none">
+                {/* Bouton étape */}
+                <button
+                  type="button"
+                  onClick={() => setActiveStep(i)}
+                  className={`flex flex-col items-center gap-1.5 group transition-all duration-200 ${i === activeStep ? 'opacity-100' : 'opacity-50 hover:opacity-80'}`}
+                >
+                  <div className={`w-10 h-10 rounded-xl border flex items-center justify-center transition-all duration-200 ${
+                    i === activeStep
+                      ? 'bg-emerald-500/20 border-emerald-500/60 text-emerald-400 shadow-lg shadow-emerald-500/20'
+                      : i < activeStep
+                        ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400/60'
+                        : 'bg-white/5 border-white/15 text-white/30'
+                  }`}>
+                    {s.icon}
+                  </div>
+                  <span className={`text-[10px] font-bold ${i === activeStep ? 'text-emerald-400' : 'text-white/30'}`}>
+                    {s.n}
+                  </span>
+                </button>
+                {/* Connecteur */}
+                {i < STEPS_DATA.length - 1 && (
+                  <div className="flex-1 flex items-center mx-2">
+                    <div className={`h-px flex-1 transition-all duration-500 ${i < activeStep ? 'bg-emerald-500/50' : 'bg-white/10'}`} />
+                    <ArrowRight className={`w-3.5 h-3.5 mx-1 transition-colors duration-500 ${i < activeStep ? 'text-emerald-500/50' : 'text-white/10'}`} />
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* Panel de détail */}
+          <div className="grid md:grid-cols-2 gap-8 items-start">
+            {/* Info gauche */}
+            <FadeSection key={activeStep}>
+              <div className="card-glass p-6 border-emerald-500/30 bg-emerald-500/5">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400">
+                    {step.icon}
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-black text-emerald-500/40">{step.n}</span>
+                      <span className="text-[10px] bg-white/8 border border-white/10 text-white/50 px-2 py-0.5 rounded-full flex items-center gap-1">
+                        <Clock className="w-2.5 h-2.5" /> {step.time}
+                      </span>
+                    </div>
+                    <h3 className="font-bold text-base mt-0.5">{step.title}</h3>
+                  </div>
+                </div>
+                <p className="text-sm text-white/60 leading-relaxed mb-4">{step.detail}</p>
+                <p className="text-[10px] text-white/25 border-t border-white/8 pt-3">
+                  Fonctionnalité : <span className="text-emerald-400/50">{step.featureTag}</span>
+                </p>
+                {step.cta && (
+                  <Link
+                    to={step.cta.to}
+                    className="mt-4 inline-flex items-center gap-2 text-xs font-semibold text-emerald-400 hover:text-emerald-300 transition-colors"
+                  >
+                    <Play className="w-3.5 h-3.5" /> {step.cta.label}
+                  </Link>
+                )}
               </div>
             </FadeSection>
-          ))}
+
+            {/* Cards droite */}
+            <div className="grid grid-cols-2 gap-4">
+              {STEPS_DATA.map((s, i) => (
+                <button
+                  key={s.n}
+                  type="button"
+                  onClick={() => setActiveStep(i)}
+                  className={`card-glass p-4 text-left flex flex-col gap-2 transition-all duration-200 ${
+                    i === activeStep
+                      ? 'border-emerald-500/40 bg-emerald-500/5'
+                      : 'opacity-60 hover:opacity-90 hover:border-white/20'
+                  }`}
+                >
+                  <span className="text-xl font-black text-emerald-500/25">{s.n}</span>
+                  <h4 className="font-semibold text-xs leading-snug">{s.title}</h4>
+                  <p className="text-[11px] text-white/45 leading-relaxed">{s.desc}</p>
+                  <span className="text-[10px] text-white/25 flex items-center gap-1 mt-auto">
+                    <Clock className="w-2.5 h-2.5" /> {s.time}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* ── Mobile : timeline verticale ── */}
+        <div className="md:hidden relative">
+          {/* Ligne centrale */}
+          <div className="absolute left-5 top-0 bottom-0 w-px bg-white/10" />
+
+          <div className="space-y-6 pl-14">
+            {STEPS_DATA.map((s, i) => (
+              <FadeSection key={s.n} delay={i * 100}>
+                <div className="relative">
+                  {/* Dot sur la ligne */}
+                  <div className={`absolute -left-9 top-3 w-4 h-4 rounded-full border-2 transition-colors duration-300 ${
+                    i === activeStep
+                      ? 'bg-emerald-500 border-emerald-400'
+                      : 'bg-navy-900 border-white/20'
+                  }`} />
+
+                  <button
+                    type="button"
+                    onClick={() => setActiveStep(i)}
+                    className={`card-glass p-4 w-full text-left flex flex-col gap-2 transition-all duration-200 ${
+                      i === activeStep ? 'border-emerald-500/40 bg-emerald-500/5' : 'opacity-70'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <span className="text-emerald-500/40 font-black text-sm">{s.n}</span>
+                      <span className="text-[10px] text-white/30 flex items-center gap-1">
+                        <Clock className="w-2.5 h-2.5" /> {s.time}
+                      </span>
+                    </div>
+                    <h3 className="font-semibold text-sm">{s.title}</h3>
+                    <p className="text-xs text-white/50 leading-relaxed">{s.desc}</p>
+                    {i === activeStep && (
+                      <p className="text-xs text-white/60 mt-1 leading-relaxed border-t border-white/8 pt-2">{s.detail}</p>
+                    )}
+                    {s.cta && i === activeStep && (
+                      <Link
+                        to={s.cta.to}
+                        className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-400"
+                        onClick={e => e.stopPropagation()}
+                      >
+                        <Play className="w-3 h-3" /> {s.cta.label}
+                      </Link>
+                    )}
+                  </button>
+                </div>
+              </FadeSection>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -365,7 +669,7 @@ function StatsSection() {
       trend: '+40%',
       trendUp: true,
       barPct: 40,
-      context: 'Basé sur 120 clients Pisteur sur 6 mois. Taux de conversion moyen de 6 % en prospection traditionnelle, 8,4 % avec Pisteur.',
+      context: 'Basé sur 120 clients Pisteur sur 6 mois. Taux de conversion moyen de 6 % en prospection traditionnelle, 8,4 % avec Pisteur.',
     },
     {
       icon: <Clock className="w-5 h-5" />,
@@ -425,10 +729,10 @@ function StatsSection() {
 const TESTIMONIALS = [
   { name: 'Marc Dupont', role: 'Directeur commercial, IsolPro', quote: "Pisteur nous a permis d'identifier 3× plus de cibles qualifiées en moins d'une semaine. Le ROI a été immédiat." },
   { name: 'Sophie Martin', role: 'Gérante, EnergétiK Conseil', quote: 'Je reçois chaque matin une liste exploitable. Fini les fichiers Excel, fini les heures perdues à qualifier.' },
-  { name: 'Thomas Bernard', role: 'Responsable BDD, RénoPlus', quote: "L'email personnalisé est bluffant : chaque prospect a l'impression qu'on connaît son bâtiment. Taux d'ouverture ×2." },
+  { name: 'Thomas Bernard', role: 'Responsable BDD, RénoPlus', quote: "L'email personnalisé est bluffant : chaque prospect a l'impression qu'on connaît son bâtiment. Taux d'ouverture ×2." },
   { name: 'Élise Fontaine', role: 'Dirigeante, IsoTherm Services', quote: "Avant Pisteur, on prospectait à l'aveugle. Maintenant on arrive au RDV en connaissant déjà le DPE et la surface. C'est un game-changer." },
   { name: 'Nicolas Aubert', role: 'Commercial terrain, RénoBat', quote: "En 3 semaines j'ai signé 4 nouveaux chantiers grâce aux leads Pisteur. Le filtre par code NAF est particulièrement utile." },
-  { name: 'Camille Renard', role: 'Responsable dev. commercial, VertiConso', quote: 'La personnalisation des emails fait toute la différence. Mes prospects me répondent en me demandant comment je connais leur immeuble !' },
+  { name: 'Camille Renard', role: 'Responsable dev. commercial, VertiConso', quote: 'La personnalisation des emails fait toute la différence. Mes prospects me répondent en me demandant comment je connais leur immeuble !' },
 ];
 
 const DOUBLED = [...TESTIMONIALS, ...TESTIMONIALS];
@@ -487,7 +791,7 @@ function CtaSection() {
         <FadeSection>
           <div className="card-glass bg-gradient-to-br from-emerald-500/10 to-blue-500/5 p-10 rounded-3xl flex flex-col md:flex-row items-center justify-between gap-6">
             <div>
-              <h2 className="text-2xl font-bold mb-2">Prêt à voir vos cibles réelles ?</h2>
+              <h2 className="text-2xl font-bold mb-2">Prêt à voir vos cibles réelles ?</h2>
               <p className="text-white/60 text-sm max-w-md">
                 Configurez Pisteur sur votre ICP, simulez votre marché et recevez un aperçu de vos leads dès aujourd&apos;hui.
               </p>
