@@ -1,9 +1,8 @@
 import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
 import { useFadeInOnScroll } from '../hooks/useFadeInOnScroll';
 import {
-  MapPin, Zap, Mail, BarChart3, Building2, ChevronRight,
-  CheckCircle2, Star
+  MapPin, Zap, Mail, BarChart3, Building2,
+  Star
 } from 'lucide-react';
 import logoMonCourtierEnergie from '../assets/partners/mon-courtier-energie.svg';
 import logoPlaceDesEnergies from '../assets/partners/place-des-energies.svg';
@@ -41,15 +40,26 @@ function FadeSection({ children, delay = 0, className = '' }) {
   );
 }
 
+/* ── Stars helper (sans spread Array) ──────────────── */
+function Stars() {
+  return (
+    <div className="flex gap-1">
+      <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+      <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+      <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+      <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+      <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+    </div>
+  );
+}
+
 /* ── Hero ────────────────────────────────────────────── */
 function HeroSection() {
   const marqueeLogos = [...partnerLogos, ...partnerLogos];
 
   return (
     <section className="relative overflow-hidden section">
-      {/* Grid background */}
       <div className="absolute inset-0 bg-grid-pattern bg-grid opacity-40 pointer-events-none" />
-      {/* Glow */}
       <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="section-inner relative grid md:grid-cols-2 gap-12 items-center">
@@ -85,7 +95,6 @@ function HeroSection() {
           </div>
         </div>
 
-        {/* Card mockup */}
         <div className="card-glass p-5 space-y-4">
           <div className="flex items-center justify-between">
             <p className="text-sm font-semibold text-white">Vos filtres actifs</p>
@@ -118,7 +127,6 @@ function HeroSection() {
         </div>
       </div>
 
-      {/* Bloc vidéo de démonstration */}
       <div className="section-inner relative mt-10 md:mt-14">
         <FadeSection>
           <div className="text-center mb-5 md:mb-6">
@@ -139,7 +147,7 @@ function HeroSection() {
                 title="Démo de l'utilisation de Pisteur"
                 className="h-full w-full"
                 loading="lazy"
-                allow="autoplay; fullscreen; picture-in-picture"
+                allow="fullscreen"
                 allowFullScreen
               />
             </div>
@@ -271,94 +279,107 @@ function StatsSection() {
   );
 }
 
-/* ── Testimonials ────────────────────────────────────── */
+/* ── Testimonials — carrousel CSS infini droite→gauche ── */
+const TESTIMONIALS = [
+  {
+    name: 'Marc Dupont',
+    role: 'Directeur commercial, IsolPro',
+    quote: "Pisteur nous a permis d'identifier 3× plus de cibles qualifiées en moins d'une semaine. Le ROI a été immédiat.",
+  },
+  {
+    name: 'Sophie Martin',
+    role: 'Gérante, EnergétiK Conseil',
+    quote: 'Je reçois chaque matin une liste exploitable. Fini les fichiers Excel, fini les heures perdues à qualifier.',
+  },
+  {
+    name: 'Thomas Bernard',
+    role: 'Responsable BDD, RénoPlus',
+    quote: "L'email personnalisé est bluffant : chaque prospect a l'impression qu'on connaît son bâtiment. Taux d'ouverture ×2.",
+  },
+  {
+    name: 'Élise Fontaine',
+    role: 'Dirigeante, IsoTherm Services',
+    quote: "Avant Pisteur, on prospectait à l'aveugle. Maintenant on arrive au RDV en connaissant déjà le DPE et la surface. C'est un game-changer.",
+  },
+  {
+    name: 'Nicolas Aubert',
+    role: 'Commercial terrain, RénoBat',
+    quote: 'En 3 semaines j\'ai signé 4 nouveaux chantiers grâce aux leads Pisteur. Le filtre par code NAF est particulièrement utile.',
+  },
+  {
+    name: 'Camille Renard',
+    role: 'Responsable dev. commercial, VertiConso',
+    quote: 'La personnalisation des emails fait toute la différence. Mes prospects me répondent en me demandant comment je connais leur immeuble !',
+  },
+];
+
+/* On duplique pour le loop infini */
+const DOUBLED = [...TESTIMONIALS, ...TESTIMONIALS];
+
+function TestimonialCard({ name, role, quote }) {
+  return (
+    <div
+      className="card-glass p-6 flex flex-col gap-3 shrink-0"
+      style={{ width: '320px' }}
+    >
+      <Stars />
+      <p className="text-sm text-white/70 leading-relaxed italic flex-1">
+        &quot;{quote}&quot;
+      </p>
+      <div>
+        <p className="text-sm font-semibold text-white">{name}</p>
+        <p className="text-xs text-white/40">{role}</p>
+      </div>
+    </div>
+  );
+}
+
 function TestimonialsSection() {
-  const items = [
-    {
-      name: 'Marc Dupont',
-      role: 'Directeur commercial, IsolPro',
-      quote:
-        "Pisteur nous a permis d'identifier 3× plus de cibles qualifiées en moins d'une semaine. Le ROI a été immédiat.",
-    },
-    {
-      name: 'Sophie Martin',
-      role: 'Gérante, EnergétiK Conseil',
-      quote:
-        'Je reçois chaque matin une liste exploitable. Fini les fichiers Excel, fini les heures perdues à qualifier.',
-    },
-    {
-      name: 'Thomas Bernard',
-      role: 'Responsable BDD, RénoPlus',
-      quote:
-        "L'email personnalisé est bluffant : chaque prospect a l'impression qu'on connaît son bâtiment. Taux d'ouverture ×2.",
-    },
-  ];
-
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    const id = setInterval(() => {
-      setIndex((prev) => (prev + 1) % items.length);
-    }, 9000); // vitesse lente : 9s entre chaque avis
-
-    return () => clearInterval(id);
-  }, [items.length]);
+  /* Durée totale : nb de cartes × largeur (320px + 20px gap) / vitesse px/s
+     On vise ~60s pour 6 cartes → confortable et lisible */
+  const totalCards = DOUBLED.length; // 12
+  const cardW = 340; // 320px + 20px gap
+  const totalW = totalCards * cardW;
 
   return (
-    <section className="section bg-navy-900/40">
+    <section className="section bg-navy-900/40 overflow-hidden">
       <div className="section-inner">
         <FadeSection>
           <h2 className="text-3xl font-bold mb-10 text-center">Ce que disent nos clients</h2>
         </FadeSection>
+      </div>
 
-        {/* Carrousel auto-défilant */}
-        <div className="relative overflow-hidden">
-          <div
-            className="flex transition-transform duration-700 ease-out"
-            style={{ transform: `translateX(-${index * 100}%)` }}
-          >
-            {items.map((t) => (
-              <div
-                key={t.name}
-                className="min-w-full px-1 sm:px-4 flex justify-center"
-              >
-                <div className="card-glass p-6 flex flex-col gap-4 max-w-md w-full">
-                  <div className="flex gap-1">
-                    {[...Array(5)].map((_, k) => (
-                      <Star
-                        key={k}
-                        className="w-3.5 h-3.5 fill-amber-400 text-amber-400"
-                      />
-                    ))}
-                  </div>
-                  <p className="text-sm text-white/70 leading-relaxed italic">
-                    &quot;{t.quote}&quot;
-                  </p>
-                  <div className="mt-auto">
-                    <p className="text-sm font-semibold">{t.name}</p>
-                    <p className="text-xs text.white/40">{t.role}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+      {/* Piste pleine-largeur pour masquer les débordements */}
+      <div className="relative w-full overflow-hidden">
+        {/* Dégradés de fondu sur les bords */}
+        <div className="pointer-events-none absolute left-0 top-0 h-full w-24 z-10"
+          style={{ background: 'linear-gradient(to right, rgb(10 14 23) 0%, transparent 100%)' }} />
+        <div className="pointer-events-none absolute right-0 top-0 h-full w-24 z-10"
+          style={{ background: 'linear-gradient(to left, rgb(10 14 23) 0%, transparent 100%)' }} />
 
-          {/* Points de pagination */}
-          <div className="mt-5 flex justify-center gap-1.5">
-            {items.map((_, i) => (
-              <button
-                key={i}
-                type="button"
-                onClick={() => setIndex(i)}
-                className={`w-2.5 h-2.5 rounded-full transition-colors border border-white/15 ${
-                  index === i ? 'bg-emerald-400' : 'bg-white/10'
-                }`}
-                aria-label={`Afficher l'avis ${i + 1}`}
-              />
-            ))}
-          </div>
+        <div
+          className="flex gap-5 py-2"
+          style={{
+            width: `${totalW}px`,
+            animation: `testimonials-scroll 55s linear infinite`,
+          }}
+        >
+          {DOUBLED.map((t, i) => (
+            <TestimonialCard key={`${t.name}-${i}`} {...t} />
+          ))}
         </div>
       </div>
+
+      {/* Keyframe injecté inline pour éviter tout conflit Tailwind */}
+      <style>{`
+        @keyframes testimonials-scroll {
+          0%   { transform: translateX(0); }
+          100% { transform: translateX(-${totalCards / 2 * cardW}px); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .testimonials-track { animation: none !important; }
+        }
+      `}</style>
     </section>
   );
 }
@@ -378,7 +399,7 @@ function CtaSection() {
             </div>
             <div className="flex gap-3 shrink-0">
               <Link to="/simulation" className="btn-accent">Simuler mon marché</Link>
-              <Link to="/contact" className="btn-outline">Contacter l'équipe</Link>
+              <Link to="/contact" className="btn-outline">Contacter l&apos;équipe</Link>
             </div>
           </div>
         </FadeSection>
