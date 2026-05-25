@@ -86,11 +86,10 @@ function StatCard({ icon, numericValue, prefix, suffix, label, trend, trendUp, c
     <div
       ref={ref}
       style={{ transitionDelay: `${delay}ms` }}
-      className={`transition-all duration-700 ${
-        visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-      }`}
+      className={`transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+        }`}
     >
-      <div className="group relative card-glass p-6 flex flex-col gap-4 hover:border-emerald-500/30 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
+      <div className="group relative card-glass p-6 min-h-[260px] h-full flex flex-col gap-4 hover:border-emerald-500/30 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
 
         {/* Icône + tooltip trigger */}
         <div className="flex items-start justify-between">
@@ -128,9 +127,8 @@ function StatCard({ icon, numericValue, prefix, suffix, label, trend, trendUp, c
 
         {/* Indicateur de tendance */}
         <div className="flex items-center gap-1.5">
-          <span className={`text-xs font-semibold flex items-center gap-0.5 ${
-            trendUp ? 'text-emerald-400' : 'text-red-400'
-          }`}>
+          <span className={`text-xs font-semibold flex items-center gap-0.5 ${trendUp ? 'text-emerald-400' : 'text-red-400'
+            }`}>
             {trendUp ? '↑' : '↓'} {trend}
           </span>
           <span className="text-[11px] text-white/30">vs. méthode traditionnelle</span>
@@ -140,9 +138,8 @@ function StatCard({ icon, numericValue, prefix, suffix, label, trend, trendUp, c
         {barPct !== null && (
           <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
             <div
-              className={`h-full rounded-full transition-all duration-1000 ease-out ${
-                trendUp ? 'bg-emerald-400' : 'bg-red-400'
-              }`}
+              className={`h-full rounded-full transition-all duration-1000 ease-out ${trendUp ? 'bg-emerald-400' : 'bg-red-400'
+                }`}
               style={{ width: visible ? `${barPct}%` : '0%' }}
             />
           </div>
