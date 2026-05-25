@@ -29,7 +29,6 @@ const partnerLogos = [
   { name: 'Foncia', image: logoFoncia },
 ];
 
-/* ── Helper FadeSection ──────────────────────────────── */
 function FadeSection({ children, delay = 0, className = '' }) {
   const { ref, visible } = useFadeInOnScroll();
   return (
@@ -43,7 +42,6 @@ function FadeSection({ children, delay = 0, className = '' }) {
   );
 }
 
-/* ── Stars helper ─────────────────────────────────── */
 function Stars() {
   return (
     <div className="flex gap-1">
@@ -56,7 +54,6 @@ function Stars() {
   );
 }
 
-/* ── Hook : compte jusqu'à une valeur cible ────────────── */
 function useCountUp(target, duration = 1200, started = false) {
   const [count, setCount] = useState(0);
   useEffect(() => {
@@ -74,7 +71,6 @@ function useCountUp(target, duration = 1200, started = false) {
   return count;
 }
 
-/* ── Composant StatCard ────────────────────────────── */
 function StatCard({ icon, numericValue, prefix, suffix, label, trend, trendUp, context, barPct, delay }) {
   const { ref, visible } = useFadeInOnScroll();
   const count = useCountUp(numericValue, 1400, visible);
@@ -85,12 +81,9 @@ function StatCard({ icon, numericValue, prefix, suffix, label, trend, trendUp, c
     <div
       ref={ref}
       style={{ transitionDelay: `${delay}ms` }}
-      className={`transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-        }`}
+      className={`transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
     >
       <div className="group relative card-glass p-6 min-h-[260px] h-full flex flex-col gap-4 hover:border-emerald-500/30 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
-
-        {/* Icône + tooltip trigger */}
         <div className="flex items-start justify-between">
           <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
             {icon}
@@ -117,8 +110,7 @@ function StatCard({ icon, numericValue, prefix, suffix, label, trend, trendUp, c
           <p className="text-sm text-white/55 mt-1.5">{label}</p>
         </div>
         <div className="flex items-center gap-1.5">
-          <span className={`text-xs font-semibold flex items-center gap-0.5 ${trendUp ? 'text-emerald-400' : 'text-red-400'
-            }`}>
+          <span className={`text-xs font-semibold flex items-center gap-0.5 ${trendUp ? 'text-emerald-400' : 'text-red-400'}`}>
             {trendUp ? '↑' : '↓'} {trend}
           </span>
           <span className="text-[11px] text-white/30">vs. méthode traditionnelle</span>
@@ -126,8 +118,7 @@ function StatCard({ icon, numericValue, prefix, suffix, label, trend, trendUp, c
         {barPct !== null && (
           <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
             <div
-              className={`h-full rounded-full transition-all duration-1000 ease-out ${trendUp ? 'bg-emerald-400' : 'bg-red-400'
-                }`}
+              className={`h-full rounded-full transition-all duration-1000 ease-out ${trendUp ? 'bg-emerald-400' : 'bg-red-400'}`}
               style={{ width: visible ? `${barPct}%` : '0%' }}
             />
           </div>
@@ -137,7 +128,6 @@ function StatCard({ icon, numericValue, prefix, suffix, label, trend, trendUp, c
   );
 }
 
-/* ── Hero ────────────────────────────────────────────── */
 function HeroSection() {
   const marqueeLogos = [...partnerLogos, ...partnerLogos];
 
@@ -223,515 +213,138 @@ function HeroSection() {
               <iframe
                 src={demoVideoUrl}
                 title="Démo de l'utilisation de Pisteur"
-                className="h-full w-full"
-                loading="lazy"
-                allow="fullscreen"
+                className="w-full h-full"
+                allow="clipboard-write; fullscreen"
                 allowFullScreen
+                loading="lazy"
+                referrerPolicy="strict-origin-when-cross-origin"
               />
             </div>
           </div>
         </FadeSection>
       </div>
-
-      <div className="relative mt-14 md:mt-20">
-        <div className="partners-strip-fullbleed">
-          <div className="section-inner-wide py-8 md:py-10">
-            <p className="text-center text-[11px] sm:text-xs uppercase tracking-[0.28em] text-white/45 font-semibold mb-6 md:mb-7">
-              Ils utilisent Pisteur
-            </p>
-            <div className="partner-marquee" aria-label="Partenaires Pisteur">
-              <div className="partner-marquee-track">
-                {marqueeLogos.map((partner, index) => (
-                  <div key={`${partner.name}-${index}`} className="partner-chip">
-                    <img
-                      src={partner.image}
-                      alt={partner.name}
-                      loading="lazy"
-                      className="partner-logo-image"
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </section>
   );
 }
 
-/* ── Features ────────────────────────────────────────── */
-const FEATURES_DATA = [
+const features = [
   {
-    num: '01',
     icon: <MapPin className="w-5 h-5" />,
-    tag: 'Ciblage',
-    badge: null,
     title: 'Ciblage géographique précis',
     desc: 'Filtrez par commune, département, secteur ou rayon GPS. Pisteur connaît chaque bâtiment en France.',
-    detail: [
-      'Rayon GPS configurable autour de vos équipes terrain',
-      'Filtres combinés : commune + DPE + surface + NAF',
-      'Export CSV ou intégration CRM direct',
-    ],
+    bullets: ['Régions, départements, communes, codes postaux', 'Rayon GPS autour d’un point exact', 'Compatible ICP mono-zone ou multi-zones'],
     step: 'Utilisé à l\'étape 01',
   },
   {
-    num: '02',
     icon: <Zap className="w-5 h-5" />,
-    tag: 'Automatisation',
     badge: 'Populaire',
     title: 'Leads livrés chaque matin',
     desc: 'Recevez une liste priorisée avec DPE, surface, énergie, gestionnaire et décideur nominatif.',
-    detail: [
-      'Scoring automatique basé sur 12 critères',
-      'Décideur nominatif avec coordonnées directes',
-      'Notification email ou Slack à 8h chaque matin',
-    ],
+    bullets: ['Classement par score de potentiel', 'Données prêtes à exploiter au quotidien', 'Export immédiat vers votre stack commerciale'],
     step: 'Utilisé à l\'étape 02',
   },
   {
-    num: '03',
     icon: <Mail className="w-5 h-5" />,
-    tag: 'Automatisation',
     badge: 'Nouveau',
-    title: 'Emails personnalisés auto',
+    title: 'Emails personnalisés',
     desc: 'Un email rédigé automatiquement, contextualisé avec le bâtiment exact et son profil énergétique.',
-    detail: [
-      'IA générative entraînée sur le secteur bâtiment',
-      'Taux d\'ouverture ×2 vs email générique',
-      'Relances automatiques configurables J+3, J+7',
-    ],
+    bullets: ['Mention du DPE et du bâtiment ciblé', 'Angle de valeur adapté à votre offre', 'Modification manuelle possible avant envoi'],
     step: 'Utilisé à l\'étape 03',
   },
   {
-    num: '04',
     icon: <BarChart3 className="w-5 h-5" />,
-    tag: 'Analyse',
-    badge: null,
     title: 'Tableau de bord analytique',
     desc: 'Suivez vos taux d\'ouverture, relances, conversions et potentiel de CA sur vos segments cibles.',
-    detail: [
+    bullets: [
       'Pipeline visuel : envoyé → ouvert → répondu → RDV',
-      'CA potentiel estimé par segment géographique',
-      'Export PDF pour reporting équipe',
+      'Comparaison entre segments et territoires',
+      'Vision claire des résultats et du ROI',
     ],
     step: 'Utilisé à l\'étape 04',
   },
 ];
 
-const FEATURE_FILTERS = ['Tous', 'Ciblage', 'Automatisation', 'Analyse'];
-
-function FeaturesSection() {
-  const [activeFilter, setActiveFilter] = useState('Tous');
-  const [expandedIndex, setExpandedIndex] = useState(null);
-
-  const filtered = FEATURES_DATA.filter(
-    f => activeFilter === 'Tous' || f.tag === activeFilter
-  );
-
-  return (
-    <section className="section bg-navy-900/40">
-      <div className="section-inner">
-        <FadeSection>
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold mb-3">Tout ce dont vous avez besoin</h2>
-            <p className="text-white/60 max-w-lg mx-auto text-sm">
-              De la donnée brute à la prise de contact, Pisteur automatise toute la chaîne de prospection.
-            </p>
-            {/* Filtres */}
-            <div className="flex flex-wrap justify-center gap-2 mt-6">
-              {FEATURE_FILTERS.map(f => (
-                <button
-                  key={f}
-                  type="button"
-                  onClick={() => { setActiveFilter(f); setExpandedIndex(null); }}
-                  className={`px-4 py-1.5 rounded-full text-xs font-semibold border transition-all duration-200 ${
-                    activeFilter === f
-                      ? 'bg-emerald-500/20 border-emerald-500/50 text-emerald-300'
-                      : 'border-white/10 text-white/50 hover:border-white/25 hover:text-white/70'
-                  }`}
-                >
-                  {f}
-                </button>
-              ))}
-            </div>
-          </div>
-        </FadeSection>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
-          {filtered.map((f, i) => {
-            const isOpen = expandedIndex === i;
-            return (
-              <FadeSection key={f.title} delay={i * 80}>
-                <div
-                  className={`card-glass p-5 flex flex-col gap-3 cursor-pointer transition-all duration-300 hover:-translate-y-1 ${
-                    isOpen ? 'border-emerald-500/40 bg-emerald-500/5' : 'hover:border-white/20'
-                  }`}
-                  onClick={() => setExpandedIndex(isOpen ? null : i)}
-                >
-                  {/* Numéro filigrane */}
-                  <div className="flex items-start justify-between">
-                    <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
-                      {f.icon}
-                    </div>
-                    <div className="flex items-center gap-2">
-                      {f.badge && (
-                        <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border ${
-                          f.badge === 'Nouveau'
-                            ? 'bg-blue-500/15 border-blue-500/30 text-blue-300'
-                            : 'bg-amber-500/15 border-amber-500/30 text-amber-300'
-                        }`}>
-                          {f.badge}
-                        </span>
-                      )}
-                      <span className="text-2xl font-black text-white/8 select-none">{f.num}</span>
-                    </div>
-                  </div>
-
-                  <h3 className="font-semibold text-sm">{f.title}</h3>
-                  <p className="text-xs text-white/50 leading-relaxed">{f.desc}</p>
-
-                  {/* Expand toggle */}
-                  <button
-                    type="button"
-                    className="flex items-center gap-1 text-emerald-400 text-xs font-medium mt-auto w-fit"
-                    aria-label={isOpen ? 'Réduire' : 'En savoir plus'}
-                  >
-                    {isOpen ? 'Réduire' : 'En savoir plus'}
-                    <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
-                  </button>
-
-                  {/* Panel expansible */}
-                  <div className={`overflow-hidden transition-all duration-400 ease-in-out ${isOpen ? 'max-h-60 opacity-100 mt-1' : 'max-h-0 opacity-0'}`}>
-                    <div className="border-t border-white/8 pt-3 space-y-2">
-                      {f.detail.map(d => (
-                        <div key={d} className="flex items-start gap-2 text-xs text-white/60">
-                          <span className="text-emerald-400 mt-0.5 shrink-0">✓</span>
-                          {d}
-                        </div>
-                      ))}
-                      <p className="text-[10px] text-white/25 mt-2 pt-2 border-t border-white/5">{f.step}</p>
-                    </div>
-                  </div>
-                </div>
-              </FadeSection>
-            );
-          })}
-        </div>
-
-        {/* Lien de connexion vers la section suivante */}
-        <FadeSection delay={300}>
-          <div className="flex justify-center mt-8">
-            <a
-              href="#how-it-works"
-              className="flex items-center gap-2 text-xs text-white/40 hover:text-emerald-400 transition-colors"
-            >
-              Voir comment utiliser ces fonctionnalités
-              <ArrowRight className="w-3.5 h-3.5" />
-            </a>
-          </div>
-        </FadeSection>
-      </div>
-    </section>
-  );
-}
-
-/* ── Comment ça marche ────────────────────────────────── */
-const STEPS_DATA = [
+const steps = [
   {
-    n: '01',
-    icon: <Settings className="w-5 h-5" />,
     time: '5 min',
     title: 'Configurez votre ICP',
     desc: 'Type de bâtiment, DPE, énergie, surface, NAF, géographie — en 5 minutes.',
     detail: 'Définissez votre client idéal une seule fois. Pisteur mémorise vos filtres et les applique automatiquement chaque jour sur l\'ensemble des 1,2 million de bâtiments français.',
-    cta: null,
-    featureTag: 'Ciblage',
+    icon: <Settings className="w-5 h-5" />,
   },
   {
-    n: '02',
-    icon: <ListChecks className="w-5 h-5" />,
     time: 'Chaque matin',
     title: 'Recevez vos leads qualifiés',
     desc: 'Chaque matin, une liste priorisée avec coordonnées et contexte décisionnel.',
     detail: 'À 8h chaque matin, votre liste est prête. Chaque lead inclut le DPE, la surface, le gestionnaire nominatif, ses coordonnées et un score de priorité calculé automatiquement.',
-    cta: null,
-    featureTag: 'Automatisation',
+    icon: <ListChecks className="w-5 h-5" />,
   },
   {
-    n: '03',
-    icon: <Send className="w-5 h-5" />,
     time: '1 clic',
     title: 'Contactez avec un email personnalisé',
     desc: 'L\'IA génère un email contextualisé pour chaque bâtiment en un clic.',
     detail: 'L\'IA rédige un email personnalisé mentionnant le DPE exact du bâtiment, sa surface et son potentiel d\'économie. Chaque prospect a l\'impression que vous connaissez déjà son immeuble.',
-    cta: null,
-    featureTag: 'Automatisation',
+    icon: <Send className="w-5 h-5" />,
   },
   {
-    n: '04',
-    icon: <BarChart2 className="w-5 h-5" />,
     time: 'Temps réel',
     title: 'Suivez vos conversions',
-    desc: 'Dashboard pour tracker les relances, RDV, conversions et CA généré.',
+    desc: 'Tableau de bord pour suivre les relances, RDV, conversions et CA généré.',
     detail: 'Visualisez en temps réel votre pipeline : emails envoyés, ouverts, répondus, RDV pris. Estimez le CA potentiel par segment et optimisez vos critères de ciblage.',
+    icon: <BarChart2 className="w-5 h-5" />,
     cta: { label: 'Voir la démo du dashboard', to: '/demo' },
     featureTag: 'Analyse',
   },
 ];
 
-function HowItWorksSection() {
-  const [activeStep, setActiveStep] = useState(0);
-  const sectionRef = useRef(null);
+const stats = [
+  {
+    icon: <TrendingUp className="w-5 h-5" />,
+    numericValue: 40,
+    prefix: '+',
+    suffix: '%',
+    label: 'de conversion en RDV',
+    trend: '+40%',
+    trendUp: true,
+    context: 'Basé sur 120 clients Pisteur sur 6 mois. Taux de conversion moyen de 6 % en prospection traditionnelle, 8,4 % avec Pisteur.',
+    barPct: 84,
+  },
+  {
+    icon: <Clock className="w-5 h-5" />,
+    numericValue: 60,
+    prefix: '−',
+    suffix: '%',
+    label: 'de temps de prospection',
+    trend: '−60%',
+    trendUp: true,
+    context: 'Mesuré sur 3 équipes commerciales. Passage de 4h/jour de qualification manuelle à moins de 1h30 avec Pisteur.',
+    barPct: 60,
+  },
+  {
+    icon: <CalendarX className="w-5 h-5" />,
+    numericValue: 67,
+    prefix: '',
+    suffix: '%',
+    label: 'des RDV inutiles évités',
+    trend: '2/3 des RDV',
+    trendUp: true,
+    context: 'Ratio calculé sur les RDV à faible potentiel éliminés grâce au scoring DPE + surface + NAF de Pisteur.',
+    barPct: 67,
+  },
+  {
+    icon: <DollarSign className="w-5 h-5" />,
+    numericValue: 3,
+    prefix: '×',
+    suffix: '',
+    label: 'de CA sur le marché bâtiment',
+    trend: '×3 de CA',
+    trendUp: true,
+    context: 'Comparatif sur 6 mois entre une équipe utilisant Pisteur et une équipe en prospection classique dans le secteur rénovation énergétique.',
+    barPct: 75,
+  },
+];
 
-  // Scroll-highlight : met à jour activeStep quand la section est visible
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            // on laisse l'utilisateur contrôler manuellement, pas de reset auto
-          }
-        });
-      },
-      { threshold: 0.2 }
-    );
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
-
-  const step = STEPS_DATA[activeStep];
-
-  return (
-    <section id="how-it-works" className="section" ref={sectionRef}>
-      <div className="section-inner">
-        <FadeSection>
-          <h2 className="text-3xl font-bold mb-3">Comment ça marche</h2>
-          <p className="text-white/60 text-sm max-w-xl mb-10">
-            En 4 étapes, Pisteur transforme la donnée bâtiment en chiffre d&apos;affaires.
-          </p>
-        </FadeSection>
-
-        {/* ── Desktop : stepper horizontal ── */}
-        <div className="hidden md:block">
-          {/* Barre de progression */}
-          <div className="relative flex items-center mb-6">
-            {STEPS_DATA.map((s, i) => (
-              <div key={s.n} className="flex items-center flex-1 last:flex-none">
-                {/* Bouton étape */}
-                <button
-                  type="button"
-                  onClick={() => setActiveStep(i)}
-                  className={`flex flex-col items-center gap-1.5 group transition-all duration-200 ${i === activeStep ? 'opacity-100' : 'opacity-50 hover:opacity-80'}`}
-                >
-                  <div className={`w-10 h-10 rounded-xl border flex items-center justify-center transition-all duration-200 ${
-                    i === activeStep
-                      ? 'bg-emerald-500/20 border-emerald-500/60 text-emerald-400 shadow-lg shadow-emerald-500/20'
-                      : i < activeStep
-                        ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400/60'
-                        : 'bg-white/5 border-white/15 text-white/30'
-                  }`}>
-                    {s.icon}
-                  </div>
-                  <span className={`text-[10px] font-bold ${i === activeStep ? 'text-emerald-400' : 'text-white/30'}`}>
-                    {s.n}
-                  </span>
-                </button>
-                {/* Connecteur */}
-                {i < STEPS_DATA.length - 1 && (
-                  <div className="flex-1 flex items-center mx-2">
-                    <div className={`h-px flex-1 transition-all duration-500 ${i < activeStep ? 'bg-emerald-500/50' : 'bg-white/10'}`} />
-                    <ArrowRight className={`w-3.5 h-3.5 mx-1 transition-colors duration-500 ${i < activeStep ? 'text-emerald-500/50' : 'text-white/10'}`} />
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-
-          {/* Panel de détail */}
-          <div className="grid md:grid-cols-2 gap-8 items-start">
-            {/* Info gauche */}
-            <FadeSection key={activeStep}>
-              <div className="card-glass p-6 border-emerald-500/30 bg-emerald-500/5">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400">
-                    {step.icon}
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-xs font-black text-emerald-500/40">{step.n}</span>
-                      <span className="text-[10px] bg-white/8 border border-white/10 text-white/50 px-2 py-0.5 rounded-full flex items-center gap-1">
-                        <Clock className="w-2.5 h-2.5" /> {step.time}
-                      </span>
-                    </div>
-                    <h3 className="font-bold text-base mt-0.5">{step.title}</h3>
-                  </div>
-                </div>
-                <p className="text-sm text-white/60 leading-relaxed mb-4">{step.detail}</p>
-                <p className="text-[10px] text-white/25 border-t border-white/8 pt-3">
-                  Fonctionnalité : <span className="text-emerald-400/50">{step.featureTag}</span>
-                </p>
-                {step.cta && (
-                  <Link
-                    to={step.cta.to}
-                    className="mt-4 inline-flex items-center gap-2 text-xs font-semibold text-emerald-400 hover:text-emerald-300 transition-colors"
-                  >
-                    <Play className="w-3.5 h-3.5" /> {step.cta.label}
-                  </Link>
-                )}
-              </div>
-            </FadeSection>
-
-            {/* Cards droite */}
-            <div className="grid grid-cols-2 gap-4">
-              {STEPS_DATA.map((s, i) => (
-                <button
-                  key={s.n}
-                  type="button"
-                  onClick={() => setActiveStep(i)}
-                  className={`card-glass p-4 text-left flex flex-col gap-2 transition-all duration-200 ${
-                    i === activeStep
-                      ? 'border-emerald-500/40 bg-emerald-500/5'
-                      : 'opacity-60 hover:opacity-90 hover:border-white/20'
-                  }`}
-                >
-                  <span className="text-xl font-black text-emerald-500/25">{s.n}</span>
-                  <h4 className="font-semibold text-xs leading-snug">{s.title}</h4>
-                  <p className="text-[11px] text-white/45 leading-relaxed">{s.desc}</p>
-                  <span className="text-[10px] text-white/25 flex items-center gap-1 mt-auto">
-                    <Clock className="w-2.5 h-2.5" /> {s.time}
-                  </span>
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* ── Mobile : timeline verticale ── */}
-        <div className="md:hidden relative">
-          {/* Ligne centrale */}
-          <div className="absolute left-5 top-0 bottom-0 w-px bg-white/10" />
-
-          <div className="space-y-6 pl-14">
-            {STEPS_DATA.map((s, i) => (
-              <FadeSection key={s.n} delay={i * 100}>
-                <div className="relative">
-                  {/* Dot sur la ligne */}
-                  <div className={`absolute -left-9 top-3 w-4 h-4 rounded-full border-2 transition-colors duration-300 ${
-                    i === activeStep
-                      ? 'bg-emerald-500 border-emerald-400'
-                      : 'bg-navy-900 border-white/20'
-                  }`} />
-
-                  <button
-                    type="button"
-                    onClick={() => setActiveStep(i)}
-                    className={`card-glass p-4 w-full text-left flex flex-col gap-2 transition-all duration-200 ${
-                      i === activeStep ? 'border-emerald-500/40 bg-emerald-500/5' : 'opacity-70'
-                    }`}
-                  >
-                    <div className="flex items-center gap-2">
-                      <span className="text-emerald-500/40 font-black text-sm">{s.n}</span>
-                      <span className="text-[10px] text-white/30 flex items-center gap-1">
-                        <Clock className="w-2.5 h-2.5" /> {s.time}
-                      </span>
-                    </div>
-                    <h3 className="font-semibold text-sm">{s.title}</h3>
-                    <p className="text-xs text-white/50 leading-relaxed">{s.desc}</p>
-                    {i === activeStep && (
-                      <p className="text-xs text-white/60 mt-1 leading-relaxed border-t border-white/8 pt-2">{s.detail}</p>
-                    )}
-                    {s.cta && i === activeStep && (
-                      <Link
-                        to={s.cta.to}
-                        className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-400"
-                        onClick={e => e.stopPropagation()}
-                      >
-                        <Play className="w-3 h-3" /> {s.cta.label}
-                      </Link>
-                    )}
-                  </button>
-                </div>
-              </FadeSection>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ── Stats ────────────────────────────────────────────── */
-function StatsSection() {
-  const stats = [
-    {
-      icon: <TrendingUp className="w-5 h-5" />,
-      numericValue: 40,
-      prefix: '+',
-      suffix: '%',
-      label: 'de conversion en RDV',
-      trend: '+40%',
-      trendUp: true,
-      barPct: 40,
-      context: 'Basé sur 120 clients Pisteur sur 6 mois. Taux de conversion moyen de 6 % en prospection traditionnelle, 8,4 % avec Pisteur.',
-    },
-    {
-      icon: <Clock className="w-5 h-5" />,
-      numericValue: 60,
-      prefix: '−',
-      suffix: '%',
-      label: 'de temps de prospection',
-      trend: '−60%',
-      trendUp: false,
-      barPct: 60,
-      context: 'Mesuré sur 3 équipes commerciales. Passage de 4h/jour de qualification manuelle à moins de 1h30 avec Pisteur.',
-    },
-    {
-      icon: <CalendarX className="w-5 h-5" />,
-      numericValue: 67,
-      prefix: '',
-      suffix: '%',
-      label: 'des RDV inutiles évités',
-      trend: '2/3 des RDV',
-      trendUp: false,
-      barPct: 67,
-      context: 'Ratio calculé sur les RDV à faible potentiel éliminés grâce au scoring DPE + surface + NAF de Pisteur.',
-    },
-    {
-      icon: <DollarSign className="w-5 h-5" />,
-      numericValue: 3,
-      prefix: '×',
-      suffix: '',
-      label: 'de CA sur le marché bâtiment',
-      trend: '×3 de CA',
-      trendUp: true,
-      barPct: null,
-      context: 'Comparatif sur 6 mois entre une équipe utilisant Pisteur et une équipe en prospection classique dans le secteur rénovation énergétique.',
-    },
-  ];
-
-  return (
-    <section className="section bg-navy-950/60 border-y border-emerald-500/10">
-      <div className="section-inner">
-        <FadeSection>
-          <div className="text-center mb-10">
-            <p className="text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-2">Résultats mesurés</p>
-            <h2 className="text-2xl font-bold">Ce que Pisteur change concrètement</h2>
-          </div>
-        </FadeSection>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
-          {stats.map((s, i) => (
-            <StatCard key={s.label} {...s} delay={i * 100} />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ── Testimonials ────────────────────────────────────── */
-const TESTIMONIALS = [
+const testimonials = [
   { name: 'Marc Dupont', role: 'Directeur commercial, IsolPro', quote: "Pisteur nous a permis d'identifier 3× plus de cibles qualifiées en moins d'une semaine. Le ROI a été immédiat." },
   { name: 'Sophie Martin', role: 'Gérante, EnergétiK Conseil', quote: 'Je reçois chaque matin une liste exploitable. Fini les fichiers Excel, fini les heures perdues à qualifier.' },
   { name: 'Thomas Bernard', role: 'Responsable BDD, RénoPlus', quote: "L'email personnalisé est bluffant : chaque prospect a l'impression qu'on connaît son bâtiment. Taux d'ouverture ×2." },
@@ -740,87 +353,73 @@ const TESTIMONIALS = [
   { name: 'Camille Renard', role: 'Responsable dev. commercial, VertiConso', quote: 'La personnalisation des emails fait toute la différence. Mes prospects me répondent en me demandant comment je connais leur immeuble !' },
 ];
 
-const DOUBLED = [...TESTIMONIALS, ...TESTIMONIALS];
-
-function TestimonialCard({ name, role, quote }) {
-  return (
-    <div className="card-glass p-6 flex flex-col gap-3 shrink-0" style={{ width: '320px' }}>
-      <Stars />
-      <p className="text-sm text-white/70 leading-relaxed italic flex-1">&quot;{quote}&quot;</p>
-      <div>
-        <p className="text-sm font-semibold text-white">{name}</p>
-        <p className="text-xs text-white/40">{role}</p>
-      </div>
-    </div>
-  );
-}
-
-function TestimonialsSection() {
-  const totalCards = DOUBLED.length;
-  const cardW = 340;
-  const totalW = totalCards * cardW;
-
-  return (
-    <section className="section bg-navy-900/40 overflow-hidden">
-      <div className="section-inner">
-        <FadeSection>
-          <h2 className="text-3xl font-bold mb-10 text-center">Ce que disent nos clients</h2>
-        </FadeSection>
-      </div>
-      <div className="w-full overflow-hidden">
-        <div
-          className="flex gap-5 py-2"
-          style={{ width: `${totalW}px`, animation: `testimonials-scroll 55s linear infinite` }}
-        >
-          {DOUBLED.map((t, i) => <TestimonialCard key={`${t.name}-${i}`} {...t} />)}
-        </div>
-      </div>
-      <style>{`
-        @keyframes testimonials-scroll {
-          0%   { transform: translateX(0); }
-          100% { transform: translateX(-${(totalCards / 2) * cardW}px); }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .testimonials-track { animation: none !important; }
-        }
-      `}</style>
-    </section>
-  );
-}
-
-/* ── CTA ──────────────────────────────────────────────── */
-function CtaSection() {
-  return (
-    <section className="section">
-      <div className="section-inner">
-        <FadeSection>
-          <div className="card-glass bg-gradient-to-br from-emerald-500/10 to-blue-500/5 p-10 rounded-3xl flex flex-col md:flex-row items-center justify-between gap-6">
-            <div>
-              <h2 className="text-2xl font-bold mb-2">Prêt à voir vos cibles réelles ?</h2>
-              <p className="text-white/60 text-sm max-w-md">
-                Configurez Pisteur sur votre ICP, simulez votre marché et recevez un aperçu de vos leads dès aujourd&apos;hui.
-              </p>
-            </div>
-            <div className="flex gap-3 shrink-0">
-              <Link to="/simulation" className="btn-accent">Simuler mon marché</Link>
-              <Link to="/contact" className="btn-outline">Contacter l&apos;équipe</Link>
-            </div>
-          </div>
-        </FadeSection>
-      </div>
-    </section>
-  );
-}
-
 export default function Home() {
+  const scrollerRef = useRef(null);
+
+  useEffect(() => {
+    const el = scrollerRef.current;
+    if (!el) return;
+    let frame;
+    const step = () => {
+      if (!el) return;
+      el.scrollLeft += 0.5;
+      if (el.scrollLeft >= el.scrollWidth / 2) {
+        el.scrollLeft = 0;
+      }
+      frame = requestAnimationFrame(step);
+    };
+    frame = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(frame);
+  }, []);
+
   return (
     <>
       <HeroSection />
-      <FeaturesSection />
-      <HowItWorksSection />
-      <StatsSection />
-      <TestimonialsSection />
-      <CtaSection />
+      <section className="section pt-0">
+        <div className="section-inner">
+          <FadeSection className="text-center mb-10">
+            <p className="text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-2">Fonctionnalités</p>
+            <h2 className="text-3xl font-bold">Tout ce dont vous avez besoin</h2>
+          </FadeSection>
+          <div className="grid md:grid-cols-2 gap-6">
+            {features.map((f, i) => (
+              <FadeSection key={f.title} delay={i * 80}>
+                <div className="card-glass p-6 rounded-3xl h-full hover:-translate-y-1 hover:border-white/15 transition-all duration-300">
+                  <div className="flex items-start justify-between gap-4 mb-4">
+                    <div className="w-11 h-11 rounded-2xl bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-center text-emerald-400">
+                      {f.icon}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {f.badge && (
+                        <span className={`text-[10px] px-2 py-1 rounded-full font-semibold uppercase tracking-wide ${
+                          f.badge === 'Nouveau'
+                            ? 'bg-emerald-500/15 text-emerald-300 border border-emerald-500/25'
+                            : 'bg-white/5 text-white/55 border border-white/10'
+                        }`}>
+                          {f.badge}
+                        </span>
+                      )}
+                      <span className="text-[10px] px-2 py-1 rounded-full bg-white/5 text-white/35 border border-white/8 uppercase tracking-wide">
+                        {f.step}
+                      </span>
+                    </div>
+                  </div>
+                  <h3 className="text-lg font-semibold mb-2">{f.title}</h3>
+                  <p className="text-sm text-white/60 leading-relaxed mb-4">{f.desc}</p>
+                  <ul className="space-y-2 text-sm text-white/65">
+                    {f.bullets.map((bullet) => (
+                      <li key={bullet} className="flex items-start gap-2">
+                        <span className="text-emerald-400 mt-0.5">✓</span>
+                        <span>{bullet}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </FadeSection>
+            ))}
+          </div>
+        </div>
+      </section>
     </>
   );
 }
