@@ -69,13 +69,10 @@ const seoByPath = {
 
 function SeoManager() {
   const { pathname } = useLocation();
-
   useEffect(() => {
     const seo = seoByPath[pathname] ?? seoByPath['/'];
     const canonicalUrl = `${window.location.origin}${pathname}`;
-
     document.title = seo.title;
-
     const upsertMeta = (selector, attributes) => {
       let element = document.head.querySelector(selector);
       if (!element) {
@@ -86,7 +83,6 @@ function SeoManager() {
       }
       Object.entries(attributes).forEach(([key, value]) => element.setAttribute(key, value));
     };
-
     const upsertLink = (selector, attributes) => {
       let element = document.head.querySelector(selector);
       if (!element) {
@@ -97,19 +93,17 @@ function SeoManager() {
       }
       Object.entries(attributes).forEach(([key, value]) => element.setAttribute(key, value));
     };
-
-    upsertMeta('meta[name="description"]',         { name: 'description', content: seo.description });
-    upsertMeta('meta[name="keywords"]',             { name: 'keywords',    content: seo.keywords });
-    upsertMeta('meta[property="og:title"]',         { property: 'og:title',       content: seo.title });
-    upsertMeta('meta[property="og:description"]',   { property: 'og:description', content: seo.description });
-    upsertMeta('meta[property="og:type"]',           { property: 'og:type',        content: 'website' });
-    upsertMeta('meta[property="og:url"]',            { property: 'og:url',         content: canonicalUrl });
-    upsertMeta('meta[name="twitter:card"]',          { name: 'twitter:card',        content: 'summary_large_image' });
-    upsertMeta('meta[name="twitter:title"]',         { name: 'twitter:title',       content: seo.title });
-    upsertMeta('meta[name="twitter:description"]',   { name: 'twitter:description', content: seo.description });
-    upsertLink('link[rel="canonical"]',              { rel: 'canonical', href: canonicalUrl });
+    upsertMeta('meta[name="description"]',       { name: 'description', content: seo.description });
+    upsertMeta('meta[name="keywords"]',           { name: 'keywords',    content: seo.keywords });
+    upsertMeta('meta[property="og:title"]',       { property: 'og:title',       content: seo.title });
+    upsertMeta('meta[property="og:description"]', { property: 'og:description', content: seo.description });
+    upsertMeta('meta[property="og:type"]',         { property: 'og:type',        content: 'website' });
+    upsertMeta('meta[property="og:url"]',          { property: 'og:url',         content: canonicalUrl });
+    upsertMeta('meta[name="twitter:card"]',        { name: 'twitter:card',        content: 'summary_large_image' });
+    upsertMeta('meta[name="twitter:title"]',       { name: 'twitter:title',       content: seo.title });
+    upsertMeta('meta[name="twitter:description"]', { name: 'twitter:description', content: seo.description });
+    upsertLink('link[rel="canonical"]',            { rel: 'canonical', href: canonicalUrl });
   }, [pathname]);
-
   return null;
 }
 
@@ -119,17 +113,64 @@ function ScrollToTop() {
   return null;
 }
 
-// ─── Widget WhatsApp/Contact ──────────────────────────────────
+/* ─── Décorations demi-cercles globales ─────────────────────────── */
+function SideDecorations() {
+  return (
+    <>
+      {/* Demi-cercle gauche haut */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed top-24 -left-24 w-48 h-48 rounded-full"
+        style={{
+          background: 'radial-gradient(circle at 100% 50%, #1e3a5f 0%, #0f2040 60%, transparent 100%)',
+          opacity: 0.55,
+          clipPath: 'inset(0 50% 0 0)',
+        }}
+      />
+      {/* Demi-cercle gauche bas */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed top-1/2 -left-32 w-64 h-64 rounded-full"
+        style={{
+          background: 'radial-gradient(circle at 100% 50%, #162d4e 0%, #0a1a30 60%, transparent 100%)',
+          opacity: 0.45,
+          clipPath: 'inset(0 50% 0 0)',
+        }}
+      />
+      {/* Demi-cercle droit haut */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed top-32 -right-24 w-48 h-48 rounded-full"
+        style={{
+          background: 'radial-gradient(circle at 0% 50%, #1e3a5f 0%, #0f2040 60%, transparent 100%)',
+          opacity: 0.55,
+          clipPath: 'inset(0 0 0 50%)',
+        }}
+      />
+      {/* Demi-cercle droit bas */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none fixed bottom-32 -right-32 w-64 h-64 rounded-full"
+        style={{
+          background: 'radial-gradient(circle at 0% 50%, #162d4e 0%, #0a1a30 60%, transparent 100%)',
+          opacity: 0.45,
+          clipPath: 'inset(0 0 0 50%)',
+        }}
+      />
+    </>
+  );
+}
+
+/* ─── Widget WhatsApp/Contact ────────────────────────────────── */
 function ContactWidget() {
   const [open, setOpen] = useState(false);
   const whatsappUrl = 'https://wa.me/33600000000?text=Bonjour%2C%20je%20voudrais%20en%20savoir%20plus%20sur%20Pisteur.';
-
   return (
     <div className="fixed bottom-6 right-6 z-50">
       {open && (
         <div className="absolute bottom-16 right-0 w-72 bg-white rounded-2xl shadow-2xl border border-navy-100 overflow-hidden animate-slideUp">
           <div className="bg-navy-900 px-5 py-4 flex items-center justify-between">
-            <p className="text-white font-semibold text-sm">Besoin d&apos;aide ?</p>
+            <p className="text-white font-semibold text-sm">Besoin d&apos;aide ?</p>
             <button onClick={() => setOpen(false)} className="text-white/60 hover:text-white transition-colors">
               <X className="w-4 h-4" />
             </button>
@@ -193,13 +234,10 @@ function ContactWidget() {
   );
 }
 
-// ─── ErrorBoundary ──────────────────────────────────────────
+/* ─── ErrorBoundary ────────────────────────────────────────── */
 import { Component } from 'react';
 class ErrorBoundary extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { hasError: false };
-  }
+  constructor(props) { super(props); this.state = { hasError: false }; }
   static getDerivedStateFromError() { return { hasError: true }; }
   componentDidCatch(error, info) { console.error('Pisteur ErrorBoundary:', error, info); }
   render() {
@@ -232,7 +270,7 @@ class ErrorBoundary extends Component {
   }
 }
 
-// ─── App ───────────────────────────────────────────────────
+/* ─── App ───────────────────────────────────────────────────── */
 export default function App() {
   const [theme, setTheme] = useState(() => {
     if (typeof window === 'undefined') return 'dark';
@@ -246,13 +284,14 @@ export default function App() {
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
     document.documentElement.style.colorScheme = theme;
-    try { window.localStorage.setItem('theme', theme); } catch {}
+    try { window.localStorage.setItem('theme', theme); } catch {};
   }, [theme]);
 
   return (
     <ErrorBoundary>
       <ToastProvider>
-        <div className="min-h-screen flex flex-col">
+        <div className="relative min-h-screen flex flex-col overflow-x-hidden">
+          <SideDecorations />
           <ScrollProgress />
           <SeoManager />
           <ScrollToTop />
@@ -261,16 +300,16 @@ export default function App() {
           <Header theme={theme} onToggleTheme={() => setTheme(current => (current === 'dark' ? 'light' : 'dark'))} />
           <main className="flex-1">
             <Routes>
-              <Route path="/"               element={<Home />} />
-              <Route path="/demo"           element={<Demo />} />
-              <Route path="/simulation"     element={<Simulation />} />
-              <Route path="/tarifs"         element={<Pricing />} />
-              <Route path="/blog"           element={<Blog />} />
-              <Route path="/faq"            element={<Faq />} />
-              <Route path="/contact"        element={<Contact />} />
-              <Route path="/cas-clients"    element={<CaseStudies />} />
+              <Route path="/"                element={<Home />} />
+              <Route path="/demo"            element={<Demo />} />
+              <Route path="/simulation"      element={<Simulation />} />
+              <Route path="/tarifs"          element={<Pricing />} />
+              <Route path="/blog"            element={<Blog />} />
+              <Route path="/faq"             element={<Faq />} />
+              <Route path="/contact"         element={<Contact />} />
+              <Route path="/cas-clients"     element={<CaseStudies />} />
               <Route path="/confidentialite" element={<PrivacyPolicy />} />
-              <Route path="*"               element={<NotFound />} />
+              <Route path="*"                element={<NotFound />} />
             </Routes>
           </main>
           <Footer />
