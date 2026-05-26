@@ -30,10 +30,10 @@ const CASES = [
     challenge: 'IsolPro prospectait manuellement via des fichiers Excel et des annuaires locaux. Chaque commercial passait 3h par jour à qualifier des cibles sans garantie de pertinence.',
     solution: 'Pisteur a été configuré sur l\'ICP d\'IsolPro en 20 minutes : bâtiments résidentiels collectifs DPE E/F/G, surfaces > 1 500 m², dans un rayon de 80 km autour de Lyon.',
     results: [
-      { metric: '+43%', label: 'taux de conversion RDV', icon: <TrendingUp className="w-4 h-4" /> },
-      { metric: '−62%', label: 'temps de prospection quotidien', icon: <Clock className="w-4 h-4" /> },
-      { metric: '×2.8', label: 'chiffre d\'affaires en 4 mois', icon: <TrendingUp className="w-4 h-4" /> },
-      { metric: '9',    label: 'nouveaux chantiers / mois', icon: <Building2 className="w-4 h-4" /> },
+      { metric: '+43%',  label: 'taux de conversion RDV',         icon: <TrendingUp className="w-4 h-4" /> },
+      { metric: '−62%',  label: 'temps de prospection quotidien',  icon: <Clock className="w-4 h-4" /> },
+      { metric: '×2.8',  label: 'chiffre d\'affaires en 4 mois',  icon: <TrendingUp className="w-4 h-4" /> },
+      { metric: '9',     label: 'nouveaux chantiers / mois',       icon: <Building2 className="w-4 h-4" /> },
     ],
     quote: "En arrivant au RDV, je connais déjà le DPE, la surface, et le nom du gestionnaire. Les prospects ont l'impression que j'ai fait mes devoirs. C'est bluffant.",
     author: 'Marc Dupont',
@@ -56,10 +56,10 @@ const CASES = [
     challenge: 'En tant que petite structure de 3 auditeurs, EnergétiK n\'avait ni le budget ni le temps pour une prospection commerciale structurée. Ils dépendaient du bouche-à-oreille.',
     solution: 'Pisteur a permis à l\'équipe de cibler précisément les syndics de copropriété gérant des immeubles DPE F/G en Île-de-France, avec coordonnées nominatives directes.',
     results: [
-      { metric: '18',   label: 'leads qualifiés / semaine', icon: <Users className="w-4 h-4" /> },
-      { metric: '+210%', label: 'de CA en 6 mois', icon: <TrendingUp className="w-4 h-4" /> },
-      { metric: '1h',   label: 'de prospection / jour max', icon: <Clock className="w-4 h-4" /> },
-      { metric: '24',   label: 'nouveaux clients signés', icon: <CheckCircle2 className="w-4 h-4" /> },
+      { metric: '18',    label: 'leads qualifiés / semaine',  icon: <Users className="w-4 h-4" /> },
+      { metric: '+210%', label: 'de CA en 6 mois',            icon: <TrendingUp className="w-4 h-4" /> },
+      { metric: '1h',    label: 'de prospection / jour max',  icon: <Clock className="w-4 h-4" /> },
+      { metric: '24',    label: 'nouveaux clients signés',    icon: <CheckCircle2 className="w-4 h-4" /> },
     ],
     quote: "On a l'impression de jouer dans une catégorie au-dessus. Nos prospects pensent qu'on a une vraie équipe commerciale. La réalité c'est juste Pisteur.",
     author: 'Sophie Martin',
@@ -82,10 +82,10 @@ const CASES = [
     challenge: 'RénoPlus venait de lever des fonds et devait étendre sa prospection à 5 nouvelles régions en moins de 3 mois. Leurs outils internes ne permettaient pas ce scale.',
     solution: 'Déploiement Pisteur sur 5 régions simultanément avec des ICP régionaux distincts. Intégration API avec leur CRM Salesforce pour un pipeline unifié.',
     results: [
-      { metric: '5',    label: 'régions opérationnelles simultanément', icon: <Building2 className="w-4 h-4" /> },
-      { metric: '+380%', label: 'de leads qualifiés vs avant', icon: <TrendingUp className="w-4 h-4" /> },
-      { metric: '8 sem', label: 'pour atteindre le régime nominal', icon: <Clock className="w-4 h-4" /> },
-      { metric: '×3.2', label: 'ROI sur les 6 premiers mois', icon: <TrendingUp className="w-4 h-4" /> },
+      { metric: '5',     label: 'régions opérationnelles simultanément', icon: <Building2 className="w-4 h-4" /> },
+      { metric: '+380%', label: 'de leads qualifiés vs avant',           icon: <TrendingUp className="w-4 h-4" /> },
+      { metric: '8 sem', label: 'pour atteindre le régime nominal',      icon: <Clock className="w-4 h-4" /> },
+      { metric: '×3.2',  label: 'ROI sur les 6 premiers mois',          icon: <TrendingUp className="w-4 h-4" /> },
     ],
     quote: "Pisteur nous a donné la capacité de prospecter comme une grande entreprise sans multiplier les équipes. C'est la brique qui manquait à notre scale.",
     author: 'Thomas Bernard',
@@ -102,25 +102,25 @@ const CASES = [
 
 const COLOR_MAP = {
   emerald: {
-    badge:   'bg-emerald-500/15 border-emerald-500/30 text-emerald-300',
-    icon:    'bg-emerald-500/10 border-emerald-500/20 text-emerald-400',
-    metric:  'text-emerald-400',
-    bar:     'bg-emerald-400',
-    border:  'border-emerald-500/30 bg-emerald-500/5',
+    badge:  'bg-emerald-500/15 border-emerald-500/30 text-emerald-700 dark:text-emerald-300',
+    icon:   'bg-emerald-500/10 border-emerald-500/20 text-emerald-600 dark:text-emerald-400',
+    metric: 'text-emerald-600 dark:text-emerald-400',
+    bar:    'bg-emerald-400',
+    border: 'border-emerald-500/30 bg-emerald-500/5',
   },
   blue: {
-    badge:   'bg-blue-500/15 border-blue-500/30 text-blue-300',
-    icon:    'bg-blue-500/10 border-blue-500/20 text-blue-400',
-    metric:  'text-blue-400',
-    bar:     'bg-blue-400',
-    border:  'border-blue-500/30 bg-blue-500/5',
+    badge:  'bg-blue-500/15 border-blue-500/30 text-blue-700 dark:text-blue-300',
+    icon:   'bg-blue-500/10 border-blue-500/20 text-blue-600 dark:text-blue-400',
+    metric: 'text-blue-600 dark:text-blue-400',
+    bar:    'bg-blue-400',
+    border: 'border-blue-500/30 bg-blue-500/5',
   },
   amber: {
-    badge:   'bg-amber-500/15 border-amber-500/30 text-amber-300',
-    icon:    'bg-amber-500/10 border-amber-500/20 text-amber-400',
-    metric:  'text-amber-400',
-    bar:     'bg-amber-400',
-    border:  'border-amber-500/30 bg-amber-500/5',
+    badge:  'bg-amber-500/15 border-amber-500/30 text-amber-700 dark:text-amber-300',
+    icon:   'bg-amber-500/10 border-amber-500/20 text-amber-600 dark:text-amber-400',
+    metric: 'text-amber-600 dark:text-amber-400',
+    bar:    'bg-amber-400',
+    border: 'border-amber-500/30 bg-amber-500/5',
   },
 };
 
@@ -138,13 +138,13 @@ function CaseCard({ cs, isActive, onClick }) {
         <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full border ${c.badge}`}>
           {cs.sector}
         </span>
-        <span className="text-[10px] text-white/30">{cs.size}</span>
+        <span className="text-[10px] text-gray-500 dark:text-white/30">{cs.size}</span>
       </div>
-      <h3 className="font-bold text-base leading-snug">{cs.company}</h3>
-      <p className="text-xs text-white/50 leading-relaxed">{cs.tagline}</p>
+      <h3 className="font-bold text-base leading-snug text-gray-900 dark:text-white">{cs.company}</h3>
+      <p className="text-xs text-gray-500 dark:text-white/50 leading-relaxed">{cs.tagline}</p>
       <div className="flex items-center gap-1 text-xs mt-auto">
         <span className={`font-semibold ${c.metric}`}>{cs.results[0].metric}</span>
-        <span className="text-white/30">{cs.results[0].label}</span>
+        <span className="text-gray-400 dark:text-white/30">{cs.results[0].label}</span>
       </div>
     </button>
   );
@@ -160,12 +160,12 @@ function CaseDetail({ cs }) {
           <span className={`text-[10px] font-bold px-2.5 py-1 rounded-full border ${c.badge}`}>
             {cs.sector}
           </span>
-          <h2 className="text-2xl font-black mt-3">{cs.company}</h2>
-          <p className="text-white/60 text-sm mt-1">{cs.tagline}</p>
+          <h2 className="text-2xl font-black mt-3 text-gray-900 dark:text-white">{cs.company}</h2>
+          <p className="text-gray-500 dark:text-white/60 text-sm mt-1">{cs.tagline}</p>
         </div>
         <div className="shrink-0 text-right">
-          <p className="text-[10px] text-white/30 uppercase tracking-wider">Résultats en</p>
-          <p className="text-lg font-bold text-white">{cs.timeline}</p>
+          <p className="text-[10px] text-gray-400 dark:text-white/30 uppercase tracking-wider">Résultats en</p>
+          <p className="text-lg font-bold text-gray-900 dark:text-white">{cs.timeline}</p>
         </div>
       </div>
 
@@ -177,7 +177,7 @@ function CaseDetail({ cs }) {
               {r.icon}
             </div>
             <p className={`text-xl font-black ${c.metric} tabular-nums`}>{r.metric}</p>
-            <p className="text-[11px] text-white/45 leading-snug mt-0.5">{r.label}</p>
+            <p className="text-[11px] text-gray-500 dark:text-white/45 leading-snug mt-0.5">{r.label}</p>
           </div>
         ))}
       </div>
@@ -185,21 +185,21 @@ function CaseDetail({ cs }) {
       {/* Contexte */}
       <div className="grid md:grid-cols-2 gap-6">
         <div>
-          <h3 className="text-xs font-bold text-white/30 uppercase tracking-wider mb-3">Le défi</h3>
-          <p className="text-sm text-white/60 leading-relaxed">{cs.challenge}</p>
+          <h3 className="text-xs font-bold text-gray-400 dark:text-white/30 uppercase tracking-wider mb-3">Le défi</h3>
+          <p className="text-sm text-gray-600 dark:text-white/60 leading-relaxed">{cs.challenge}</p>
         </div>
         <div>
-          <h3 className="text-xs font-bold text-white/30 uppercase tracking-wider mb-3">La solution</h3>
-          <p className="text-sm text-white/60 leading-relaxed">{cs.solution}</p>
+          <h3 className="text-xs font-bold text-gray-400 dark:text-white/30 uppercase tracking-wider mb-3">La solution</h3>
+          <p className="text-sm text-gray-600 dark:text-white/60 leading-relaxed">{cs.solution}</p>
         </div>
       </div>
 
       {/* Points clés */}
       <div>
-        <h3 className="text-xs font-bold text-white/30 uppercase tracking-wider mb-3">Points clés</h3>
+        <h3 className="text-xs font-bold text-gray-400 dark:text-white/30 uppercase tracking-wider mb-3">Points clés</h3>
         <div className="grid sm:grid-cols-2 gap-2">
           {cs.highlights.map(h => (
-            <div key={h} className="flex items-start gap-2 text-sm text-white/60">
+            <div key={h} className="flex items-start gap-2 text-sm text-gray-600 dark:text-white/60">
               <CheckCircle2 className={`w-4 h-4 mt-0.5 shrink-0 ${c.metric}`} />
               {h}
             </div>
@@ -207,13 +207,15 @@ function CaseDetail({ cs }) {
         </div>
       </div>
 
-      {/* Citation */}
+      {/* Citation — texte foncé en light mode, clair en dark */}
       <div className={`card-glass ${c.border} p-5 flex gap-4`}>
         <Quote className={`w-6 h-6 ${c.metric} shrink-0 mt-1`} />
         <div>
-          <p className="text-sm text-white/75 italic leading-relaxed mb-3">&ldquo;{cs.quote}&rdquo;</p>
-          <p className="text-sm font-semibold text-white">{cs.author}</p>
-          <p className="text-xs text-white/40">{cs.role}</p>
+          <p className="text-sm italic leading-relaxed mb-3 text-gray-700 dark:text-white/80">
+            &ldquo;{cs.quote}&rdquo;
+          </p>
+          <p className="text-sm font-semibold text-gray-900 dark:text-white">{cs.author}</p>
+          <p className="text-xs text-gray-500 dark:text-white/40">{cs.role}</p>
         </div>
       </div>
     </div>
@@ -230,9 +232,9 @@ export default function CaseStudies() {
         {/* Header */}
         <FadeSection>
           <div className="mb-10">
-            <p className="text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-2">Études de cas</p>
-            <h1 className="text-3xl font-bold mb-3">Ils ont transformé leur prospection</h1>
-            <p className="text-white/60 text-sm max-w-xl leading-relaxed">
+            <p className="text-emerald-500 dark:text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-2">Études de cas</p>
+            <h1 className="text-3xl font-bold mb-3 text-gray-900 dark:text-white">Ils ont transformé leur prospection</h1>
+            <p className="text-gray-500 dark:text-white/60 text-sm max-w-xl leading-relaxed">
               Des entreprises du secteur bâtiment — de la TPE à l&apos;ETI — ont fait de Pisteur
               leur avantage concurrentiel. Voici leurs résultats réels.
             </p>
@@ -263,7 +265,7 @@ export default function CaseStudies() {
         {/* CTA bas */}
         <FadeSection delay={200}>
           <div className="mt-12 text-center">
-            <p className="text-white/50 text-sm mb-4">
+            <p className="text-gray-500 dark:text-white/50 text-sm mb-4">
               Vous aussi, transformez votre prospection bâtiment.
             </p>
             <div className="flex flex-wrap justify-center gap-3">
