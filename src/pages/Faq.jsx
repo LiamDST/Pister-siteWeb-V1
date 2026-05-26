@@ -116,7 +116,7 @@ function FaqItem({ item }) {
 
   return (
     <div className={`card-glass rounded-2xl overflow-hidden transition-all duration-300 ${
-      open ? 'border-emerald-500/25' : 'border-white/8'
+      open ? 'border-blue-500/25' : 'border-white/8'
     }`}>
       <button
         onClick={() => setOpen(o => !o)}
@@ -124,7 +124,7 @@ function FaqItem({ item }) {
       >
         <div className="flex items-center gap-3 min-w-0">
           {item.isNew && (
-            <span className="shrink-0 inline-flex items-center gap-1 text-[10px] font-semibold bg-emerald-500/15 text-emerald-400 px-2 py-0.5 rounded-full uppercase tracking-wider">
+            <span className="shrink-0 inline-flex items-center gap-1 text-[10px] font-semibold bg-blue-500/15 text-blue-400 px-2 py-0.5 rounded-full uppercase tracking-wider">
               <Sparkles className="w-2.5 h-2.5" />Nouveau
             </span>
           )}
@@ -151,7 +151,7 @@ function FaqItem({ item }) {
               <span className="text-xs text-white/35">Cette réponse vous a-t-elle aidé ?</span>
               <button
                 onClick={() => setVote('up')}
-                className="flex items-center gap-1.5 text-xs text-white/40 hover:text-emerald-400 transition-colors px-2.5 py-1 rounded-lg hover:bg-emerald-500/10"
+                className="flex items-center gap-1.5 text-xs text-white/40 hover:text-blue-400 transition-colors px-2.5 py-1 rounded-lg hover:bg-blue-500/10"
               >
                 <ThumbsUp className="w-3.5 h-3.5" /> Oui
               </button>
@@ -164,7 +164,7 @@ function FaqItem({ item }) {
             </div>
           ) : (
             <p className={`mt-4 text-xs ${
-              vote === 'up' ? 'text-emerald-400' : 'text-white/40'
+              vote === 'up' ? 'text-blue-400' : 'text-white/40'
             }`}>
               {vote === 'up' ? '✔ Merci pour votre retour !' : 'Merci. Nous améliorerons cette réponse.'}
             </p>
@@ -195,11 +195,11 @@ export default function Faq() {
 
         {/* ── En-tête ── */}
         <FadeSection className="text-center mb-10">
-          <p className="text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-2">FAQ</p>
+          <p className="text-blue-400 text-xs font-semibold uppercase tracking-wider mb-2">FAQ</p>
           <h1 className="text-4xl font-bold mb-3">Questions fréquentes</h1>
           <p className="text-sm text-white/55">
             Vous ne trouvez pas la réponse ?{' '}
-            <Link to="/contact" className="text-emerald-400 hover:text-emerald-300 font-medium underline underline-offset-4 transition-colors">
+            <Link to="/contact" className="text-blue-400 hover:text-blue-300 font-medium underline underline-offset-4 transition-colors">
               Contactez-nous
             </Link>
           </p>
@@ -214,7 +214,7 @@ export default function Faq() {
               placeholder="Rechercher une question…"
               value={query}
               onChange={e => setQuery(e.target.value)}
-              className="w-full bg-white/5 border border-white/10 rounded-2xl pl-11 pr-4 py-3 text-sm placeholder-white/30 focus:outline-none focus:border-emerald-500/50 focus:ring-1 focus:ring-emerald-500/30 transition-all"
+              className="w-full bg-white/5 border border-white/10 rounded-2xl pl-11 pr-4 py-3 text-sm placeholder-white/30 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/30 transition-all"
             />
             {query && (
               <button
@@ -236,7 +236,7 @@ export default function Faq() {
                 onClick={() => setActiveCat(cat.id)}
                 className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
                   activeCat === cat.id
-                    ? 'bg-emerald-500 text-white shadow-sm'
+                    ? 'bg-blue-500 text-white shadow-sm'
                     : 'bg-white/5 text-white/50 hover:bg-white/10 hover:text-white/80'
                 }`}
               >
@@ -268,7 +268,7 @@ export default function Faq() {
                 <p className="text-white/50 text-sm">
                   Aucune question ne correspond à <strong className="text-white/70">&ldquo;{query}&rdquo;</strong>.
                 </p>
-                <Link to="/contact" className="mt-4 inline-block text-sm text-emerald-400 underline underline-offset-4">
+                <Link to="/contact" className="mt-4 inline-block text-sm text-blue-400 underline underline-offset-4">
                   Posez-la directement à notre équipe
                 </Link>
               </div>

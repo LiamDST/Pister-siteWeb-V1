@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 /**
  * Barre de progression de scroll fine en haut de page.
- * Couleur : dégradé emerald → teal, cohérent avec la charte Pisteur.
+ * Couleur : dégradé blue → teal, cohérent avec la charte Pisteur.
  */
 export default function ScrollProgress() {
   const [pct, setPct] = useState(0);
@@ -29,7 +29,7 @@ export default function ScrollProgress() {
       className="fixed top-0 left-0 right-0 z-[60] h-[3px] pointer-events-none"
     >
       <div
-        className="h-full bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-500 transition-none rounded-r-full"
+        className="h-full bg-gradient-to-r from-blue-400 via-teal-400 to-blue-500 transition-none rounded-r-full"
         style={{ width: `${pct}%` }}
       />
     </div>

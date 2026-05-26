@@ -59,7 +59,7 @@ export default function CookieBanner() {
         {/* Header */}
         <div className="flex items-center justify-between px-5 pt-5 pb-3">
           <div className="flex items-center gap-2">
-            <Cookie className="w-5 h-5 text-emerald-400" />
+            <Cookie className="w-5 h-5 text-blue-400" />
             <p className="font-semibold text-sm" style={{ color: textMain }}>
               Vos préférences cookies
             </p>
@@ -81,7 +81,7 @@ export default function CookieBanner() {
             Consultez notre{' '}
             <Link
               to="/confidentialite"
-              className="text-emerald-400 underline underline-offset-2 hover:text-emerald-300 transition-colors"
+              className="text-blue-400 underline underline-offset-2 hover:text-blue-300 transition-colors"
             >
               politique de confidentialité
             </Link>.
@@ -104,7 +104,7 @@ export default function CookieBanner() {
               {/* Nécessaires */}
               <div className="flex items-start justify-between gap-3">
                 <div className="flex items-start gap-2">
-                  <Shield className="w-4 h-4 text-emerald-400 mt-0.5 shrink-0" />
+                  <Shield className="w-4 h-4 text-blue-400 mt-0.5 shrink-0" />
                   <div>
                     <p className="text-xs font-semibold" style={{ color: textMain }}>Cookies nécessaires</p>
                     <p className="text-[11px] mt-0.5" style={{ color: textFaint }}>
@@ -112,7 +112,7 @@ export default function CookieBanner() {
                     </p>
                   </div>
                 </div>
-                <span className="text-[11px] text-emerald-400 font-semibold shrink-0 mt-0.5">Toujours actif</span>
+                <span className="text-[11px] text-blue-400 font-semibold shrink-0 mt-0.5">Toujours actif</span>
               </div>
 
               {/* Analytics */}
@@ -133,7 +133,7 @@ export default function CookieBanner() {
                     checked={prefs.analytics}
                     onChange={e => setPrefs(p => ({ ...p, analytics: e.target.checked }))}
                   />
-                  <div className="w-8 h-4 rounded-full transition-colors bg-white/10 peer-checked:bg-emerald-500 relative after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:after:translate-x-4" />
+                  <div className="w-8 h-4 rounded-full transition-colors bg-white/10 peer-checked:bg-blue-500 relative after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:after:translate-x-4" />
                 </label>
               </div>
 
@@ -155,7 +155,7 @@ export default function CookieBanner() {
                     checked={prefs.marketing}
                     onChange={e => setPrefs(p => ({ ...p, marketing: e.target.checked }))}
                   />
-                  <div className="w-8 h-4 rounded-full transition-colors bg-white/10 peer-checked:bg-emerald-500 relative after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:after:translate-x-4" />
+                  <div className="w-8 h-4 rounded-full transition-colors bg-white/10 peer-checked:bg-blue-500 relative after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-3 after:w-3 after:transition-all peer-checked:after:translate-x-4" />
                 </label>
               </div>
             </div>
@@ -175,7 +175,7 @@ export default function CookieBanner() {
           </button>
           <button
             onClick={() => save(true)}
-            className="flex-1 px-4 py-2.5 rounded-xl text-xs font-semibold bg-emerald-500 hover:bg-emerald-400 transition-all shadow shadow-emerald-500/20"
+            className="flex-1 px-4 py-2.5 rounded-xl text-xs font-semibold bg-blue-500 hover:bg-blue-400 transition-all shadow shadow-blue-500/20"
             style={{ color: '#fff' }}
           >
             Tout accepter

@@ -158,8 +158,8 @@ function ContactWidget() {
               </div>
             </a>
             <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-50 transition-colors">
-              <div className="w-9 h-9 bg-emerald-50 rounded-full flex items-center justify-center">
-                <MessageCircle className="w-4 h-4 text-emerald-600" />
+              <div className="w-9 h-9 bg-blue-50 rounded-full flex items-center justify-center">
+                <MessageCircle className="w-4 h-4 text-blue-600" />
               </div>
               <div>
                 <p className="text-sm font-medium text-navy-900">WhatsApp</p>
@@ -213,7 +213,7 @@ class ErrorBoundary extends Component {
             <div className="flex justify-center gap-3">
               <button
                 onClick={() => window.location.reload()}
-                className="px-5 py-2.5 rounded-xl bg-emerald-500 text-white text-sm font-semibold hover:bg-emerald-400 transition-colors"
+                className="px-5 py-2.5 rounded-xl bg-blue-500 text-white text-sm font-semibold hover:bg-blue-400 transition-colors"
               >
                 Recharger
               </button>

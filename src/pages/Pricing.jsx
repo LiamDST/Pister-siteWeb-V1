@@ -91,7 +91,7 @@ const faqItems = [
 
 /* ─── Sous-composants ───────────────────────────────────────── */
 function BoolCell({ val }) {
-  if (val === true)  return <CheckCircle2 className="w-4 h-4 text-emerald-400 mx-auto" />;
+  if (val === true)  return <CheckCircle2 className="w-4 h-4 text-blue-400 mx-auto" />;
   if (val === false) return <XCircle className="w-4 h-4 text-white/20 mx-auto" />;
   return <span className="text-sm font-medium">{val}</span>;
 }
@@ -102,7 +102,7 @@ function FaqItem({ q, a }) {
     <div className="border-b border-white/8">
       <button
         onClick={() => setOpen(o => !o)}
-        className="w-full flex items-center justify-between py-4 text-left text-sm font-medium gap-4 hover:text-emerald-400 transition-colors"
+        className="w-full flex items-center justify-between py-4 text-left text-sm font-medium gap-4 hover:text-blue-400 transition-colors"
       >
         <span>{q}</span>
         {open ? <ChevronUp className="w-4 h-4 shrink-0" /> : <ChevronDown className="w-4 h-4 shrink-0" />}
@@ -136,7 +136,7 @@ export default function Pricing() {
 
         {/* ── En-tête ── */}
         <FadeSection className="text-center mb-10">
-          <p className="text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-2">Tarifs</p>
+          <p className="text-blue-400 text-xs font-semibold uppercase tracking-wider mb-2">Tarifs</p>
           <h1 className="text-4xl font-bold mb-3">Simple, transparent.</h1>
           <p className="text-white/60 text-sm max-w-md mx-auto">
             Pas d&apos;engagement, pas de CB demandée pour l&apos;essai. Changez de plan à tout moment.
@@ -146,13 +146,13 @@ export default function Pricing() {
           <div className="mt-6 inline-flex items-center gap-3 bg-white/5 rounded-full px-2 py-1.5 text-sm">
             <button
               onClick={() => setAnnual(false)}
-              className={`px-4 py-1.5 rounded-full transition-all font-medium ${!annual ? 'bg-emerald-500 text-white shadow' : 'text-white/50 hover:text-white/80'}`}
+              className={`px-4 py-1.5 rounded-full transition-all font-medium ${!annual ? 'bg-blue-500 text-white shadow' : 'text-white/50 hover:text-white/80'}`}
             >
               Mensuel
             </button>
             <button
               onClick={() => setAnnual(true)}
-              className={`px-4 py-1.5 rounded-full transition-all font-medium flex items-center gap-2 ${annual ? 'bg-emerald-500 text-white shadow' : 'text-white/50 hover:text-white/80'}`}
+              className={`px-4 py-1.5 rounded-full transition-all font-medium flex items-center gap-2 ${annual ? 'bg-blue-500 text-white shadow' : 'text-white/50 hover:text-white/80'}`}
             >
               Annuel
               <span className="text-xs bg-amber-400/20 text-amber-300 px-1.5 py-0.5 rounded-full font-semibold">
@@ -170,7 +170,7 @@ export default function Pricing() {
             const originalPrice = p.monthlyPrice;
             return (
               <FadeSection key={p.name} delay={i * 80}>
-                <div className={`card-glass p-6 h-full flex flex-col gap-5 relative overflow-hidden ${p.highlight ? 'border-emerald-500/40 ring-1 ring-emerald-500/20' : ''}`}>
+                <div className={`card-glass p-6 h-full flex flex-col gap-5 relative overflow-hidden ${p.highlight ? 'border-blue-500/40 ring-1 ring-blue-500/20' : ''}`}>
                   {p.highlight && (
                     <div className="absolute inset-0 pointer-events-none rounded-2xl"
                       style={{ boxShadow: 'inset 0 0 40px 0 rgba(16,185,129,0.06)' }} />
@@ -179,7 +179,7 @@ export default function Pricing() {
                   <div className="flex items-start justify-between gap-2">
                     <div>
                       {p.highlight && (
-                        <span className="inline-block text-xs font-semibold bg-emerald-500/20 text-emerald-300 px-2.5 py-1 rounded-full mb-2">
+                        <span className="inline-block text-xs font-semibold bg-blue-500/20 text-blue-300 px-2.5 py-1 rounded-full mb-2">
                           ✦ Recommandé
                         </span>
                       )}
@@ -187,7 +187,7 @@ export default function Pricing() {
                       <p className="text-white/50 text-xs mt-1">{p.desc}</p>
                     </div>
                     <div className="p-2 rounded-xl bg-white/5 shrink-0">
-                      <Icon className="w-4 h-4 text-emerald-400" />
+                      <Icon className="w-4 h-4 text-blue-400" />
                     </div>
                   </div>
 
@@ -206,7 +206,7 @@ export default function Pricing() {
                   <ul className="flex-1 space-y-2">
                     {p.features.map(f => (
                       <li key={f} className="flex items-center gap-2 text-sm text-white/70">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+                        <CheckCircle2 className="w-4 h-4 text-blue-400 shrink-0" />
                         {f}
                       </li>
                     ))}
@@ -220,7 +220,7 @@ export default function Pricing() {
                     </div>
                     <div className="h-1 w-full bg-white/8 rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-emerald-500/60 rounded-full transition-all duration-700"
+                        className="h-full bg-blue-500/60 rounded-full transition-all duration-700"
                         style={{ width: `${p.popularity}%` }}
                       />
                     </div>
@@ -258,7 +258,7 @@ export default function Pricing() {
         <FadeSection className="mt-10">
           <button
             onClick={() => setShowCompare(o => !o)}
-            className="mx-auto flex items-center gap-2 text-sm text-emerald-400 hover:text-emerald-300 transition-colors font-medium"
+            className="mx-auto flex items-center gap-2 text-sm text-blue-400 hover:text-blue-300 transition-colors font-medium"
           >
             {showCompare ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
             {showCompare ? 'Masquer la comparaison' : 'Voir la comparaison complète'}
@@ -271,7 +271,7 @@ export default function Pricing() {
                   <tr className="border-b border-white/8">
                     <th className="text-left p-4 text-white/50 font-medium w-1/2">Fonctionnalité</th>
                     <th className="text-center p-4 font-semibold">Starter</th>
-                    <th className="text-center p-4 font-semibold text-emerald-400">Pro</th>
+                    <th className="text-center p-4 font-semibold text-blue-400">Pro</th>
                     <th className="text-center p-4 font-semibold">Growth</th>
                   </tr>
                 </thead>
@@ -293,7 +293,7 @@ export default function Pricing() {
         {/* ── Calculateur ROI ── */}
         <FadeSection className="mt-10">
           <div className="card-glass p-6 sm:p-8 rounded-3xl border-white/10">
-            <p className="text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-2">Calculateur ROI</p>
+            <p className="text-blue-400 text-xs font-semibold uppercase tracking-wider mb-2">Calculateur ROI</p>
             <h2 className="text-xl sm:text-2xl font-bold mb-1">Quel est votre retour sur investissement ?</h2>
             <p className="text-sm text-white/50 mb-8">Ajustez les curseurs pour estimer le CA généré par Pisteur.</p>
 
@@ -301,12 +301,12 @@ export default function Pricing() {
               <div>
                 <label className="block text-sm font-medium mb-1">
                   Rendez-vous signés / mois
-                  <span className="ml-2 text-emerald-400 font-bold">{rdv}</span>
+                  <span className="ml-2 text-blue-400 font-bold">{rdv}</span>
                 </label>
                 <input
                   type="range" min="1" max="40" value={rdv}
                   onChange={e => setRdv(Number(e.target.value))}
-                  className="w-full accent-emerald-500"
+                  className="w-full accent-blue-500"
                 />
                 <div className="flex justify-between text-xs text-white/30 mt-1">
                   <span>1</span><span>40</span>
@@ -316,12 +316,12 @@ export default function Pricing() {
               <div>
                 <label className="block text-sm font-medium mb-1">
                   Panier moyen / chantier
-                  <span className="ml-2 text-emerald-400 font-bold">{panier.toLocaleString('fr-FR')} €</span>
+                  <span className="ml-2 text-blue-400 font-bold">{panier.toLocaleString('fr-FR')} €</span>
                 </label>
                 <input
                   type="range" min="500" max="20000" step="500" value={panier}
                   onChange={e => setPanier(Number(e.target.value))}
-                  className="w-full accent-emerald-500"
+                  className="w-full accent-blue-500"
                 />
                 <div className="flex justify-between text-xs text-white/30 mt-1">
                   <span>500 €</span><span>20 000 €</span>
@@ -336,9 +336,9 @@ export default function Pricing() {
                   {roiCA.toLocaleString('fr-FR')} €
                 </p>
               </div>
-              <div className="rounded-2xl bg-emerald-500/10 border border-emerald-500/20 p-5 text-center">
-                <p className="text-xs text-emerald-300/60 uppercase tracking-widest mb-2">Plan recommandé</p>
-                <p className="text-3xl font-black text-emerald-400">{planRecom}</p>
+              <div className="rounded-2xl bg-blue-500/10 border border-blue-500/20 p-5 text-center">
+                <p className="text-xs text-blue-300/60 uppercase tracking-widest mb-2">Plan recommandé</p>
+                <p className="text-3xl font-black text-blue-400">{planRecom}</p>
                 <p className="text-xs text-white/40 mt-1">{planPrice} € / mois</p>
               </div>
               <div className="rounded-2xl bg-white/5 border border-white/8 p-5 text-center">
@@ -364,8 +364,8 @@ export default function Pricing() {
                 { val: '10 crédits', sub: '= 1 téléphone portable', desc: 'Numéro direct du contact. 0 crédit si non trouvé.' },
               ].map(c => (
                 <div key={c.sub} className="rounded-2xl bg-navy-950/70 p-5 border border-white/10">
-                  <p className="text-3xl font-bold text-emerald-400">{c.val}</p>
-                  <p className="mt-2 text-xs font-semibold uppercase tracking-widest text-emerald-300/90">{c.sub}</p>
+                  <p className="text-3xl font-bold text-blue-400">{c.val}</p>
+                  <p className="mt-2 text-xs font-semibold uppercase tracking-widest text-blue-300/90">{c.sub}</p>
                   <p className="mt-4 text-sm text-white/60 leading-relaxed">{c.desc}</p>
                 </div>
               ))}
@@ -382,7 +382,7 @@ export default function Pricing() {
             ))}
             <p className="mt-6 text-center text-sm text-white/55">
               Autre question ?{' '}
-              <Link to="/contact" className="font-medium text-emerald-400 underline underline-offset-4">
+              <Link to="/contact" className="font-medium text-blue-400 underline underline-offset-4">
                 Demandez une démo personnalisée.
               </Link>
             </p>

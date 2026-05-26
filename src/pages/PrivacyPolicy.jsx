@@ -62,11 +62,11 @@ export default function PrivacyPolicy() {
     <section className="section">
       <div className="section-inner max-w-4xl">
         <div className="mb-8">
-          <Link to="/" className="inline-flex items-center gap-2 text-sm text-white/55 hover:text-emerald-400 transition-colors mb-6">
+          <Link to="/" className="inline-flex items-center gap-2 text-sm text-white/55 hover:text-blue-400 transition-colors mb-6">
             <ChevronLeft className="w-4 h-4" />
             ← Retour à l'accueil
           </Link>
-          <p className="text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-2">Confidentialité</p>
+          <p className="text-blue-400 text-xs font-semibold uppercase tracking-wider mb-2">Confidentialité</p>
           <h1 className="text-4xl font-bold mb-3">Politique de confidentialité</h1>
           <p className="text-white/55 text-sm">Dernière mise à jour : 25 mai 2026</p>
         </div>

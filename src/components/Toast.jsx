@@ -5,14 +5,14 @@ import { CheckCircle2, XCircle, Info, AlertTriangle, X } from 'lucide-react';
 const ToastContext = createContext(null);
 
 const ICONS = {
-  success: <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />,
+  success: <CheckCircle2 className="w-4 h-4 text-blue-400 shrink-0" />,
   error:   <XCircle     className="w-4 h-4 text-red-400    shrink-0" />,
   info:    <Info        className="w-4 h-4 text-blue-400   shrink-0" />,
   warning: <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />,
 };
 
 const BORDERS = {
-  success: 'border-emerald-500/30',
+  success: 'border-blue-500/30',
   error:   'border-red-500/30',
   info:    'border-blue-500/30',
   warning: 'border-amber-500/30',

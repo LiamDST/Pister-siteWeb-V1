@@ -28,8 +28,8 @@ function BuildingIllustration() {
       <div className="flex items-end justify-center gap-3 mb-2">
         {/* Pastille gauche — au-dessus bâtiment gauche (52px) */}
         <div className="flex justify-center" style={{ width: 52, animation: 'pin-float 3s ease-in-out 0.8s infinite' }}>
-          <span className="inline-flex items-center gap-1 bg-emerald-500/20 border border-emerald-500/40 text-emerald-300 text-[10px] font-semibold px-2 py-0.5 rounded-full whitespace-nowrap">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="inline-flex items-center gap-1 bg-blue-500/20 border border-blue-500/40 text-blue-300 text-[10px] font-semibold px-2 py-0.5 rounded-full whitespace-nowrap">
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
             Lead qualifié
           </span>
         </div>
@@ -91,7 +91,7 @@ function BuildingIllustration() {
       </div>
 
       {/* Sol */}
-      <div className="h-px bg-gradient-to-r from-transparent via-emerald-500/30 to-transparent mt-0" />
+      <div className="h-px bg-gradient-to-r from-transparent via-blue-500/30 to-transparent mt-0" />
     </div>
   );
 }
@@ -144,7 +144,7 @@ export default function Contact() {
         {/* Infos */}
         <div className="space-y-7">
           <div>
-            <p className="text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-2">Contact</p>
+            <p className="text-blue-400 text-xs font-semibold uppercase tracking-wider mb-2">Contact</p>
             <h1 className="text-4xl font-bold mb-3">Parlons de votre marché</h1>
             <p className="text-white/60 text-sm leading-relaxed">
               Notre équipe vous configure une démo sur vos cibles réelles et vous montre combien de bâtiments correspondent à votre ICP dans votre zone.
@@ -160,13 +160,13 @@ export default function Contact() {
               { icon: <Clock className="w-4 h-4" />, label: 'Réponse', value: 'Sous 24h ouvrées', href: null },
             ].map(({ icon, label, value, href }) => (
               <div key={label} className="card-glass flex items-center gap-4 px-4 py-3 hover:border-white/20 transition-colors">
-                <div className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 shrink-0">
+                <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 shrink-0">
                   {icon}
                 </div>
                 <div className="min-w-0">
                   <p className="text-[11px] text-white/40 leading-none mb-0.5">{label}</p>
                   {href ? (
-                    <a href={href} className="text-sm font-medium text-white/80 hover:text-emerald-400 transition-colors truncate block">{value}</a>
+                    <a href={href} className="text-sm font-medium text-white/80 hover:text-blue-400 transition-colors truncate block">{value}</a>
                   ) : (
                     <p className="text-sm font-medium text-white/80">{value}</p>
                   )}
@@ -180,7 +180,7 @@ export default function Contact() {
         <div className="card-glass p-6">
           {status === 'success' ? (
             <div className="flex flex-col items-center gap-4 py-8 text-center">
-              <CheckCircle2 className="w-12 h-12 text-emerald-400" />
+              <CheckCircle2 className="w-12 h-12 text-blue-400" />
               <h2 className="text-xl font-bold">Message envoyé !</h2>
               <p className="text-white/60 text-sm">Nous vous répondons dans les 24h. Un email de confirmation vous a été envoyé.</p>
               <button onClick={() => setStatus('idle')} className="btn-outline mt-2">Envoyer un autre message</button>

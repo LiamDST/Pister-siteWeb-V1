@@ -39,13 +39,13 @@ export default function NotFound() {
           </div>
 
           {/* Code 404 */}
-          <p className="text-8xl font-black text-emerald-500/20 leading-none mb-4 select-none">404</p>
+          <p className="text-8xl font-black text-blue-500/20 leading-none mb-4 select-none">404</p>
 
           <h1 className="text-2xl font-bold mb-3">Page introuvable</h1>
           <p className="text-white/60 text-sm leading-relaxed max-w-md mx-auto mb-8">
             La page que vous cherchez n&apos;existe pas ou a été déplacée.
             Vous serez redirigé vers l&apos;accueil dans{' '}
-            <span className="text-emerald-400 font-semibold tabular-nums">{countdown}s</span>.
+            <span className="text-blue-400 font-semibold tabular-nums">{countdown}s</span>.
           </p>
 
           {/* Actions */}
@@ -74,9 +74,9 @@ export default function NotFound() {
                 <Link
                   key={s.to}
                   to={s.to}
-                  className="card-glass p-4 flex items-center gap-3 hover:border-emerald-500/30 hover:-translate-y-0.5 transition-all duration-200 group"
+                  className="card-glass p-4 flex items-center gap-3 hover:border-blue-500/30 hover:-translate-y-0.5 transition-all duration-200 group"
                 >
-                  <div className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 group-hover:bg-emerald-500/20 transition-colors shrink-0">
+                  <div className="w-8 h-8 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 group-hover:bg-blue-500/20 transition-colors shrink-0">
                     <Home className="w-3.5 h-3.5" />
                   </div>
                   <div>

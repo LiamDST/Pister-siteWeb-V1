@@ -62,7 +62,7 @@ export default function Header({ theme, onToggleTheme }) {
                 {item.label}
                 {/* Underline animé sous le lien actif */}
                 <span
-                  className={`absolute bottom-0.5 left-3 right-3 h-[2px] rounded-full bg-emerald-400 transition-all duration-300 ${
+                  className={`absolute bottom-0.5 left-3 right-3 h-[2px] rounded-full bg-blue-400 transition-all duration-300 ${
                     isActive ? 'opacity-100 scale-x-100' : 'opacity-0 scale-x-0'
                   }`}
                   style={{ transformOrigin: 'center' }}
@@ -122,13 +122,13 @@ export default function Header({ theme, onToggleTheme }) {
                 end={item.to === '/'}
                 className={`flex items-center justify-between text-sm px-3 py-2.5 rounded-lg transition-colors ${
                   isActive
-                    ? 'bg-emerald-500/10 text-emerald-300 font-medium border border-emerald-500/20'
+                    ? 'bg-blue-500/10 text-blue-300 font-medium border border-blue-500/20'
                     : 'text-white/60 hover:text-white hover:bg-white/5'
                 }`}
               >
                 {item.label}
                 {isActive && (
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
                 )}
               </NavLink>
             );

@@ -86,17 +86,17 @@ function StepsBar({ step }) {
           <div className="flex flex-col items-center gap-1">
             <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold border transition-all duration-300 ${
               i < step
-                ? 'bg-emerald-500 border-emerald-500 text-white'
+                ? 'bg-blue-500 border-blue-500 text-white'
                 : i === step
-                  ? 'bg-emerald-500/20 border-emerald-500/60 text-emerald-400'
+                  ? 'bg-blue-500/20 border-blue-500/60 text-blue-400'
                   : 'bg-white/5 border-white/15 text-white/30'
             }`}>
               {i < step ? '✓' : i + 1}
             </div>
-            <span className={`text-[10px] whitespace-nowrap ${i === step ? 'text-emerald-400' : 'text-white/30'}`}>{s}</span>
+            <span className={`text-[10px] whitespace-nowrap ${i === step ? 'text-blue-400' : 'text-white/30'}`}>{s}</span>
           </div>
           {i < steps.length - 1 && (
-            <div className={`flex-1 h-px mb-4 transition-all duration-500 ${i < step ? 'bg-emerald-500/50' : 'bg-white/10'}`} />
+            <div className={`flex-1 h-px mb-4 transition-all duration-500 ${i < step ? 'bg-blue-500/50' : 'bg-white/10'}`} />
           )}
         </div>
       ))}
@@ -112,8 +112,8 @@ function ICPSummary({ form, liveCount }) {
     <div className="icp-card">
       {/* Header */}
       <div className="icp-header">
-        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-        <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wider">
+        <CheckCircle2 className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+        <span className="text-xs font-semibold text-blue-400 uppercase tracking-wider">
           Récapitulatif de votre ICP
         </span>
       </div>
@@ -123,7 +123,7 @@ function ICPSummary({ form, liveCount }) {
         {/* Région */}
         <div className="icp-divider flex items-center gap-3 px-4 py-3">
           <div className="icp-icon">
-            <MapPin className="w-3.5 h-3.5 text-emerald-400" />
+            <MapPin className="w-3.5 h-3.5 text-blue-400" />
           </div>
           <div className="flex-1 min-w-0">
             <p className="icp-label">Région</p>
@@ -171,7 +171,7 @@ function ICPSummary({ form, liveCount }) {
         {/* Surface */}
         <div className="icp-divider flex items-center gap-3 px-4 py-3">
           <div className="icp-icon">
-            <Ruler className="w-3.5 h-3.5 text-emerald-400" />
+            <Ruler className="w-3.5 h-3.5 text-blue-400" />
           </div>
           <div className="flex-1 min-w-0">
             <p className="icp-label">Surface minimale</p>
@@ -189,9 +189,9 @@ function ICPSummary({ form, liveCount }) {
       <div className="icp-footer">
         <div>
           <p className="icp-label">Estimation</p>
-          <p className="text-xl font-black text-emerald-400 tabular-nums leading-tight">
+          <p className="text-xl font-black text-blue-400 tabular-nums leading-tight">
             {liveCount.toLocaleString('fr-FR')}
-            <span className="text-sm font-semibold text-emerald-400/70 ml-1">bâtiments</span>
+            <span className="text-sm font-semibold text-blue-400/70 ml-1">bâtiments</span>
           </p>
         </div>
         <div className="text-right">
@@ -211,15 +211,15 @@ function PreviewPanel({ form, liveCount, status, result }) {
     return (
       <div className="card-glass p-8 flex flex-col items-center justify-center text-center gap-5 min-h-[420px]">
         <div className="relative">
-          <Loader2 className="w-12 h-12 text-emerald-400 animate-spin" />
-          <div className="absolute inset-0 rounded-full bg-emerald-400/10 animate-ping" />
+          <Loader2 className="w-12 h-12 text-blue-400 animate-spin" />
+          <div className="absolute inset-0 rounded-full bg-blue-400/10 animate-ping" />
         </div>
         <div className="space-y-1">
           <p className="text-white/70 text-sm font-medium">Analyse en cours…</p>
           <p className="text-white/35 text-xs">Scan de 1 200 000 bâtiments français</p>
         </div>
         <div className="w-full bg-white/5 rounded-full h-1.5 overflow-hidden">
-          <div className="h-full bg-emerald-400 rounded-full animate-[progress_0.8s_ease-out_forwards]" style={{ width: '80%' }} />
+          <div className="h-full bg-blue-400 rounded-full animate-[progress_0.8s_ease-out_forwards]" style={{ width: '80%' }} />
         </div>
       </div>
     );
@@ -228,15 +228,15 @@ function PreviewPanel({ form, liveCount, status, result }) {
   if (status === 'done' && result !== null) {
     return (
       <div className="card-glass p-8 flex flex-col items-center text-center gap-5 min-h-[420px]">
-        <CheckCircle2 className="w-10 h-10 text-emerald-400" />
+        <CheckCircle2 className="w-10 h-10 text-blue-400" />
         <div>
-          <p className="text-6xl font-black text-emerald-400 tabular-nums">{result.toLocaleString('fr-FR')}</p>
+          <p className="text-6xl font-black text-blue-400 tabular-nums">{result.toLocaleString('fr-FR')}</p>
           <p className="text-white/60 text-sm mt-2">bâtiments correspondent à vos critères</p>
         </div>
         <div className="w-full space-y-2">
           {fakeleads.map((l, i) => (
             <div key={i} className="flex items-center gap-3 bg-white/5 rounded-xl px-3 py-2 text-left">
-              <Building2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+              <Building2 className="w-3.5 h-3.5 text-blue-400 shrink-0" />
               <div className="flex-1 min-w-0">
                 <p className="text-xs font-semibold text-white truncate">{l.city}</p>
                 <p className="text-[11px] text-white/40 truncate">{l.type} · {l.surface}</p>
@@ -248,8 +248,8 @@ function PreviewPanel({ form, liveCount, status, result }) {
         </div>
         <div className="grid grid-cols-3 gap-3 w-full">
           {[['~' + Math.round(result * 0.08), 'RDV/mois estimés'], ['×3', 'plus de CA'], ['8h', 'économisées/sem']].map(([v, l]) => (
-            <div key={l} className="bg-emerald-500/10 border border-emerald-500/20 rounded-xl p-3 text-center">
-              <p className="text-lg font-black text-emerald-400">{v}</p>
+            <div key={l} className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-3 text-center">
+              <p className="text-lg font-black text-blue-400">{v}</p>
               <p className="text-[10px] text-white/45 leading-tight mt-0.5">{l}</p>
             </div>
           ))}
@@ -266,7 +266,7 @@ function PreviewPanel({ form, liveCount, status, result }) {
     <div className="card-glass p-8 flex flex-col gap-6 min-h-[420px]">
       <div className="text-center">
         <p className="text-xs text-white/40 uppercase tracking-wider mb-1">Bâtiments estimés</p>
-        <p className="text-5xl font-black text-emerald-400 tabular-nums transition-all duration-300">
+        <p className="text-5xl font-black text-blue-400 tabular-nums transition-all duration-300">
           {animated.toLocaleString('fr-FR')}
         </p>
         <p className="text-xs text-white/30 mt-1">mis à jour en temps réel</p>
@@ -274,12 +274,12 @@ function PreviewPanel({ form, liveCount, status, result }) {
 
       <div className="grid grid-cols-2 gap-3">
         <div className="bg-white/5 rounded-xl p-3 text-center">
-          <MapPin className="w-4 h-4 text-emerald-400 mx-auto mb-1" />
+          <MapPin className="w-4 h-4 text-blue-400 mx-auto mb-1" />
           <p className="text-xs font-semibold text-white truncate">{form.region}</p>
           <p className="text-[10px] text-white/35">Région</p>
         </div>
         <div className="bg-white/5 rounded-xl p-3 text-center">
-          <Building2 className="w-4 h-4 text-emerald-400 mx-auto mb-1" />
+          <Building2 className="w-4 h-4 text-blue-400 mx-auto mb-1" />
           <p className="text-xs font-semibold text-white truncate">{form.buildingType}</p>
           <p className="text-[10px] text-white/35">Type</p>
         </div>
@@ -289,7 +289,7 @@ function PreviewPanel({ form, liveCount, status, result }) {
           <p className="text-[10px] text-white/35">DPE ciblés</p>
         </div>
         <div className="bg-white/5 rounded-xl p-3 text-center">
-          <BarChart3 className="w-4 h-4 text-emerald-400 mx-auto mb-1" />
+          <BarChart3 className="w-4 h-4 text-blue-400 mx-auto mb-1" />
           <p className="text-xs font-semibold text-white">&gt; {parseInt(form.minSurface).toLocaleString('fr-FR')} m²</p>
           <p className="text-[10px] text-white/35">Surface min.</p>
         </div>
@@ -299,7 +299,7 @@ function PreviewPanel({ form, liveCount, status, result }) {
         <p className="text-[10px] text-white/30 uppercase tracking-wider">Exemples de leads</p>
         {fakeleads.map((l, i) => (
           <div key={i} className="flex items-center gap-3 bg-white/5 rounded-xl px-3 py-2 opacity-60">
-            <Building2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+            <Building2 className="w-3.5 h-3.5 text-blue-400 shrink-0" />
             <div className="flex-1 min-w-0">
               <p className="text-xs font-semibold text-white truncate">{l.city}</p>
               <p className="text-[11px] text-white/40 truncate">{l.type} · {l.surface}</p>
@@ -363,7 +363,7 @@ export default function Simulation() {
       <div className="section-inner max-w-5xl mx-auto">
         {/* Header */}
         <div className="mb-10 text-center">
-          <p className="text-emerald-400 text-xs font-semibold uppercase tracking-[0.28em] mb-2">Simulation</p>
+          <p className="text-blue-400 text-xs font-semibold uppercase tracking-[0.28em] mb-2">Simulation</p>
           <h1 className="text-4xl font-bold mb-3">Estimez votre marché</h1>
           <p className="text-white/50 text-sm max-w-md mx-auto leading-relaxed">
             Renseignez votre ICP et découvrez combien de bâtiments correspondent à votre profil cible.
@@ -397,7 +397,7 @@ export default function Simulation() {
                           onClick={() => setForm(f => ({ ...f, region: r }))}
                           className={`px-3 py-2 rounded-xl text-xs font-medium border transition-all duration-200 text-left flex items-center gap-2 ${
                             form.region === r
-                              ? 'bg-emerald-500/20 border-emerald-500/50 text-emerald-300'
+                              ? 'bg-blue-500/20 border-blue-500/50 text-blue-300'
                               : 'bg-white/3 border-white/10 text-white/50 hover:border-white/25 hover:text-white/70'
                           }`}
                         >
@@ -429,7 +429,7 @@ export default function Simulation() {
                           onClick={() => setForm(f => ({ ...f, buildingType: t.value }))}
                           className={`w-full px-3 py-2.5 rounded-xl text-xs font-medium border transition-all duration-200 text-left flex items-center gap-2 ${
                             form.buildingType === t.value
-                              ? 'bg-emerald-500/20 border-emerald-500/50 text-emerald-300'
+                              ? 'bg-blue-500/20 border-blue-500/50 text-blue-300'
                               : 'bg-white/3 border-white/10 text-white/50 hover:border-white/25 hover:text-white/70'
                           }`}
                         >
@@ -468,7 +468,7 @@ export default function Simulation() {
                   <div>
                     <label className="text-xs text-white/50 mb-2 flex justify-between">
                       <span className="font-medium">Surface minimale</span>
-                      <span className="text-emerald-400 font-bold tabular-nums">{parseInt(form.minSurface).toLocaleString('fr-FR')} m²</span>
+                      <span className="text-blue-400 font-bold tabular-nums">{parseInt(form.minSurface).toLocaleString('fr-FR')} m²</span>
                     </label>
                     <input
                       type="range"
@@ -477,7 +477,7 @@ export default function Simulation() {
                       step={100}
                       value={form.minSurface}
                       onChange={e => setForm(f => ({ ...f, minSurface: parseInt(e.target.value) }))}
-                      className="w-full accent-emerald-400 cursor-pointer"
+                      className="w-full accent-blue-400 cursor-pointer"
                     />
                     <div className="flex justify-between text-[10px] text-white/25 mt-1">
                       <span>0 m²</span>
@@ -513,7 +513,7 @@ export default function Simulation() {
 
                   <div>
                     <label className="text-xs text-white/50 mb-2 flex items-center gap-1.5 font-medium">
-                      <Mail className="w-3.5 h-3.5 text-emerald-400" />
+                      <Mail className="w-3.5 h-3.5 text-blue-400" />
                       Recevez votre simulation par email
                       <span className="text-white/25 font-normal">(optionnel)</span>
                     </label>

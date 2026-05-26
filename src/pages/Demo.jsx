@@ -25,7 +25,7 @@ export default function Demo() {
     <section className="section">
       <div className="section-inner space-y-12">
         <FadeSection className="text-center">
-          <p className="text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-2">Démo interactive</p>
+          <p className="text-blue-400 text-xs font-semibold uppercase tracking-wider mb-2">Démo interactive</p>
           <h1 className="text-4xl font-bold mb-3">Voici à quoi ressemble Pisteur</h1>
           <p className="text-white/60 text-sm max-w-lg mx-auto">
             Un exemple réel de leads générés avec les filtres d&apos;une PME de rénovation énergétique.
@@ -38,7 +38,7 @@ export default function Demo() {
             <p className="text-sm font-semibold mb-3 text-white/80">Filtres actifs</p>
             <div className="flex flex-wrap gap-2">
               {['Résidentiel collectif', 'DPE E/F/G', 'Surface > 1500 m²', 'Île-de-France + Rhône + Loire-Atlantique', 'Code NAF 68.32A'].map(f => (
-                <span key={f} className="text-xs px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300">{f}</span>
+                <span key={f} className="text-xs px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-300">{f}</span>
               ))}
             </div>
           </div>
@@ -51,7 +51,7 @@ export default function Demo() {
               <div className="card-glass p-5 flex flex-col sm:flex-row items-start sm:items-center gap-4 hover:border-white/20 transition-colors">
                 <div className="flex-1 space-y-1">
                   <div className="flex items-center gap-2">
-                    <Building2 className="w-4 h-4 text-emerald-400" />
+                    <Building2 className="w-4 h-4 text-blue-400" />
                     <p className="font-semibold">{lead.name}</p>
                     <span className={`text-xs px-2 py-0.5 rounded-full font-bold ${dpeColors[lead.dpe]}`}>DPE {lead.dpe}</span>
                   </div>
@@ -63,7 +63,7 @@ export default function Demo() {
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="text-center">
-                    <p className="text-xl font-black text-emerald-400">{lead.score}</p>
+                    <p className="text-xl font-black text-blue-400">{lead.score}</p>
                     <p className="text-xs text-white/40">Score</p>
                   </div>
                   <button className="btn-outline text-xs px-3 py-2 flex items-center gap-1">

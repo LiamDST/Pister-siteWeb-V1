@@ -64,7 +64,7 @@ export default function ExitIntentModal() {
       />
 
       {/* Panel */}
-      <div className="relative z-10 w-full max-w-lg card-glass border-emerald-500/20 p-8 animate-slideUp">
+      <div className="relative z-10 w-full max-w-lg card-glass border-blue-500/20 p-8 animate-slideUp">
         <button
           onClick={close}
           aria-label="Fermer"
@@ -75,11 +75,11 @@ export default function ExitIntentModal() {
 
         {/* Header */}
         <div className="flex items-center gap-3 mb-5">
-          <div className="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+          <div className="w-10 h-10 rounded-xl bg-blue-500/15 border border-blue-500/30 flex items-center justify-center text-blue-400">
             <Zap className="w-5 h-5" />
           </div>
           <div>
-            <p className="text-[10px] text-emerald-400 font-semibold uppercase tracking-wider">Avant de partir</p>
+            <p className="text-[10px] text-blue-400 font-semibold uppercase tracking-wider">Avant de partir</p>
             <h2 id="exit-intent-title" className="text-lg font-bold leading-snug">
               Simulez votre marché en 60 secondes
             </h2>
@@ -99,7 +99,7 @@ export default function ExitIntentModal() {
             { icon: <Zap        className="w-4 h-4" />, value: '8h',     label: 'leads livrés' },
           ].map(({ icon, value, label }) => (
             <div key={label} className="bg-white/5 rounded-xl p-3 text-center border border-white/8">
-              <div className="flex justify-center text-emerald-400 mb-1">{icon}</div>
+              <div className="flex justify-center text-blue-400 mb-1">{icon}</div>
               <p className="text-base font-black text-white">{value}</p>
               <p className="text-[10px] text-white/40">{label}</p>
             </div>

@@ -25,7 +25,7 @@ const CASES = [
     company: 'IsolPro',
     sector: 'Isolation thermique',
     size: '12 commerciaux',
-    color: 'emerald',
+    color: 'blue',
     tagline: 'De 3h de prospection par jour à 45 minutes',
     challenge: 'IsolPro prospectait manuellement via des fichiers Excel et des annuaires locaux. Chaque commercial passait 3h par jour à qualifier des cibles sans garantie de pertinence.',
     solution: 'Pisteur a été configuré sur l\'ICP d\'IsolPro en 20 minutes : bâtiments résidentiels collectifs DPE E/F/G, surfaces > 1 500 m², dans un rayon de 80 km autour de Lyon.',
@@ -101,12 +101,12 @@ const CASES = [
 ];
 
 const COLOR_MAP = {
-  emerald: {
-    badge:  'bg-emerald-500/15 border-emerald-500/30 text-emerald-700 dark:text-emerald-300',
-    icon:   'bg-emerald-500/10 border-emerald-500/20 text-emerald-600 dark:text-emerald-400',
-    metric: 'text-emerald-600 dark:text-emerald-400',
-    bar:    'bg-emerald-400',
-    border: 'border-emerald-500/30 bg-emerald-500/5',
+  blue: {
+    badge:  'bg-blue-500/15 border-blue-500/30 text-blue-700 dark:text-blue-300',
+    icon:   'bg-blue-500/10 border-blue-500/20 text-blue-600 dark:text-blue-400',
+    metric: 'text-blue-600 dark:text-blue-400',
+    bar:    'bg-blue-400',
+    border: 'border-blue-500/30 bg-blue-500/5',
   },
   blue: {
     badge:  'bg-blue-500/15 border-blue-500/30 text-blue-700 dark:text-blue-300',
@@ -232,7 +232,7 @@ export default function CaseStudies() {
         {/* Header */}
         <FadeSection>
           <div className="mb-10">
-            <p className="text-emerald-500 dark:text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-2">Études de cas</p>
+            <p className="text-blue-500 dark:text-blue-400 text-xs font-semibold uppercase tracking-wider mb-2">Études de cas</p>
             <h1 className="text-3xl font-bold mb-3 text-gray-900 dark:text-white">Ils ont transformé leur prospection</h1>
             <p className="text-gray-500 dark:text-white/60 text-sm max-w-xl leading-relaxed">
               Des entreprises du secteur bâtiment — de la TPE à l&apos;ETI — ont fait de Pisteur

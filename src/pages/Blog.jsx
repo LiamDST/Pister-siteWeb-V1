@@ -48,7 +48,7 @@ const tagConfig = {
 };
 
 const filterBtnBase = 'px-3 py-1.5 rounded-full text-xs font-semibold transition-all border';
-const filterBtnActive = 'bg-emerald-500 text-white border-emerald-500';
+const filterBtnActive = 'bg-blue-500 text-white border-blue-500';
 const filterBtnIdle = 'text-white/50 border-white/10 hover:border-white/25 hover:text-white/80';
 
 function FadeSection({ children, delay = 0 }) {
@@ -95,7 +95,7 @@ function PostCard({ p, delay = 0 }) {
           <p className="text-xs text-white/50 leading-relaxed flex-1">{p.excerpt}</p>
           <div className="flex items-center justify-between mt-1">
             <span className="text-xs text-white/30">{p.date}</span>
-            <span className="text-xs text-emerald-400 font-semibold flex items-center gap-1 group-hover:gap-2 transition-all">
+            <span className="text-xs text-blue-400 font-semibold flex items-center gap-1 group-hover:gap-2 transition-all">
               Lire <ArrowRight className="w-3 h-3" />
             </span>
           </div>
@@ -129,7 +129,7 @@ function HeroCard({ p }) {
           <p className="text-sm text-white/55 leading-relaxed">{p.excerpt}</p>
           <div className="flex items-center justify-between mt-auto pt-2 border-t border-white/5">
             <span className="text-xs text-white/30">{p.date}</span>
-            <span className="text-sm text-emerald-400 font-semibold flex items-center gap-1.5 group-hover:gap-3 transition-all">
+            <span className="text-sm text-blue-400 font-semibold flex items-center gap-1.5 group-hover:gap-3 transition-all">
               Lire l’article <ArrowRight className="w-4 h-4" />
             </span>
           </div>
@@ -173,7 +173,7 @@ export default function Blog() {
         <FadeSection>
           <div className="flex flex-wrap items-end justify-between gap-4 mb-8">
             <div>
-              <p className="text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-2">Blog</p>
+              <p className="text-blue-400 text-xs font-semibold uppercase tracking-wider mb-2">Blog</p>
               <h1 className="text-4xl font-bold mb-1">Ressources & insights</h1>
               <p className="text-white/50 text-sm">Stratégies, données et guides pour la prospection bâtiment.</p>
             </div>
@@ -251,7 +251,7 @@ export default function Blog() {
         {/* — Newsletter — */}
         <FadeSection delay={100}>
           <div className="card-glass mt-14 p-8 flex flex-col md:flex-row items-center gap-6 text-center md:text-left">
-            <div className="w-12 h-12 rounded-xl bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center text-emerald-400 shrink-0">
+            <div className="w-12 h-12 rounded-xl bg-blue-500/15 border border-blue-500/25 flex items-center justify-center text-blue-400 shrink-0">
               <Mail className="w-5 h-5" />
             </div>
             <div className="flex-1">
@@ -259,7 +259,7 @@ export default function Blog() {
               <p className="text-xs text-white/50">Une ressource par semaine, directement dans votre boîte mail. Sans spam.</p>
             </div>
             {nlStatus === 'ok' ? (
-              <div className="flex items-center gap-2 text-emerald-400 text-sm font-semibold">
+              <div className="flex items-center gap-2 text-blue-400 text-sm font-semibold">
                 ✓ Inscription confirmée !
               </div>
             ) : (
