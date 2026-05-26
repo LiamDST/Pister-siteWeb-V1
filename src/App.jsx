@@ -234,6 +234,132 @@ function ContactWidget() {
   );
 }
 
+/* ─── Splash Screen ─────────────────────────────────────────── */
+function SplashScreen({ onDone }) {
+  const [progress, setProgress] = useState(0);
+  const [fadeOut, setFadeOut] = useState(false);
+
+  useEffect(() => {
+    let p = 0;
+    const t = setInterval(() => {
+      p += Math.random() * 22 + 8;
+      if (p >= 100) {
+        p = 100;
+        clearInterval(t);
+        setTimeout(() => {
+          setFadeOut(true);
+          setTimeout(onDone, 500);
+        }, 200);
+      }
+      setProgress(Math.min(p, 100));
+    }, 80);
+    return () => clearInterval(t);
+  }, [onDone]);
+
+  return (
+    <div className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center transition-opacity duration-500 ${fadeOut ? 'opacity-0' : 'opacity-100'}`}
+      style={{ background: 'var(--page-bg)' }}>
+      {/* Halo glow */}
+      <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(ellipse 600px 400px at 50% 45%, rgba(59,130,246,0.08), transparent 70%)' }} />
+      {/* Grille */}
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: 'linear-gradient(rgba(59,130,246,1) 1px, transparent 1px), linear-gradient(90deg, rgba(59,130,246,1) 1px, transparent 1px)', backgroundSize: '48px 48px' }} />
+
+      <div className="relative z-10 flex flex-col items-center gap-8">
+        {/* Logo animé */}
+        <div className="relative">
+          <div className="w-20 h-20 rounded-2xl flex items-center justify-center" style={{ background: 'linear-gradient(135deg, rgba(59,130,246,0.2), rgba(139,92,246,0.15))', border: '1px solid rgba(59,130,246,0.3)', boxShadow: '0 0 40px rgba(59,130,246,0.2)' }}>
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="10" stroke="rgba(59,130,246,0.4)" strokeWidth="1" />
+              <circle cx="12" cy="12" r="6" stroke="rgba(59,130,246,0.6)" strokeWidth="1" />
+              <circle cx="12" cy="12" r="2" stroke="rgba(59,130,246,0.9)" strokeWidth="1.5" />
+              <line x1="12" y1="2" x2="12" y2="22" stroke="rgba(59,130,246,0.2)" strokeWidth="1" />
+              <line x1="2" y1="12" x2="22" y2="12" stroke="rgba(59,130,246,0.2)" strokeWidth="1" />
+              <path d="M12 12 L19 8" stroke="#3b82f6" strokeWidth="1.5" strokeLinecap="round"
+                style={{ transformOrigin: '12px 12px', animation: 'sweep 2s linear infinite' }} />
+            </svg>
+          </div>
+          {/* Ping */}
+          <div className="absolute inset-0 rounded-2xl animate-ping" style={{ border: '1px solid rgba(59,130,246,0.15)', animationDuration: '1.5s' }} />
+        </div>
+
+        {/* Nom */}
+        <div className="text-center">
+          <p className="text-2xl font-black tracking-tight" style={{ background: 'linear-gradient(135deg, #ffffff, rgba(255,255,255,0.6))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Pisteur</p>
+          <p className="text-xs text-white/30 mt-1 tracking-widest uppercase">Prospection bâtiment IA</p>
+        </div>
+
+        {/* Barre de progression */}
+        <div className="w-48 space-y-2">
+          <div className="h-0.5 bg-white/8 rounded-full overflow-hidden">
+            <div className="h-full rounded-full transition-all duration-100 ease-out"
+              style={{ width: `${progress}%`, background: 'linear-gradient(90deg, #3b82f6, #818cf8, #10b981)', backgroundSize: '200% 100%', animation: 'gradientShift 1.5s ease infinite' }} />
+          </div>
+          <p className="text-[10px] text-white/25 text-center tabular-nums">{Math.round(progress)}%</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Bouton Scroll To Top ───────────────────────────────────── */
+function ScrollToTopButton() {
+  const [scrollPct, setScrollPct] = useState(0);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const el = document.documentElement;
+      const scrolled = el.scrollTop;
+      const total = el.scrollHeight - el.clientHeight;
+      const pct = total > 0 ? (scrolled / total) * 100 : 0;
+      setScrollPct(pct);
+      setVisible(pct > 30);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const handleClick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  const r = 20;
+  const circ = 2 * Math.PI * r;
+  const dash = circ - (scrollPct / 100) * circ;
+
+  return (
+    <button
+      onClick={handleClick}
+      aria-label="Retour en haut"
+      className={`fixed bottom-24 right-6 z-50 w-12 h-12 flex items-center justify-center transition-all duration-500 ${
+        visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
+      }`}
+    >
+      {/* Cercle SVG de progression */}
+      <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 48 48">
+        {/* Piste */}
+        <circle cx="24" cy="24" r={r} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="2" />
+        {/* Progression */}
+        <circle cx="24" cy="24" r={r} fill="none"
+          stroke="url(#scrollGrad)" strokeWidth="2.5" strokeLinecap="round"
+          strokeDasharray={circ} strokeDashoffset={dash}
+          style={{ transition: 'stroke-dashoffset 0.2s ease' }} />
+        <defs>
+          <linearGradient id="scrollGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="#3b82f6" />
+            <stop offset="100%" stopColor="#818cf8" />
+          </linearGradient>
+        </defs>
+      </svg>
+      {/* Fond intérieur + flèche */}
+      <div className="relative z-10 w-9 h-9 rounded-full flex items-center justify-center"
+        style={{ background: 'rgba(255,255,255,0.06)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,0.12)' }}>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.8)" strokeWidth="2.5" strokeLinecap="round">
+          <path d="M12 19V5M5 12l7-7 7 7" />
+        </svg>
+      </div>
+    </button>
+  );
+}
+
 /* ─── ErrorBoundary ────────────────────────────────────────── */
 import { Component } from 'react';
 class ErrorBoundary extends Component {
@@ -272,6 +398,7 @@ class ErrorBoundary extends Component {
 
 /* ─── App ───────────────────────────────────────────────────── */
 export default function App() {
+  const [splashDone, setSplashDone] = useState(false);
   const [theme, setTheme] = useState(() => {
     if (typeof window === 'undefined') return 'dark';
     try {
@@ -290,8 +417,10 @@ export default function App() {
   return (
     <ErrorBoundary>
       <ToastProvider>
+        {!splashDone && <SplashScreen onDone={() => setSplashDone(true)} />}
         <div className="relative min-h-screen flex flex-col overflow-x-hidden">
           <SideDecorations />
+          <ScrollToTopButton />
           <ScrollProgress />
           <SeoManager />
           <ScrollToTop />

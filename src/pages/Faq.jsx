@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+﻿import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronDown, ChevronUp, Search, ThumbsUp, ThumbsDown, Sparkles } from 'lucide-react';
 import { useFadeInOnScroll } from '../hooks/useFadeInOnScroll';
@@ -190,111 +190,132 @@ export default function Faq() {
   }, [activeCat, query]);
 
   return (
-    <section className="section">
-      <div className="section-inner max-w-3xl">
+    <div className="relative min-h-screen">
+      <div className="page-circles" />
+      <div className="page-circles-extra" />
+      <section className="section relative pt-28">
+        <div className="hero-glow opacity-40" />
+        <div className="section-inner max-w-5xl relative z-10">
 
-        {/* ── En-tête ── */}
-        <FadeSection className="text-center mb-10">
-          <p className="text-blue-400 text-xs font-semibold uppercase tracking-wider mb-2">FAQ</p>
-          <h1 className="text-4xl font-bold mb-3">Questions fréquentes</h1>
-          <p className="text-sm text-white/55">
-            Vous ne trouvez pas la réponse ?{' '}
-            <Link to="/contact" className="text-blue-400 hover:text-blue-300 font-medium underline underline-offset-4 transition-colors">
-              Contactez-nous
-            </Link>
-          </p>
-        </FadeSection>
+          <FadeSection className="text-center mb-12">
+            <span className="inline-flex items-center gap-2 bg-amber-500/15 border border-amber-500/25 text-amber-300 text-xs font-semibold px-4 py-2 rounded-full mb-6">
+              <Sparkles size={12} /> Questions fréquentes
+            </span>
+            <h1 className="text-4xl sm:text-5xl font-black mb-4">
+              Tout ce que vous voulez<br />
+              <span className="stat-number">savoir sur Pisteur</span>
+            </h1>
+            <p className="text-white/50 text-sm max-w-md mx-auto">
+              Vous ne trouvez pas la réponse ?{' '}
+              <Link to="/contact" className="text-blue-400 hover:text-blue-300 font-medium underline underline-offset-4 transition-colors">
+                Posez-la à notre équipe
+              </Link>
+            </p>
+            <div className="flex items-center justify-center gap-6 mt-5 text-xs text-white/30">
+              <span>{faqData.length} questions répondues</span>
+              <span className="w-px h-3 bg-white/15" />
+              <span>Mis à jour en mai 2026</span>
+              <span className="w-px h-3 bg-white/15" />
+              <span>Support 7j/7</span>
+            </div>
+          </FadeSection>
 
-        {/* ── Barre de recherche ── */}
-        <FadeSection className="mb-6">
-          <div className="relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30 pointer-events-none" />
-            <input
-              type="text"
-              placeholder="Rechercher une question…"
-              value={query}
-              onChange={e => setQuery(e.target.value)}
-              className="w-full bg-white/5 border border-white/10 rounded-2xl pl-11 pr-4 py-3 text-sm placeholder-white/30 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/30 transition-all"
-            />
-            {query && (
-              <button
-                onClick={() => setQuery('')}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 text-lg leading-none transition-colors"
-              >
-                ×
-              </button>
-            )}
-          </div>
-        </FadeSection>
+          <FadeSection className="mb-5">
+            <div className="relative">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30 pointer-events-none" />
+              <input type="text" placeholder="Rechercher parmi les questions…" value={query} onChange={e => setQuery(e.target.value)}
+                className="w-full bg-white/5 border border-white/10 rounded-2xl pl-11 pr-4 py-3.5 text-sm placeholder-white/30 focus:outline-none focus:border-blue-500/50 focus:ring-1 focus:ring-blue-500/30 transition-all" />
+              {query && (
+                <button onClick={() => setQuery('')} className="absolute right-4 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 text-xl leading-none">×</button>
+              )}
+            </div>
+          </FadeSection>
 
-        {/* ── Filtres catégories ── */}
-        <FadeSection className="mb-8">
-          <div className="flex flex-wrap gap-2">
-            {categories.map(cat => (
-              <button
-                key={cat.id}
-                onClick={() => setActiveCat(cat.id)}
-                className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all ${
-                  activeCat === cat.id
-                    ? 'bg-blue-500 text-white shadow-sm'
-                    : 'bg-white/5 text-white/50 hover:bg-white/10 hover:text-white/80'
-                }`}
-              >
-                {cat.label}
-                <span className={`ml-1.5 text-xs ${
-                  activeCat === cat.id ? 'text-white/70' : 'text-white/25'
-                }`}>
-                  {cat.id === 'all'
-                    ? faqData.length
-                    : faqData.filter(f => f.cat === cat.id).length}
-                </span>
-              </button>
-            ))}
-          </div>
-        </FadeSection>
+          <FadeSection className="mb-8">
+            <div className="flex flex-wrap gap-2">
+              {categories.map(cat => (
+                <button key={cat.id} onClick={() => setActiveCat(cat.id)}
+                  className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center gap-1.5 ${activeCat === cat.id ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/25' : 'bg-white/5 border border-white/10 text-white/50 hover:bg-white/10 hover:text-white/80'}`}>
+                  {cat.label}
+                  <span className={`text-xs px-1.5 py-0.5 rounded-md ${activeCat === cat.id ? 'bg-white/20 text-white' : 'bg-white/8 text-white/30'}`}>
+                    {cat.id === 'all' ? faqData.length : faqData.filter(f => f.cat === cat.id).length}
+                  </span>
+                </button>
+              ))}
+            </div>
+          </FadeSection>
 
-        {/* ── Liste questions ── */}
-        <div className="space-y-3">
           {filtered.length > 0 ? (
-            filtered.map((item, i) => (
-              <FadeSection key={item.id} delay={i * 40}>
-                <FaqItem item={item} />
-              </FadeSection>
-            ))
+            <div className="grid lg:grid-cols-5 gap-8 items-start">
+              <div className="lg:col-span-3 space-y-3">
+                {filtered.map((item, i) => (
+                  <FadeSection key={item.id} delay={i * 40}><FaqItem item={item} /></FadeSection>
+                ))}
+              </div>
+              <div className="lg:col-span-2 space-y-5 lg:sticky lg:top-24">
+                <FadeSection delay={100}>
+                  <div className="card-glass p-6">
+                    <h3 className="font-bold text-sm mb-4">Raccourcis par thème</h3>
+                    <div className="space-y-2">
+                      {categories.filter(c => c.id !== 'all').map(cat => (
+                        <button key={cat.id} onClick={() => setActiveCat(cat.id)}
+                          className={`w-full text-left px-3 py-2.5 rounded-xl text-xs font-medium flex items-center justify-between transition-all ${activeCat === cat.id ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30' : 'hover:bg-white/5 text-white/50'}`}>
+                          {cat.label}
+                          <span className="text-white/30 text-[10px]">{faqData.filter(f => f.cat === cat.id).length} questions</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </FadeSection>
+                <FadeSection delay={150}>
+                  <div className="card-glass p-6">
+                    <div className="w-10 h-10 rounded-xl bg-blue-500/15 flex items-center justify-center mb-4">
+                      <Sparkles size={18} className="text-blue-400" />
+                    </div>
+                    <h3 className="font-bold text-sm mb-2">Question non trouvée ?</h3>
+                    <p className="text-xs text-white/45 mb-4">Notre équipe répond en moins de 2h en jours ouvrés.</p>
+                    <Link to="/contact" className="btn-accent text-xs w-full text-center block py-2.5">Contacter l'équipe</Link>
+                  </div>
+                </FadeSection>
+                <FadeSection delay={200}>
+                  <div className="card-glass p-6">
+                    <h3 className="font-bold text-sm mb-3">Nouveautes</h3>
+                    <div className="space-y-2.5">
+                      {faqData.filter(f => f.isNew).map(item => (
+                        <div key={item.id} className="flex items-start gap-2">
+                          <span className="text-[10px] bg-blue-500/15 text-blue-400 border border-blue-500/25 px-1.5 py-0.5 rounded-full shrink-0 mt-0.5">Nouveau</span>
+                          <p className="text-xs text-white/55 leading-relaxed">{item.q}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </FadeSection>
+              </div>
+            </div>
           ) : (
             <FadeSection>
-              <div className="text-center py-16">
-                <p className="text-4xl mb-4">&#128269;</p>
-                <p className="text-white/50 text-sm">
-                  Aucune question ne correspond à <strong className="text-white/70">&ldquo;{query}&rdquo;</strong>.
-                </p>
-                <Link to="/contact" className="mt-4 inline-block text-sm text-blue-400 underline underline-offset-4">
-                  Posez-la directement à notre équipe
-                </Link>
+              <div className="card-glass text-center py-16">
+                <p className="text-4xl mb-4">Search</p>
+                <p className="text-white/50 text-sm">Aucun resultat pour cette recherche.</p>
+                <button onClick={() => setQuery('')} className="btn-outline text-xs mt-4">Reinitialiser</button>
               </div>
             </FadeSection>
           )}
+
+          <FadeSection className="mt-14">
+            <div className="card-glass p-8 text-center relative overflow-hidden">
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-0.5 bg-gradient-to-r from-transparent via-blue-500/60 to-transparent" />
+              <p className="font-black text-xl mb-2">Pret a essayer Pisteur ?</p>
+              <p className="text-white/45 text-sm mb-6">14 jours gratuits - Sans carte bancaire - Support inclus</p>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <Link to="/tarifs" className="btn-outline text-sm px-6 py-3">Voir les tarifs</Link>
+                <Link to="/contact" className="btn-accent text-sm px-6 py-3">Essai gratuit</Link>
+              </div>
+            </div>
+          </FadeSection>
+
         </div>
-
-        {/* ── Encart lien Pricing ── */}
-        <FadeSection className="mt-12">
-          <div className="card-glass p-6 rounded-3xl border-white/8 flex flex-col sm:flex-row items-center gap-4 text-center sm:text-left">
-            <div className="flex-1">
-              <p className="font-semibold text-sm">Prêt à essayer Pisteur ?</p>
-              <p className="text-xs text-white/45 mt-1">14 jours gratuits, sans carte bancaire. Accès à toutes les fonctionnalités Pro.</p>
-            </div>
-            <div className="flex gap-3 shrink-0">
-              <Link to="/pricing" className="btn-outline text-sm px-5 py-2">
-                Voir les tarifs
-              </Link>
-              <Link to="/contact" className="btn-accent text-sm px-5 py-2">
-                Essai gratuit
-              </Link>
-            </div>
-          </div>
-        </FadeSection>
-
-      </div>
-    </section>
+      </section>
+    </div>
   );
 }

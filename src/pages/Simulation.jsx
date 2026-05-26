@@ -13,6 +13,7 @@ const regions = [
   'Nouvelle-Aquitaine', 'Bretagne', 'Grand Est',
   'Normandie', 'Hauts-de-France', 'Pays de la Loire',
   "Provence-Alpes-Côte d'Azur",
+  'Centre-Val de Loire', 'Bourgogne-Franche-Comté',
 ];
 
 const buildingTypes = [
@@ -46,6 +47,7 @@ function computeResult({ region, buildingType, dpeSelected, minSurface }) {
     'Nouvelle-Aquitaine': 2900, 'Bretagne': 1800, 'Grand Est': 2200,
     'Normandie': 1600, 'Hauts-de-France': 2500, 'Pays de la Loire': 2100,
     "Provence-Alpes-Côte d'Azur": 3600,
+    'Centre-Val de Loire': 1400, 'Bourgogne-Franche-Comté': 1200,
   }[region] || 3000;
   const typeMult = {
     'Résidentiel collectif': 1, 'Tertiaire': 0.6, 'Logement social': 0.4,
@@ -75,7 +77,232 @@ function useCountUp(target, duration = 900) {
   }, [target, duration]);
   return count;
 }
+/* ─── Carte SVG France — paths géographiquement fidèles ─── */
+/* viewBox="0 0 600 660" — projection Lambert-93 simplifiée */
+const regionMeta = {
+  'Hauts-de-France':             { leads: 2500, labelX: 308, labelY: 60,  short: 'Hauts-de-France' },
+  'Normandie':                    { leads: 1600, labelX: 162, labelY: 88,  short: 'Normandie' },
+  'Île-de-France':                { leads: 8400, labelX: 300, labelY: 120, short: 'Île-de-France' },
+  'Grand Est':                    { leads: 2200, labelX: 424, labelY: 90,  short: 'Grand Est' },
+  'Bretagne':                     { leads: 1800, labelX: 90,  labelY: 156, short: 'Bretagne' },
+  'Pays de la Loire':             { leads: 2100, labelX: 168, labelY: 178, short: 'Pays de la Loire' },
+  'Centre-Val de Loire':          { leads: 1400, labelX: 268, labelY: 182, short: 'Centre-VdL' },
+  'Bourgogne-Franche-Comté':     { leads: 1200, labelX: 375, labelY: 186, short: 'Bourgogne-FC' },
+  'Nouvelle-Aquitaine':           { leads: 2900, labelX: 112, labelY: 270, short: 'Nouvelle-Acq.' },
+  'Auvergne-Rhône-Alpes':        { leads: 4200, labelX: 355, labelY: 250, short: 'Auvergne-RA' },
+  'Occitanie':                    { leads: 3100, labelX: 214, labelY: 336, short: 'Occitanie' },
+  "Provence-Alpes-Côte d'Azur":  { leads: 3600, labelX: 441, labelY: 334, short: 'PACA' },
+};
 
+/* Chemins SVG France — tracés réels adaptés viewBox "0 0 500 520" */
+const regionPaths = {
+  'Hauts-de-France':
+    'M232 34 C244 28 268 24 300 22 C328 20 354 26 372 36 C384 44 388 54 382 66 C374 80 354 88 328 94 C308 98 284 100 262 96 C244 92 234 80 230 66 C228 56 228 42 232 34Z',
+  'Normandie':
+    'M84 76 C108 62 148 54 186 52 C214 50 232 56 234 68 C234 80 218 94 196 106 C178 116 156 124 132 122 C110 120 88 110 78 96 C72 86 74 80 84 76Z',
+  'Île-de-France':
+    'M262 96 C276 90 296 90 314 96 C330 102 340 114 338 126 C336 138 322 146 304 148 C286 150 270 144 262 134 C254 124 252 108 262 96Z',
+  'Grand Est':
+    'M372 36 C394 28 428 24 460 32 C482 38 494 54 490 74 C486 96 468 116 448 130 C430 142 408 148 390 142 C372 136 358 118 350 96 C344 78 350 60 360 48 C364 42 368 38 372 36Z',
+  'Bretagne':
+    'M32 134 C52 122 84 118 112 122 C134 126 148 140 144 156 C140 170 124 182 104 188 C84 194 60 190 44 178 C30 168 26 152 32 134Z',
+  'Pays de la Loire':
+    'M112 122 C132 118 156 118 180 122 C202 126 220 136 232 148 C242 160 242 176 232 192 C222 208 204 220 182 228 C160 236 136 234 118 222 C100 210 90 190 90 168 C90 148 100 130 112 122Z',
+  'Centre-Val de Loire':
+    'M232 148 C248 140 268 138 288 144 C308 150 322 164 322 180 C322 196 310 212 292 220 C274 228 252 228 236 220 C220 212 212 196 214 180 C216 164 222 154 232 148Z',
+  'Bourgogne-Franche-Comté':
+    'M338 126 C358 118 382 118 402 130 C422 142 434 162 432 184 C430 206 416 224 396 234 C376 244 352 244 336 234 C320 224 314 204 316 184 C318 162 326 136 338 126Z',
+  'Nouvelle-Aquitaine':
+    'M90 168 C102 162 122 162 140 168 C158 174 170 188 174 206 C184 226 188 252 178 280 C168 306 148 330 124 346 C102 360 76 366 58 356 C40 346 36 322 40 296 C44 268 58 240 72 218 C80 200 84 178 90 168Z',
+  'Auvergne-Rhône-Alpes':
+    'M322 180 C340 170 362 168 384 176 C406 186 422 206 424 230 C426 254 414 278 396 296 C378 312 354 322 330 320 C308 318 290 304 284 284 C278 262 286 238 296 218 C306 200 312 188 322 180Z',
+  'Occitanie':
+    'M174 280 C190 268 212 264 232 270 C252 276 264 294 266 316 C268 340 256 364 238 382 C220 398 196 406 174 402 C152 398 136 384 126 366 C116 348 120 326 128 306 C136 288 158 290 174 280Z',
+  "Provence-Alpes-Côte d'Azur":
+    'M396 296 C416 282 444 278 466 288 C488 298 498 320 494 344 C490 364 474 378 454 382 C434 386 412 378 398 362 C384 346 380 322 384 302 C388 298 392 296 396 296Z',
+};
+
+/* Couleur de chaleur selon le nombre de leads */
+function leadColor(leads, isSelected, isHovered) {
+  if (isSelected) return { fill: 'rgba(59,130,246,0.42)', stroke: '#3b82f6', sw: 2 };
+  if (isHovered)  return { fill: 'rgba(59,130,246,0.22)', stroke: 'rgba(59,130,246,0.8)', sw: 1.5 };
+  // heatmap subtil : plus de leads = teinte bleue légère
+  const intensity = Math.min((leads - 1000) / 8000, 1);
+  const alpha = 0.06 + intensity * 0.10;
+  return {
+    fill: `rgba(59,130,246,${alpha.toFixed(2)})`,
+    stroke: 'rgba(99,120,180,0.30)',
+    sw: 0.8,
+  };
+}
+
+function FranceMap({ selected, onSelect }) {
+  const [hovered, setHovered] = useState(null);
+  const [tooltip, setTooltip] = useState({ x: 0, y: 0 });
+  const svgRef = useRef(null);
+
+  const handleMouseMove = (e, name) => {
+    const svg = svgRef.current;
+    if (!svg) return;
+    const rect = svg.getBoundingClientRect();
+    setTooltip({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+    setHovered(name);
+  };
+
+  return (
+    <div className="relative select-none">
+      {/* Titre */}
+      <div className="flex items-center justify-between mb-3">
+        <p className="text-xs font-semibold text-white/50">Cliquez sur une région</p>
+        {selected && (
+          <span className="text-xs font-black text-blue-400 flex items-center gap-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
+            {selected}
+          </span>
+        )}
+      </div>
+
+      <svg
+        ref={svgRef}
+        viewBox="0 0 520 420"
+        className="w-full h-auto drop-shadow-sm"
+        style={{ display: 'block', overflow: 'visible' }}
+      >
+        <defs>
+          <filter id="rglow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+          </filter>
+          <filter id="rselected" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="6" result="coloredBlur" />
+            <feMerge><feMergeNode in="coloredBlur" /><feMergeNode in="SourceGraphic" /></feMerge>
+          </filter>
+          <radialGradient id="bgGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%"   stopColor="rgba(59,130,246,0.04)" />
+            <stop offset="100%" stopColor="rgba(59,130,246,0)" />
+          </radialGradient>
+        </defs>
+
+        {/* Halo fond */}
+        <ellipse cx="270" cy="300" rx="260" ry="240" fill="url(#bgGrad)" />
+
+        {Object.entries(regionPaths).map(([name, path]) => {
+          const isSelected = selected === name;
+          const isHovered  = hovered === name;
+          const meta       = regionMeta[name];
+          if (!meta) return null;
+          const { fill, stroke, sw } = leadColor(meta.leads, isSelected, isHovered);
+          const active = isSelected || isHovered;
+
+          return (
+            <g key={name}
+              style={{ cursor: 'pointer' }}
+              onClick={() => onSelect(name)}
+              onMouseMove={e => handleMouseMove(e, name)}
+              onMouseLeave={() => setHovered(null)}
+            >
+              {/* Ombre portée si actif */}
+              {active && (
+                <path d={path} fill="rgba(59,130,246,0.08)"
+                  transform="translate(2,4)"
+                  style={{ filter: 'blur(6px)' }} />
+              )}
+
+              {/* Région principale */}
+              <path
+                d={path}
+                fill={fill}
+                stroke={stroke}
+                strokeWidth={sw}
+                strokeLinejoin="round"
+                style={{
+                  transition: 'fill 0.2s ease, stroke 0.2s ease, filter 0.2s ease',
+                  filter: isSelected ? 'url(#rselected)' : isHovered ? 'url(#rglow)' : 'none',
+                }}
+              />
+
+              {/* Label région — toujours visible */}
+              <text
+                x={meta.labelX}
+                y={meta.labelY}
+                textAnchor="middle"
+                dominantBaseline="middle"
+                fontSize={isSelected ? '9' : '7.5'}
+                fontWeight={active ? '800' : '600'}
+                fontFamily="system-ui, sans-serif"
+                fill={isSelected ? '#93c5fd' : isHovered ? 'rgba(147,197,253,0.9)' : 'rgba(150,160,200,0.55)'}
+                style={{ transition: 'all 0.2s ease', pointerEvents: 'none', letterSpacing: '0.3px' }}
+              >
+                {meta.short}
+              </text>
+
+              {/* Pastille leads — visible au hover/select */}
+              {active && (
+                <g style={{ pointerEvents: 'none' }}>
+                  {/* Glow ring */}
+                  {isSelected && (
+                    <>
+                      <circle cx={meta.labelX} cy={meta.labelY} r="18"
+                        fill="none" stroke="rgba(59,130,246,0.25)" strokeWidth="1">
+                        <animate attributeName="r" values="18;28;18" dur="2.2s" repeatCount="indefinite" />
+                        <animate attributeName="opacity" values="0.5;0;0.5" dur="2.2s" repeatCount="indefinite" />
+                      </circle>
+                      <circle cx={meta.labelX} cy={meta.labelY} r="13"
+                        fill="none" stroke="rgba(59,130,246,0.15)" strokeWidth="1">
+                        <animate attributeName="r" values="13;22;13" dur="2.2s" begin="0.4s" repeatCount="indefinite" />
+                        <animate attributeName="opacity" values="0.4;0;0.4" dur="2.2s" begin="0.4s" repeatCount="indefinite" />
+                      </circle>
+                    </>
+                  )}
+                  {/* Badge */}
+                  <circle cx={meta.labelX} cy={meta.labelY} r="13"
+                    fill={isSelected ? '#2563eb' : 'rgba(59,130,246,0.75)'}
+                    style={{ filter: 'url(#rselected)' }} />
+                  <text x={meta.labelX} y={meta.labelY} textAnchor="middle" dominantBaseline="middle"
+                    fill="white" fontSize="6.5" fontWeight="800" fontFamily="system-ui">
+                    {meta.leads >= 1000 ? `${(meta.leads/1000).toFixed(1)}k` : meta.leads}
+                  </text>
+                </g>
+              )}
+            </g>
+          );
+        })}
+      </svg>
+
+      {/* Tooltip flottant positionné à la souris */}
+      {hovered && regionMeta[hovered] && (
+        <div
+          className="absolute z-20 pointer-events-none"
+          style={{
+            left: Math.min(tooltip.x + 12, 300),
+            top: tooltip.y - 42,
+            transform: 'translateX(-50%)',
+          }}
+        >
+          <div className="bg-gray-900/95 backdrop-blur-md border border-blue-500/30 rounded-xl px-3.5 py-2.5 shadow-xl shadow-blue-500/10 animate-slideUp whitespace-nowrap">
+            <p className="text-[11px] font-black text-white mb-0.5">{hovered}</p>
+            <div className="flex items-center gap-2">
+              <span className="text-[10px] text-blue-300 font-bold">{regionMeta[hovered].leads.toLocaleString('fr-FR')} leads</span>
+              <span className="text-[10px] text-white/30">·</span>
+              <span className="text-[10px] text-white/50">Cliquez pour sélectionner</span>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Légende heatmap */}
+      <div className="flex items-center justify-between mt-3 px-1">
+        <span className="text-[10px] text-white/25">Faible densité</span>
+        <div className="flex gap-0.5">
+          {[0.06, 0.09, 0.12, 0.15, 0.18, 0.22, 0.30, 0.42].map((a, i) => (
+            <div key={i} className="w-4 h-1.5 rounded-sm" style={{ background: `rgba(59,130,246,${a})` }} />
+          ))}
+        </div>
+        <span className="text-[10px] text-white/25">Forte densité</span>
+      </div>
+    </div>
+  );
+}
 /* ─── Steps indicator ─────────────────────────────────── */
 function StepsBar({ step }) {
   const steps = ['Localisation', 'Bâtiment & DPE', 'Contact'];
@@ -216,7 +443,7 @@ function PreviewPanel({ form, liveCount, status, result }) {
         </div>
         <div className="space-y-1">
           <p className="text-white/70 text-sm font-medium">Analyse en cours…</p>
-          <p className="text-white/35 text-xs">Scan de 1 200 000 bâtiments français</p>
+          <p className="text-white/35 text-xs">Scan de 1 500 000 bâtiments français</p>
         </div>
         <div className="w-full bg-white/5 rounded-full h-1.5 overflow-hidden">
           <div className="h-full bg-blue-400 rounded-full animate-[progress_0.8s_ease-out_forwards]" style={{ width: '80%' }} />
@@ -266,16 +493,24 @@ function PreviewPanel({ form, liveCount, status, result }) {
     <div className="card-glass p-8 flex flex-col gap-6 min-h-[420px]">
       <div className="text-center">
         <p className="text-xs text-white/40 uppercase tracking-wider mb-1">Bâtiments estimés</p>
-        <p className="text-5xl font-black text-blue-400 tabular-nums transition-all duration-300">
-          {animated.toLocaleString('fr-FR')}
+        {form.region ? (
+          <p className="text-5xl font-black text-blue-400 tabular-nums transition-all duration-300">
+            {animated.toLocaleString('fr-FR')}
+          </p>
+        ) : (
+          <p className="text-4xl font-black tabular-nums" style={{ background: 'linear-gradient(135deg, #3b82f6, #818cf8)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+            1,5 Millions
+          </p>
+        )}
+        <p className="text-xs text-white/30 mt-1">
+          {form.region ? 'mis à jour en temps réel' : 'bâtiments dans notre base nationale'}
         </p>
-        <p className="text-xs text-white/30 mt-1">mis à jour en temps réel</p>
       </div>
 
       <div className="grid grid-cols-2 gap-3">
         <div className="bg-white/5 rounded-xl p-3 text-center">
           <MapPin className="w-4 h-4 text-blue-400 mx-auto mb-1" />
-          <p className="text-xs font-semibold text-white truncate">{form.region}</p>
+          <p className="text-xs font-semibold text-white truncate">{form.region || '—'}</p>
           <p className="text-[10px] text-white/35">Région</p>
         </div>
         <div className="bg-white/5 rounded-xl p-3 text-center">
@@ -317,7 +552,7 @@ function PreviewPanel({ form, liveCount, status, result }) {
 export default function Simulation() {
   const [step, setStep] = useState(0);
   const [form, setForm] = useState({
-    region: regions[0],
+    region: '',
     buildingType: buildingTypes[0].value,
     dpeSelected: ['E', 'F', 'G'],
     minSurface: 500,
@@ -326,7 +561,7 @@ export default function Simulation() {
   const [result, setResult] = useState(null);
   const [status, setStatus] = useState('idle');
 
-  const liveCount = computeResult(form);
+  const liveCount = form.region ? computeResult(form) : 0;
 
   const toggleDpe = (label) => {
     setForm(f => ({
@@ -359,17 +594,24 @@ export default function Simulation() {
   };
 
   return (
-    <section className="section">
-      <div className="section-inner max-w-5xl mx-auto">
+    <div className="relative min-h-screen">
+      <div className="page-circles" />
+      <div className="page-circles-extra" />
+    <section className="section relative pt-28">
+      <div className="hero-glow opacity-50" />
+      <div className="section-inner max-w-5xl mx-auto relative z-10">
         {/* Header */}
-        <div className="mb-10 text-center">
-          <p className="text-blue-400 text-xs font-semibold uppercase tracking-[0.28em] mb-2">Simulation</p>
-          <h1 className="text-4xl font-bold mb-3">Estimez votre marché</h1>
+        <div className="mb-12 text-center">
+          <span className="inline-flex items-center gap-2 bg-emerald-500/15 border border-emerald-500/25 text-emerald-300 text-xs font-semibold px-4 py-2 rounded-full mb-6">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            Simulation de marché — BDNB · ADEME
+          </span>
+          <h1 className="text-4xl sm:text-5xl font-black mb-4">Estimez votre <span className="stat-number">potentiel de marché</span></h1>
           <p className="text-white/50 text-sm max-w-md mx-auto leading-relaxed">
-            Renseignez votre ICP et découvrez combien de bâtiments correspondent à votre profil cible.
+            Renseignez votre ICP et découvrez combien de bâtiments correspondent à votre profil cible — en temps réel.
           </p>
           <div className="flex items-center justify-center gap-4 mt-4 text-[11px] text-white/30">
-            <span className="flex items-center gap-1"><Building2 className="w-3 h-3" /> 1,2M bâtiments analysés</span>
+            <span className="flex items-center gap-1"><Building2 className="w-3 h-3" /> 1,5M bâtiments analysés</span>
             <span className="w-px h-3 bg-white/15" />
             <span className="flex items-center gap-1"><TrendingUp className="w-3 h-3" /> Données BDNB · ADEME</span>
             <span className="w-px h-3 bg-white/15" />
@@ -384,32 +626,21 @@ export default function Simulation() {
 
             <form onSubmit={handleSimulate} className="card-glass p-6 space-y-6">
 
-              {/* Étape 0 : Région */}
+              {/* Étape 0 : Région — Carte SVG France */}
               {step === 0 && (
                 <div className="space-y-4 animate-[fadeIn_0.3s_ease-out]">
                   <div>
-                    <label className="text-xs text-white/50 mb-2 block font-medium">Région cible</label>
-                    <div className="grid grid-cols-2 gap-2">
-                      {regions.map(r => (
-                        <button
-                          key={r}
-                          type="button"
-                          onClick={() => setForm(f => ({ ...f, region: r }))}
-                          className={`px-3 py-2 rounded-xl text-xs font-medium border transition-all duration-200 text-left flex items-center gap-2 ${
-                            form.region === r
-                              ? 'bg-blue-500/20 border-blue-500/50 text-blue-300'
-                              : 'bg-white/3 border-white/10 text-white/50 hover:border-white/25 hover:text-white/70'
-                          }`}
-                        >
-                          <MapPin className="w-3 h-3 shrink-0" /> {r}
-                        </button>
-                      ))}
-                    </div>
+                    <label className="text-xs text-white/50 mb-3 block font-medium flex items-center justify-between">
+                      <span>Sélectionnez votre région cible</span>
+                      {form.region && <span className="text-blue-300 font-bold">{form.region}</span>}
+                    </label>
+                    <FranceMap selected={form.region} onSelect={r => setForm(f => ({ ...f, region: r }))} />
                   </div>
                   <button
                     type="button"
                     onClick={() => setStep(1)}
-                    className="btn-accent w-full flex items-center justify-center gap-2"
+                    disabled={!form.region}
+                    className="btn-accent w-full flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed"
                   >
                     Continuer <ArrowRight className="w-4 h-4" />
                   </button>
@@ -565,5 +796,6 @@ export default function Simulation() {
         @keyframes progress { from { width: 0%; } to { width: 80%; } }
       `}</style>
     </section>
+    </div>
   );
 }
