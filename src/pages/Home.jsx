@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useFadeInOnScroll } from '../hooks/useFadeInOnScroll';
 import {
   MapPin, Zap, Mail, BarChart3, Building2,
-  Star, TrendingUp, Clock, CalendarX, DollarSign,
+  Star, TrendingUp, Clock, CalendarX, Euro,
   Info, ChevronDown, Settings, ListChecks, Send, BarChart2,
   ArrowRight, Play
 } from 'lucide-react';
@@ -88,11 +88,11 @@ function StatCard({ icon, numericValue, prefix, suffix, label, trend, trendUp, c
       className={`transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`}
     >
-      <div className="group relative card-glass p-6 min-h-[260px] h-full flex flex-col gap-4 hover:border-blue-500/30 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
+      <div className="group relative card-glass p-6 min-h-[260px] h-full flex flex-col gap-4 hover:border-emerald-500/30 hover:-translate-y-1 hover:shadow-lg transition-all duration-300">
 
         {/* Icône + tooltip trigger */}
         <div className="flex items-start justify-between">
-          <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400">
+          <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
             {icon}
           </div>
           <button
@@ -113,11 +113,11 @@ function StatCard({ icon, numericValue, prefix, suffix, label, trend, trendUp, c
           )}
         </div>
         <div>
-          <p className="text-4xl font-black text-blue-400 tabular-nums leading-none">{display}</p>
+          <p className="text-4xl font-black text-emerald-400 tabular-nums leading-none">{display}</p>
           <p className="text-sm text-white/55 mt-1.5">{label}</p>
         </div>
         <div className="flex items-center gap-1.5">
-          <span className={`text-xs font-semibold flex items-center gap-0.5 ${trendUp ? 'text-blue-400' : 'text-red-400'
+          <span className={`text-xs font-semibold flex items-center gap-0.5 ${trendUp ? 'text-emerald-400' : 'text-red-400'
             }`}>
             {trendUp ? '↑' : '↓'} {trend}
           </span>
@@ -126,7 +126,7 @@ function StatCard({ icon, numericValue, prefix, suffix, label, trend, trendUp, c
         {barPct !== null && (
           <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
             <div
-              className={`h-full rounded-full transition-all duration-1000 ease-out ${trendUp ? 'bg-blue-400' : 'bg-red-400'
+              className={`h-full rounded-full transition-all duration-1000 ease-out ${trendUp ? 'bg-emerald-400' : 'bg-red-400'
                 }`}
               style={{ width: visible ? `${barPct}%` : '0%' }}
             />
@@ -144,17 +144,17 @@ function HeroSection() {
   return (
     <section className="relative overflow-hidden section">
       <div className="absolute inset-0 bg-grid-pattern bg-grid opacity-40 pointer-events-none" />
-      <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-blue-500/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="section-inner relative grid md:grid-cols-2 gap-12 items-center">
         <div className="space-y-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-300 text-xs font-medium">
-            <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-medium">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
             73 leads identifiés aujourd&apos;hui
           </div>
           <h1 className="text-4xl sm:text-5xl font-bold tracking-tight leading-tight">
             Trouvez les bâtiments{' '}
-            <span className="text-blue-400">qui ont besoin de vous.</span>
+            <span className="text-emerald-400">qui ont besoin de vous.</span>
           </h1>
           <p className="text-base text-white/60 max-w-md leading-relaxed">
             Pisteur analyse 1,2 million de bâtiments et vous livre chaque matin les
@@ -177,7 +177,7 @@ function HeroSection() {
         <div className="card-glass p-5 space-y-4">
           <div className="flex items-center justify-between">
             <p className="text-sm font-semibold text-white">Vos filtres actifs</p>
-            <span className="text-xs text-blue-400 font-medium">12 leads trouvés</span>
+            <span className="text-xs text-emerald-400 font-medium">12 leads trouvés</span>
           </div>
           <div className="grid grid-cols-2 gap-3">
             {[
@@ -195,7 +195,7 @@ function HeroSection() {
           <div className="border-t border-white/5 pt-3 space-y-2">
             {['Résidence Les Acacias — Paris 15e', 'Copropriété Verdun — Lyon 3e', 'Imm. Les Platanes — Nantes'].map(lead => (
               <div key={lead} className="flex items-center gap-2 text-sm text-white/70">
-                <Building2 className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+                <Building2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
                 {lead}
               </div>
             ))}
@@ -209,7 +209,7 @@ function HeroSection() {
       <div className="section-inner relative mt-10 md:mt-14">
         <FadeSection>
           <div className="text-center mb-5 md:mb-6">
-            <p className="text-blue-400 text-[11px] sm:text-xs font-semibold uppercase tracking-[0.28em] mb-2">
+            <p className="text-emerald-400 text-[11px] sm:text-xs font-semibold uppercase tracking-[0.28em] mb-2">
               Démonstration produit
             </p>
             <h2 className="text-xl sm:text-2xl font-semibold text-white/90 max-w-2xl mx-auto">
@@ -339,7 +339,6 @@ function FeaturesSection() {
             <p className="text-white/60 max-w-lg mx-auto text-sm">
               De la donnée brute à la prise de contact, Pisteur automatise toute la chaîne de prospection.
             </p>
-            {/* Filtres */}
             <div className="flex flex-wrap justify-center gap-2 mt-6">
               {FEATURE_FILTERS.map(f => (
                 <button
@@ -348,7 +347,7 @@ function FeaturesSection() {
                   onClick={() => { setActiveFilter(f); setExpandedIndex(null); }}
                   className={`px-4 py-1.5 rounded-full text-xs font-semibold border transition-all duration-200 ${
                     activeFilter === f
-                      ? 'bg-blue-500/20 border-blue-500/50 text-blue-300'
+                      ? 'bg-emerald-500/20 border-emerald-500/50 text-emerald-300'
                       : 'border-white/10 text-white/50 hover:border-white/25 hover:text-white/70'
                   }`}
                 >
@@ -366,13 +365,12 @@ function FeaturesSection() {
               <FadeSection key={f.title} delay={i * 80}>
                 <div
                   className={`card-glass p-5 flex flex-col gap-3 cursor-pointer transition-all duration-300 hover:-translate-y-1 ${
-                    isOpen ? 'border-blue-500/40 bg-blue-500/5' : 'hover:border-white/20'
+                    isOpen ? 'border-emerald-500/40 bg-emerald-500/5' : 'hover:border-white/20'
                   }`}
                   onClick={() => setExpandedIndex(isOpen ? null : i)}
                 >
-                  {/* Numéro filigrane */}
                   <div className="flex items-start justify-between">
-                    <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400">
+                    <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
                       {f.icon}
                     </div>
                     <div className="flex items-center gap-2">
@@ -392,22 +390,20 @@ function FeaturesSection() {
                   <h3 className="font-semibold text-sm">{f.title}</h3>
                   <p className="text-xs text-white/50 leading-relaxed">{f.desc}</p>
 
-                  {/* Expand toggle */}
                   <button
                     type="button"
-                    className="flex items-center gap-1 text-blue-400 text-xs font-medium mt-auto w-fit"
+                    className="flex items-center gap-1 text-emerald-400 text-xs font-medium mt-auto w-fit"
                     aria-label={isOpen ? 'Réduire' : 'En savoir plus'}
                   >
                     {isOpen ? 'Réduire' : 'En savoir plus'}
                     <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
                   </button>
 
-                  {/* Panel expansible */}
                   <div className={`overflow-hidden transition-all duration-400 ease-in-out ${isOpen ? 'max-h-60 opacity-100 mt-1' : 'max-h-0 opacity-0'}`}>
                     <div className="border-t border-white/8 pt-3 space-y-2">
                       {f.detail.map(d => (
                         <div key={d} className="flex items-start gap-2 text-xs text-white/60">
-                          <span className="text-blue-400 mt-0.5 shrink-0">✓</span>
+                          <span className="text-emerald-400 mt-0.5 shrink-0">✓</span>
                           {d}
                         </div>
                       ))}
@@ -420,12 +416,11 @@ function FeaturesSection() {
           })}
         </div>
 
-        {/* Lien de connexion vers la section suivante */}
         <FadeSection delay={300}>
           <div className="flex justify-center mt-8">
             <a
               href="#how-it-works"
-              className="flex items-center gap-2 text-xs text-white/40 hover:text-blue-400 transition-colors"
+              className="flex items-center gap-2 text-xs text-white/40 hover:text-emerald-400 transition-colors"
             >
               Voir comment utiliser ces fonctionnalités
               <ArrowRight className="w-3.5 h-3.5" />
@@ -485,16 +480,9 @@ function HowItWorksSection() {
   const [activeStep, setActiveStep] = useState(0);
   const sectionRef = useRef(null);
 
-  // Scroll-highlight : met à jour activeStep quand la section est visible
   useEffect(() => {
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            // on laisse l'utilisateur contrôler manuellement, pas de reset auto
-          }
-        });
-      },
+      (entries) => { entries.forEach(() => {}); },
       { threshold: 0.2 }
     );
     if (sectionRef.current) observer.observe(sectionRef.current);
@@ -513,13 +501,10 @@ function HowItWorksSection() {
           </p>
         </FadeSection>
 
-        {/* ── Desktop : stepper horizontal ── */}
         <div className="hidden md:block">
-          {/* Barre de progression */}
           <div className="relative flex items-center mb-6">
             {STEPS_DATA.map((s, i) => (
               <div key={s.n} className="flex items-center flex-1 last:flex-none">
-                {/* Bouton étape */}
                 <button
                   type="button"
                   onClick={() => setActiveStep(i)}
@@ -527,40 +512,37 @@ function HowItWorksSection() {
                 >
                   <div className={`w-10 h-10 rounded-xl border flex items-center justify-center transition-all duration-200 ${
                     i === activeStep
-                      ? 'bg-blue-500/20 border-blue-500/60 text-blue-400 shadow-lg shadow-blue-500/20'
+                      ? 'bg-emerald-500/20 border-emerald-500/60 text-emerald-400 shadow-lg shadow-emerald-500/20'
                       : i < activeStep
-                        ? 'bg-blue-500/10 border-blue-500/30 text-blue-400/60'
+                        ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400/60'
                         : 'bg-white/5 border-white/15 text-white/30'
                   }`}>
                     {s.icon}
                   </div>
-                  <span className={`text-[10px] font-bold ${i === activeStep ? 'text-blue-400' : 'text-white/30'}`}>
+                  <span className={`text-[10px] font-bold ${i === activeStep ? 'text-emerald-400' : 'text-white/30'}`}>
                     {s.n}
                   </span>
                 </button>
-                {/* Connecteur */}
                 {i < STEPS_DATA.length - 1 && (
                   <div className="flex-1 flex items-center mx-2">
-                    <div className={`h-px flex-1 transition-all duration-500 ${i < activeStep ? 'bg-blue-500/50' : 'bg-white/10'}`} />
-                    <ArrowRight className={`w-3.5 h-3.5 mx-1 transition-colors duration-500 ${i < activeStep ? 'text-blue-500/50' : 'text-white/10'}`} />
+                    <div className={`h-px flex-1 transition-all duration-500 ${i < activeStep ? 'bg-emerald-500/50' : 'bg-white/10'}`} />
+                    <ArrowRight className={`w-3.5 h-3.5 mx-1 transition-colors duration-500 ${i < activeStep ? 'text-emerald-500/50' : 'text-white/10'}`} />
                   </div>
                 )}
               </div>
             ))}
           </div>
 
-          {/* Panel de détail */}
           <div className="grid md:grid-cols-2 gap-8 items-start">
-            {/* Info gauche */}
             <FadeSection key={activeStep}>
-              <div className="card-glass p-6 border-blue-500/30 bg-blue-500/5">
+              <div className="card-glass p-6 border-emerald-500/30 bg-emerald-500/5">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 rounded-xl bg-blue-500/20 border border-blue-500/40 flex items-center justify-center text-blue-400">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400">
                     {step.icon}
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
-                      <span className="text-xs font-black text-blue-500/40">{step.n}</span>
+                      <span className="text-xs font-black text-emerald-500/40">{step.n}</span>
                       <span className="text-[10px] bg-white/8 border border-white/10 text-white/50 px-2 py-0.5 rounded-full flex items-center gap-1">
                         <Clock className="w-2.5 h-2.5" /> {step.time}
                       </span>
@@ -570,12 +552,12 @@ function HowItWorksSection() {
                 </div>
                 <p className="text-sm text-white/60 leading-relaxed mb-4">{step.detail}</p>
                 <p className="text-[10px] text-white/25 border-t border-white/8 pt-3">
-                  Fonctionnalité : <span className="text-blue-400/50">{step.featureTag}</span>
+                  Fonctionnalité : <span className="text-emerald-400/50">{step.featureTag}</span>
                 </p>
                 {step.cta && (
                   <Link
                     to={step.cta.to}
-                    className="mt-4 inline-flex items-center gap-2 text-xs font-semibold text-blue-400 hover:text-blue-300 transition-colors"
+                    className="mt-4 inline-flex items-center gap-2 text-xs font-semibold text-emerald-400 hover:text-emerald-300 transition-colors"
                   >
                     <Play className="w-3.5 h-3.5" /> {step.cta.label}
                   </Link>
@@ -583,7 +565,6 @@ function HowItWorksSection() {
               </div>
             </FadeSection>
 
-            {/* Cards droite */}
             <div className="grid grid-cols-2 gap-4">
               {STEPS_DATA.map((s, i) => (
                 <button
@@ -592,11 +573,11 @@ function HowItWorksSection() {
                   onClick={() => setActiveStep(i)}
                   className={`card-glass p-4 text-left flex flex-col gap-2 transition-all duration-200 ${
                     i === activeStep
-                      ? 'border-blue-500/40 bg-blue-500/5'
+                      ? 'border-emerald-500/40 bg-emerald-500/5'
                       : 'opacity-60 hover:opacity-90 hover:border-white/20'
                   }`}
                 >
-                  <span className="text-xl font-black text-blue-500/25">{s.n}</span>
+                  <span className="text-xl font-black text-emerald-500/25">{s.n}</span>
                   <h4 className="font-semibold text-xs leading-snug">{s.title}</h4>
                   <p className="text-[11px] text-white/45 leading-relaxed">{s.desc}</p>
                   <span className="text-[10px] text-white/25 flex items-center gap-1 mt-auto">
@@ -608,31 +589,26 @@ function HowItWorksSection() {
           </div>
         </div>
 
-        {/* ── Mobile : timeline verticale ── */}
         <div className="md:hidden relative">
-          {/* Ligne centrale */}
           <div className="absolute left-5 top-0 bottom-0 w-px bg-white/10" />
-
           <div className="space-y-6 pl-14">
             {STEPS_DATA.map((s, i) => (
               <FadeSection key={s.n} delay={i * 100}>
                 <div className="relative">
-                  {/* Dot sur la ligne */}
                   <div className={`absolute -left-9 top-3 w-4 h-4 rounded-full border-2 transition-colors duration-300 ${
                     i === activeStep
-                      ? 'bg-blue-500 border-blue-400'
+                      ? 'bg-emerald-500 border-emerald-400'
                       : 'bg-navy-900 border-white/20'
                   }`} />
-
                   <button
                     type="button"
                     onClick={() => setActiveStep(i)}
                     className={`card-glass p-4 w-full text-left flex flex-col gap-2 transition-all duration-200 ${
-                      i === activeStep ? 'border-blue-500/40 bg-blue-500/5' : 'opacity-70'
+                      i === activeStep ? 'border-emerald-500/40 bg-emerald-500/5' : 'opacity-70'
                     }`}
                   >
                     <div className="flex items-center gap-2">
-                      <span className="text-blue-500/40 font-black text-sm">{s.n}</span>
+                      <span className="text-emerald-500/40 font-black text-sm">{s.n}</span>
                       <span className="text-[10px] text-white/30 flex items-center gap-1">
                         <Clock className="w-2.5 h-2.5" /> {s.time}
                       </span>
@@ -645,7 +621,7 @@ function HowItWorksSection() {
                     {s.cta && i === activeStep && (
                       <Link
                         to={s.cta.to}
-                        className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-blue-400"
+                        className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-400"
                         onClick={e => e.stopPropagation()}
                       >
                         <Play className="w-3 h-3" /> {s.cta.label}
@@ -699,7 +675,7 @@ function StatsSection() {
       context: 'Ratio calculé sur les RDV à faible potentiel éliminés grâce au scoring DPE + surface + NAF de Pisteur.',
     },
     {
-      icon: <DollarSign className="w-5 h-5" />,
+      icon: <Euro className="w-5 h-5" />,
       numericValue: 3,
       prefix: '×',
       suffix: '',
@@ -712,11 +688,11 @@ function StatsSection() {
   ];
 
   return (
-    <section className="section bg-navy-950/60 border-y border-blue-500/10">
+    <section className="section bg-navy-950/60 border-y border-emerald-500/10">
       <div className="section-inner">
         <FadeSection>
           <div className="text-center mb-10">
-            <p className="text-blue-400 text-xs font-semibold uppercase tracking-wider mb-2">Résultats mesurés</p>
+            <p className="text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-2">Résultats mesurés</p>
             <h2 className="text-2xl font-bold">Ce que Pisteur change concrètement</h2>
           </div>
         </FadeSection>
@@ -794,7 +770,7 @@ function CtaSection() {
     <section className="section">
       <div className="section-inner">
         <FadeSection>
-          <div className="card-glass bg-gradient-to-br from-blue-500/10 to-blue-500/5 p-10 rounded-3xl flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="card-glass bg-gradient-to-br from-emerald-500/10 to-blue-500/5 p-10 rounded-3xl flex flex-col md:flex-row items-center justify-between gap-6">
             <div>
               <h2 className="text-2xl font-bold mb-2">Prêt à voir vos cibles réelles ?</h2>
               <p className="text-white/60 text-sm max-w-md">
