@@ -108,13 +108,6 @@ const COLOR_MAP = {
     bar:    'bg-blue-400',
     border: 'border-blue-500/30 bg-blue-500/5',
   },
-  blue: {
-    badge:  'bg-blue-500/15 border-blue-500/30 text-blue-700 dark:text-blue-300',
-    icon:   'bg-blue-500/10 border-blue-500/20 text-blue-600 dark:text-blue-400',
-    metric: 'text-blue-600 dark:text-blue-400',
-    bar:    'bg-blue-400',
-    border: 'border-blue-500/30 bg-blue-500/5',
-  },
   amber: {
     badge:  'bg-amber-500/15 border-amber-500/30 text-amber-700 dark:text-amber-300',
     icon:   'bg-amber-500/10 border-amber-500/20 text-amber-600 dark:text-amber-400',
